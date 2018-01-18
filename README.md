@@ -23,5 +23,5 @@ ToDo:
   - [ ] Tokenizierung
     - [x] Chunking der Sätze
     - [ ] Aufbau und Füllung eines Tokens
-    - [ ] Bezug zu Informationen der Semantik Gruppe
+    - [ ] Bezug/Interpretation zu Informationen der Semantik Gruppe
  
