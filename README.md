@@ -18,6 +18,7 @@ Bei dem [SpeechTokenization](SpeechTokenization) Ordner handelt es sich um den J
   - [ ] GUI
 - [ ] Upload des Back-End Code (Application Server)
   - [ ] Tokenizierung
+    - [ ] dsfa
   - [x] Schnittstelle
 - [ ] Simulation der Semantik Gruppe
 - [ ] 
