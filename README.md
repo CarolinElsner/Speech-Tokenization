@@ -11,12 +11,9 @@ Das Team besteht aus den folgenden Mitgliedern:
 
 Bei dem [SpeechTokenization](SpeechTokenization) Ordner handelt es sich um den Java Code. Mitinbegriffen ist ein Servlet, das die Kommunikation mit einem Web Server ermöglicht. Dieser Programmcode ist auf einem Applikationsserver auszuführen. Im Rahmen der Tests wurde der Tomcat 8.0 Server verwendet. Um die Kommunikation des Webservers mit dem Applikationsserver zu ermöglichen wird auf dem Webserver ein GET Request an den Port des Applikationsservers ausgeführt. In dem Servlet können die übergebenen Parameter und dessen Werte ausgelesen werden. Zum aktuellen Stand wird ein Parameter mit der Bezeichnung "param" in dem Servlet ausgelesen.
 
-- [ ] Mercury
-- [x] Venus
-- [x] Earth (Orbit/Moon)
-- [x] Mars
-- [ ] Jupiter
-- [ ] Saturn
-- [ ] Uranus
-- [ ] Neptune
-- [ ] Comet Haley
+- [x] Entwicklung einer geeigneten Schnittstelle zwischen JavaScript und Java
+- [ ] Upload des Front-End Code
+- [ ] Upload des Back-End Code
+  - [ ] test
+- [ ] Simulation der Semantik Gruppe
+- [ ] 
