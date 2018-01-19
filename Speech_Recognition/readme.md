@@ -1,4 +1,4 @@
-Watson Speech JavaScript SDK Examples
+Watson Speech JavaScript SDK Example (Folgt)
 =====================================
 
 This folder has example Node.js and Python servers to generate auth tokens and 
