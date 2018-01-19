@@ -4,7 +4,8 @@
 # Log file
 *.log
 
-node_modules/
+# ignoring the big node_modules folder
+/node_modules/
 
 # BlueJ files
 *.ctxt
