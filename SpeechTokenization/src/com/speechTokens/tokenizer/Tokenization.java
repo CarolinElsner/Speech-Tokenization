@@ -94,7 +94,7 @@ public class Tokenization {
 		
 		
 		//Ermittlung Tokenizer Wahrscheinlichkeiten
-		double tokenProbs[] = tokenizer.getTokenProbabilities();
+		//double tokenProbs[] = tokenizer.getTokenProbabilities();
 		
 		return tokens;
     	

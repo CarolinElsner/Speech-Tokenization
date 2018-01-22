@@ -1,10 +1,7 @@
 package com.speechTokens.XML;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -14,19 +11,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import opennlp.tools.chunker.ChunkerME;
-import opennlp.tools.chunker.ChunkerModel;
-import opennlp.tools.cmdline.parser.ParserTool;
-import opennlp.tools.parser.Parse;
-import opennlp.tools.parser.Parser;
-import opennlp.tools.parser.ParserFactory;
-import opennlp.tools.parser.ParserModel;
-import opennlp.tools.postag.POSModel;
-import opennlp.tools.postag.POSTaggerME;
-import opennlp.tools.sentdetect.SentenceDetectorME;
-import opennlp.tools.sentdetect.SentenceModel;
-import opennlp.tools.tokenize.TokenizerME;
-import opennlp.tools.tokenize.TokenizerModel;
 
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
@@ -71,7 +55,9 @@ public class XML_Token {
 				// TODO: Prüfen dass Token nicht leer ist
 			} else if(chunkResult[i].charAt(0) == 'B') {
 				System.out.println(chunkPhrase+ "####"+ i);
-
+				chunkPhrase = "";
+				chunkPhrase = chunkPhrase + " " + tokens[i];
+				sizeChunk = sizeChunk + 1;
 				
 				// chunk element 2. Hierarchie
 				Element chunk = doc.createElement("chunk");
@@ -92,10 +78,6 @@ public class XML_Token {
 				Element responseSemantik = doc.createElement("semantik");
 				responseSemantik.appendChild(doc.createTextNode("in euer Gesicht"));
 				chunk.appendChild(responseSemantik);
-				
-				chunkPhrase = "";
-				chunkPhrase = chunkPhrase + " " + tokens[i];
-				sizeChunk = sizeChunk + 1;
 			}					
 					
 	}
