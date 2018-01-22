@@ -24,4 +24,7 @@ Speech_Recognition/node_modules/
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 /.metadata/
+<<<<<<< HEAD
 /.recommenders/
+=======
+>>>>>>> b1606bff9a30c31d329e7da5ccd251bc76afe08b
