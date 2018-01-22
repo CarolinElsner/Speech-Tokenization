@@ -35,9 +35,11 @@ import org.w3c.dom.Element;
 public class XML_Token {
 
 	
-	// man brauch tokens und chunkResults
+	// TODO: Weniger feste strings, diese alle in Variablen für diese klasse instanziieren
+	// TODO: Variablen als PRIVATE INITIIEREN
+	// TODO: Alle Variablen an den Anfang dieser Klasse der übersicht halber schreiben (nicht innerhalb der Methode initiieren)
 	public static void createToken(String tokens[], String chunkResult[]) throws IOException {
-		System.out.println(tokens.length+"#####" + chunkResult.length);
+
 	// TODO: Muss noch dynamisch sein sodass die Zahlen hochgezählt werden
 	int sentenceCounter = 1;
 
@@ -63,11 +65,10 @@ public class XML_Token {
 	for(int i = 0; i < chunkResult.length; i++){
 			// B indicates the start of a new chunk therefore, if it's not a B, it means the token belongs to the previous chunk
 			if(chunkResult[i].charAt(0) != 'B') {
-				
 				//sizeChunk = sizeChunk + 1;
-				chunkPhrase = chunkPhrase + " " + tokens[i];
-			
-			// chunkPhrase is a finished chunk and token is not empty
+				chunkPhrase = chunkPhrase + " " + tokens[i];			
+			// if chunkPhrase is a finished chunk
+				// TODO: Prüfen dass Token nicht leer ist
 			} else if(chunkResult[i].charAt(0) == 'B') {
 				System.out.println(chunkPhrase+ "####"+ i);
 

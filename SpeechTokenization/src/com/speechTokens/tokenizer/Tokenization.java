@@ -3,7 +3,6 @@ package com.speechTokens.tokenizer;
 import java.io.InputStream;
 
 import com.speechTokens.XML.XML_Token;
-import com.speechTokens.XML.createToken;
 
 import java.io.IOException;
 import java.io.FileInputStream;
