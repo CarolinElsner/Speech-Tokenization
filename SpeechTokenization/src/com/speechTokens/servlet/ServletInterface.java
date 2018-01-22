@@ -24,7 +24,7 @@ public class ServletInterface extends HttpServlet {
         //super();
         // TODO Auto-generated constructor stub
     }
-
+    
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO: A response can be added in the future which is caught in the JS Script and shown on the website
