@@ -24,7 +24,6 @@ public class ServletInterface extends HttpServlet {
         //super();
         // TODO Auto-generated constructor stub
     }
-//    Test
     
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
