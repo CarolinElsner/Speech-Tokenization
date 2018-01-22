@@ -1,6 +1,10 @@
 package com.speechTokens.tokenizer;
 
 import java.io.InputStream;
+
+import com.speechTokens.XML.XML_Token;
+import com.speechTokens.XML.createToken;
+
 import java.io.IOException;
 import java.io.FileInputStream;
 import opennlp.tools.postag.*;
@@ -29,7 +33,10 @@ public class Tokenization {
 		String posTags[] = posTagging(tokens);
 		
 		String chunkResult[] = chunk(tokens, posTags);
+		
 		Parse parseResult[] = parse(sentence);
+		
+		XML_Token.createToken(tokens, chunkResult);
 		
 		for (Parse p: parseResult)
 			p.show();
@@ -38,6 +45,7 @@ public class Tokenization {
 		for(int i = 0; i < chunkResult.length; i++) {		
 			System.out.println(tokens[i] + " " + posTags[i] + " " + chunkResult[i]);
 		}
+		
 		String chunkPhrase = "";
 		
 		for(int i = 0; i < chunkResult.length; i++){

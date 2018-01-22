@@ -14,7 +14,7 @@ public class readXMLResponse {
 		
 		try {
 			//XML File einlesen
-			File fXmlFile = new File("C:\\Users\\Benedikt\\Desktop\\Studium\\Master\\1.Semester\\Cloud Computing Technology\\file.xml");
+			File fXmlFile = new File("C:\\Users\\Menz\\Desktop\\file.xml");
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(fXmlFile);
