@@ -27,6 +27,7 @@ public class ServletInterface extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO: A response can be added in the future which is caught in the JS Script and shown on the website
 		String JsSentence = request.getParameter("param"); // receive Parameter from GET Request, where the spoken text is stored
 		// To execute the other class and its dependencies it is important to add these dependencies under "Deployment Assembly"
 		Tokenization.doTokenization(JsSentence);				// forward recorded sentence to the Tokenization Java Class
