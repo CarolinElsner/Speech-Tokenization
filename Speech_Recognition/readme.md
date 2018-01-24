@@ -1,50 +1,29 @@
-Watson Speech JavaScript SDK Example (Folgt)
+Speech Recognition Demo Applikation
 =====================================
 
-This folder has example Node.js and Python servers to generate auth tokens and 
-several html files (in `static/`) with different examples of using the Speech SDK. 
-
-There are also a few audio files to test with in the `static/` folder.
+Dieser Ordner ist die Speech Recognition Web-Applikation für unsere Fallstudie. Er beinhaltet einen Node.js Server, auf dem die Web-Applikation gehostet wird (Port 3000) sowie einen Authentifizierungs-Server (Port 3001), der Authentifizierungs-Tokens für die Kommunikation mit der IBM Watson Speech to Text API erstellt. Der `static/`-Order enthält die HTML-Datei ´recognition.html´, die den HTML-Code der Weboberfläche und den JavaScript-Code der die Kommunikation mit der IBM Speech to Text API und dem Java Servlet herstellt.
 
 
-Prerequisite
+Voraussetzungen
 ------------
 
-* IBM Watson Speech to Text service credentials - see [Service credentials for Watson services](https://www.ibm.com/watson/developercloud/doc/common/getting-started-credentials.html)
-* Node.js OR Python
-* [Bower](https://bower.io/) for installing client-side dependencies
+* IBM Watson Speech to Text und Text to Speech API Zugänge - siehe [Service credentials for Watson services](https://www.ibm.com/watson/developercloud/doc/common/getting-started-credentials.html)
+* [Node.js](https://nodejs.org/de/)
+* [Bower](https://bower.io/)
 
 
-Setup - Node.js
+Installation - Node.js
 ---------------
 
-1. `cd` into the `examples/` directory and run `npm install` to grab dependencies (this automatically runs `bower install`)
-2. edit `tts-token.js` and `stt-token.js` to include your service credentials (or create a `.env` file)
-3. run `npm start`
-4. Open your browser to http://localhost:3000/ to see the examples.
+1. `cd` in den `Speech_Recognition/`-Ordner und Ausführen des Node.js-Kommandos `npm install`, um die nötigen Pakete zu installieren.
+2. Anpassen der ´example.env´-Datei, sodass diese die eigenen API-Zugänge (Username und Password) beinhaltet. Der Name der ´example.env´-Datei muss zu ´.env´ umbenannt werden.
+3. `npm start` ausführen, um die server.js Datei auszuführen und die Server zu starten.
+4. Den Browser öffnen und zu http://localhost:3000/static/recognition.html navigieren, um zur Weboberfläche der Speech Recognition Web-Applikation zu gelangen.
 
 
-Setup - Python
---------------
-
-1. `cd` into the `examples/` directory and run `pip install watson_developer_cloud flask` (or `easy_install...`) to install python dependencies
-2. run `bower install` to install client-side dependencies
-3. edit `server.py` to include your service credentials (or create a `.env` file)
-4. run `python server.py`
-5. Open your browser to http://localhost:5000/ to see the examples.
-
-
-Notes
------
-
-* The examples all use [fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) (a modern promise-based replacement for XMLHttpRequest) to retrieve auth tokens. Most supported browsers include a native fetch implementation, but a pollyfill is included in the top-level module for older browsers.
-* The examples use a Node.js server to generate tokens. It doesn't have to be written in Node.js, but *some server-side token generator is required*. The SDK will not accept your service credentials directly, and you can not use them to generate a token client-side. SDKs are available for [Node.js](https://github.com/watson-developer-cloud/node-sdk#authorization), [Java](https://github.com/watson-developer-cloud/java-sdk), [Python](https://github.com/watson-developer-cloud/python-sdk/blob/master/examples/authorization_v1.py), and there is a [REST API](https://www.ibm.com/watson/developercloud/doc/common/getting-started-tokens.html) for use with other languages (or `curl`).
-* The Speech SDK may be used in browserify, Webpack, or as a standalone library. Most of the examples use the standalone version either installed via bower or symlinked to the root directory when developing locally.
-
-
-More Examples
+Weitere Beispiele
 -------------
 
 * Speech to Text: [Demo](https://speech-to-text-demo.mybluemix.net/), [Code](https://github.com/watson-developer-cloud/speech-to-text-nodejs)
-* Speech & Dialog services together: [Demo](https://speech-dialog.mybluemix.net/), [Code](https://github.com/nfriedly/speech-dialog)
-* Text to Speech w/ word timings: [Demo](http://watson-tts-timing.mybluemix.net/), [Code](https://github.com/nfriedly/tts-timing)
+* Speech to Text & Dialog Service: [Demo](https://speech-dialog.mybluemix.net/), [Code](https://github.com/nfriedly/speech-dialog)
+* Umfangreiche Speech to Text und Text to Speech Beispiel-Web-Applikationen mit IBM Watson: [Demo](https://watson-speech.mybluemix.net/), [Code](https://github.com/watson-developer-cloud/speech-javascript-sdk/tree/master/examples/)
