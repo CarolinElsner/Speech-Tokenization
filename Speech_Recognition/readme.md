@@ -1,7 +1,7 @@
 Speech Recognition Demo Applikation
 =====================================
 
-Dieser Ordner ist die Speech Recognition Web-Applikation für unsere Fallstudie. Er beinhaltet einen Node.js Server, auf dem die Web-Applikation gehostet wird (Port 3000) sowie einen Authentifizierungs-Server (Port 3001), der Authentifizierungs-Tokens für die Kommunikation mit der IBM Watson Speech to Text API erstellt. Der `static/`-Order enthält die HTML-Datei ´recognition.html´, die den HTML-Code der Weboberfläche und den JavaScript-Code der die Kommunikation mit der IBM Speech to Text API und dem Java Servlet herstellt.
+Dieser Ordner ist die Speech Recognition Web-Applikation für unsere Fallstudie. Er beinhaltet einen Node.js Server, auf dem die Web-Applikation gehostet wird (Port 3000) sowie einen Authentifizierungs-Server (Port 3001), der Authentifizierungs-Tokens für die Kommunikation mit der IBM Watson Speech to Text API erstellt. Der `static/`-Order enthält die HTML-Datei `recognition.html`, die den HTML-Code der Weboberfläche und den JavaScript-Code der die Kommunikation mit der IBM Speech to Text API und dem Java Servlet herstellt.
 
 
 Voraussetzungen
@@ -16,7 +16,7 @@ Installation - Node.js
 ---------------
 
 1. `cd` in den `Speech_Recognition/`-Ordner und Ausführen des Node.js-Kommandos `npm install`, um die nötigen Pakete zu installieren.
-2. Anpassen der ´example.env´-Datei, sodass diese die eigenen API-Zugänge (Username und Password) beinhaltet. Der Name der ´example.env´-Datei muss zu ´.env´ umbenannt werden.
+2. Anpassen der `example.env`-Datei, sodass diese die eigenen API-Zugänge (Username und Password) beinhaltet. Der Name der `example.env`-Datei muss zu `.env` umbenannt werden.
 3. `npm start` ausführen, um die server.js Datei auszuführen und die Server zu starten.
 4. Den Browser öffnen und zu http://localhost:3000/static/recognition.html navigieren, um zur Weboberfläche der Speech Recognition Web-Applikation zu gelangen.
 
