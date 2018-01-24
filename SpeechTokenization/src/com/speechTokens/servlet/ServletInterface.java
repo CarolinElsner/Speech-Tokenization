@@ -22,7 +22,6 @@ public class ServletInterface extends HttpServlet {
      */
     public ServletInterface() {
         //super();
-        // TODO Auto-generated constructor stub
     }
     
 	@Override

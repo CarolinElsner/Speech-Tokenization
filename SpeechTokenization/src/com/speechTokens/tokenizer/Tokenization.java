@@ -4,7 +4,11 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.w3c.dom.Document;
+
 import com.speechTokens.XML.XML_Token;
+import com.speechTokens.XML.readXMLResponse;
+import com.sun.xml.internal.fastinfoset.util.StringArray;
 
 import java.io.IOException;
 import java.io.FileInputStream;
@@ -22,48 +26,77 @@ import opennlp.tools.chunker.*;
 
 public class Tokenization {
 
-	private static String path = "C:/Users/Menz/eclipse-workspace/resources/";
+	private static String path = "resources/"; // relative path (to find yours, type: System.out.println(System.getProperty("user.dir").toString());)
+	//private static String path = "C:/Users/Menz/eclipse-workspace/resources/"; // path of the opennlp Modules
 
+	/**
+	 * @param sentence that should be tokenized
+	 * @Description
+	 * Main function which executes the XML_Token.createToken(), readXMLResponse.addSemantics() and XML_Token.createXML() functions.
+	 * In this function the sentence gets tokenized into an ArrayList, then sent to the createToken() function to create an XML Token.
+	 * The returned Object is a {@link Document} which contains the sentence as xml file and this is sent to the addSemantics() function.
+	 * The then returned Object is a modified {@link Document} which contains the semantics for each chunk.
+	 */
 	public static void doTokenization(String sentence) throws IOException {
+		// THIS IS THE DIRECTORY WHERE TOMCAT FETCHES FROM THE RELATIVE PATH System.out.println(System.getProperty("user.dir").toString());
 		// the actual spoken text devided by whitespaces
 		String tokens[] = tokenize(sentence);
 		// further grammatical information about that token
 		String posTags[] = posTagging(tokens);
-		// Creates chunks of tokens: B --> start new token; not B --> belongs to the token with a B before
+		// Creates chunks of tokens: B --> start new token; not B --> belongs to the
+		// token with a B before
 		String chunkResult[] = chunk(tokens, posTags);
 
+		/*
+		 * Console outputs of the tokenized sentence
 		Parse parseResult[] = parse(sentence);
-
 		for (Parse p : parseResult)
 			p.show();
-
 		for (int i = 0; i < chunkResult.length; i++) {
 			System.out.println(tokens[i] + " " + posTags[i] + " " + chunkResult[i]);
 		}
-
+		*/
 		// has to be initialised empty with every Tokenization
 		List<String> chunkList = new ArrayList<String>();
-		
+
 		// iterates through every token
 		for (int i = 0; i < chunkResult.length; i++) {
 			// add a new token, since B indicates it is a new token
 			if (chunkResult[i].charAt(0) == 'B') {
 				chunkList.add(tokens[i]);
-			// add the token to the last chunk since it is not B	
+				// add the token to the last chunk since it is not B
 			} else if (chunkResult[i].charAt(0) != 'B') {
 				int lastElement = chunkList.size() - 1; // last element in ArrayList
-				String cacheElement = chunkList.get(lastElement); // cache last Element of ArrayList to avoid overrwriting it
-				chunkList.set(lastElement, cacheElement + " " + tokens[i]); // concat the cached element with the new token
+				if (lastElement >= 0) {
+					String cacheElement = chunkList.get(lastElement); // cache last Element of ArrayList to avoid
+																		// overrwriting it
+					chunkList.set(lastElement, cacheElement + " " + tokens[i]); // concat the cached element with the
+																				// new token
+				} else { // if the last element is < 0 it means the whole sentence consists of one element
+							// wich does not start with a B chunk
+					chunkList.add(tokens[i]);
+				}
 			}
 		}
-		
+
 		// execute the createToken function in the com.speechTokens.XML Package
-		XML_Token.createToken(chunkList);
+
+		// now the sentence was chunked and stored in an ArrayList. It is now sent to create a XML Token
+		Document docToken = XML_Token.createToken(chunkList);
+		
+		// The tokenized sentence is sent to the addSemantics() function to insert semantics that mach the chunks
+		Document modifiedDoc = readXMLResponse.addSemantics(docToken);
+		
+		// creates an XML file with the new token which has the semantics
+		XML_Token.createXML(modifiedDoc, "fileNEW.xml");
+
 		/*
+		 * to show all the chunks in the List
 		 * for (int j = 0; j < chunkList.size(); j++) {
 		 * System.out.println(chunkList.get(j)); }
 		 */
 	}
+
 
 	public static String[] Sentence(String sentence) throws IOException {
 
@@ -80,7 +113,11 @@ public class Tokenization {
 		return splitString;
 
 	}
-
+	
+	/**
+	 * @param the sentence that was recorded
+	 * @return {@link StringArray} of each word, number or sign (token)
+	 * */
 	public static String[] tokenize(String sentence) throws IOException {
 
 		// Tokenizer Modell laden
@@ -97,9 +134,12 @@ public class Tokenization {
 		// double tokenProbs[] = tokenizer.getTokenProbabilities();
 
 		return tokens;
-
 	}
 
+	/**
+	 * @param the sentence that was recorded
+	 * @return {@link StringArray} grammatic information about each token
+	 * */
 	public static String[] posTagging(String[] tokens) throws IOException {
 
 		// Part-of-Speech Tagger Modell laden
@@ -118,6 +158,11 @@ public class Tokenization {
 
 	}
 
+	/**
+	 * @param {@link StringArray} tokens of the recourded sentence (ideally the output of the tokenize() function)
+	 * @param {@link StringArray} gramatic iformation about each token of the recourded sentence (ideally the output of the posTagging() function)
+	 * @return {@link StringArray} chunks, grouped tokens (tokens which belong together)
+	 * */
 	public static String[] chunk(String[] tokens, String[] posTags) throws IOException {
 
 		// Chunk Modell

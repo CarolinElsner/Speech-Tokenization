@@ -8,6 +8,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -19,25 +20,33 @@ import org.w3c.dom.Element;
 
 public class XML_Token {
 
-	private static String xmlPath = "C:\\Users\\Menz\\Desktop\\file.xml";
-	private static String firstDOM = "sentence";
-	private static String secondDOM = "chunk";
-	private static String thirdDOMone = "text";
-	private static String thirdDOMtwo = "semantic";
+	public static String firstDOM = "sentence";
+	public static String secondDOM = "chunk";
+	public static String thirdDOMone = "text";
+	public static String thirdDOMtwo = "semantic";
 	private static String thirdDOMtwoAttr = ""; // Semantic attributes
-	// TODO: Muss noch dynamisch sein sodass die Zahlen hochgezählt werden
 	private static int sentenceCounter = 1;
 
-	// public static void createToken(String tokens[], String chunkResult[]) throws
-	// IOException {
-	public static void createToken(List<String> chunkList) throws IOException {
-		try {
+	
+	
 
+	/** 
+	 * @Description This function creates an specific hierarchy for the chunks
+	 * @param chunkList has to be a list, with each entry being one chunk
+	 * @return {@link Document} the xml representation of the chunks
+	 * 
+	 */
+	public static Document createToken(List<String> chunkList) throws IOException {
+		Document doc = null;
+		try {
+			// These variables have to be initialised here because they have to be reset
+			// with every tokenization
+			int sizeChunk = 0;
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 
 			// root element sentence
-			Document doc = docBuilder.newDocument();
+			doc = docBuilder.newDocument();
 			Element rootElement = doc.createElement(firstDOM);
 			doc.appendChild(rootElement);
 
@@ -45,12 +54,9 @@ public class XML_Token {
 			Attr attr = doc.createAttribute("id");
 			attr.setValue(String.valueOf(sentenceCounter));
 			rootElement.setAttributeNode(attr);
-
 			// increase the sentence ID (will start with 1 with every server runtime)
 			sentenceCounter += 1;
-			// These variables have to be initialised here because they have to be reset
-			// with every tokenization
-			int sizeChunk = 0;
+
 			// iterates through the chunks in the sentence
 			for (int i = 0; i < chunkList.size(); i++) {
 				// chunk element 2. Hierarchie
@@ -76,23 +82,33 @@ public class XML_Token {
 				// after one element on 2nd hierarchy is created, increase the id
 				sizeChunk = sizeChunk + 1;
 			}
-
-
-
-			// write the content into xml file
-			TransformerFactory transformerFactory = TransformerFactory.newInstance();
-			Transformer transformer = transformerFactory.newTransformer();
-			DOMSource source = new DOMSource(doc);
-			StreamResult result = new StreamResult(new File(xmlPath));
-			transformer.transform(source, result);
-
-			System.out.println("File saved!");
-
 		} catch (ParserConfigurationException pce) {
 			pce.printStackTrace();
-		} catch (TransformerException tfe) {
-			tfe.printStackTrace();
 		}
+		return doc;
 	}
 
+	/**
+	 * @Description creates a real XML File at the location that is stored in the variable xmlPath
+	 * @param doc represents any XML Document Object
+	 * @param xmlPath represents the absolute Path where the xml file should be stored
+	 * */
+	public static void createXML(Document doc, String xmlPath) {
+		// write the content into xml file
+		TransformerFactory transformerFactory = TransformerFactory.newInstance();
+		Transformer transformer = null;
+		try {
+			transformer = transformerFactory.newTransformer();
+		} catch (TransformerConfigurationException e1) {
+			e1.printStackTrace();
+		}
+		DOMSource source = new DOMSource(doc);
+		StreamResult result = new StreamResult(new File(xmlPath));
+		try {
+			transformer.transform(source, result);
+		} catch (TransformerException e) {
+			e.printStackTrace();
+		}
+		System.out.println("File saved as"+ xmlPath);
+	}
 }
