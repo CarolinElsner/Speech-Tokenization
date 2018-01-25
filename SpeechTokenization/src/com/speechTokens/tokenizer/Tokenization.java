@@ -6,8 +6,8 @@ import java.util.List;
 
 import org.w3c.dom.Document;
 
+import com.speechTokens.XML.MatchChunkSemantics;
 import com.speechTokens.XML.XML_Token;
-import com.speechTokens.XML.readXMLResponse;
 import com.sun.xml.internal.fastinfoset.util.StringArray;
 
 import java.io.IOException;
@@ -25,9 +25,12 @@ import opennlp.tools.parser.ParserModel;
 import opennlp.tools.chunker.*;
 
 public class Tokenization {
+	
+	// with Tomcat you have to use absolute paths or relative paths starting at the Desktop
+	// to make sure you can find the directory with this code: System.out.println(System.getProperty("user.dir").toString());
+	private static String NLPmodulePath = "resources/"; // path where the opennlp/lib jars are stored
+	private static String XMLoutputPath = "Neuer Ordner/"; // path where the tokens should be stored as XML
 
-	private static String path = "resources/"; // relative path (to find yours, type: System.out.println(System.getProperty("user.dir").toString());)
-	//private static String path = "C:/Users/Menz/eclipse-workspace/resources/"; // path of the opennlp Modules
 
 	/**
 	 * @param sentence that should be tokenized
@@ -38,7 +41,6 @@ public class Tokenization {
 	 * The then returned Object is a modified {@link Document} which contains the semantics for each chunk.
 	 */
 	public static void doTokenization(String sentence) throws IOException {
-		// THIS IS THE DIRECTORY WHERE TOMCAT FETCHES FROM THE RELATIVE PATH System.out.println(System.getProperty("user.dir").toString());
 		// the actual spoken text devided by whitespaces
 		String tokens[] = tokenize(sentence);
 		// further grammatical information about that token
@@ -85,10 +87,11 @@ public class Tokenization {
 		Document docToken = XML_Token.createToken(chunkList);
 		
 		// The tokenized sentence is sent to the addSemantics() function to insert semantics that mach the chunks
-		Document modifiedDoc = readXMLResponse.addSemantics(docToken);
+		Document modifiedDoc = MatchChunkSemantics.addSemantics(docToken);
 		
 		// creates an XML file with the new token which has the semantics
-		XML_Token.createXML(modifiedDoc, "fileNEW.xml");
+		// the sentenceCounter is added to create with every token an new file
+		XML_Token.createXML(modifiedDoc, XMLoutputPath+"sentence"+XML_Token.sentenceCounter+".xml");
 
 		/*
 		 * to show all the chunks in the List
@@ -101,7 +104,7 @@ public class Tokenization {
 	public static String[] Sentence(String sentence) throws IOException {
 
 		// Sentence Detection Modell laden
-		InputStream modelInSent = new FileInputStream(path + "en-sent.bin");
+		InputStream modelInSent = new FileInputStream(NLPmodulePath + "en-sent.bin");
 		SentenceModel modelSent = new SentenceModel(modelInSent);
 
 		// Konstruktor Sentence Detector
@@ -121,7 +124,7 @@ public class Tokenization {
 	public static String[] tokenize(String sentence) throws IOException {
 
 		// Tokenizer Modell laden
-		InputStream modelIn = new FileInputStream(path + "en-token.bin");
+		InputStream modelIn = new FileInputStream(NLPmodulePath + "en-token.bin");
 		TokenizerModel model = new TokenizerModel(modelIn);
 
 		// Konstruktor Tokenizer
@@ -143,7 +146,7 @@ public class Tokenization {
 	public static String[] posTagging(String[] tokens) throws IOException {
 
 		// Part-of-Speech Tagger Modell laden
-		InputStream modelInPOS = new FileInputStream(path + "en-pos-maxent.bin");
+		InputStream modelInPOS = new FileInputStream(NLPmodulePath + "en-pos-maxent.bin");
 		POSModel modelPOS = new POSModel(modelInPOS);
 		POSTaggerME tagger = new POSTaggerME(modelPOS);
 
@@ -166,7 +169,7 @@ public class Tokenization {
 	public static String[] chunk(String[] tokens, String[] posTags) throws IOException {
 
 		// Chunk Modell
-		InputStream inputStream = new FileInputStream(path + "en-chunker.bin");
+		InputStream inputStream = new FileInputStream(NLPmodulePath + "en-chunker.bin");
 		ChunkerModel modelChunk = new ChunkerModel(inputStream);
 		ChunkerME chunker = new ChunkerME(modelChunk);
 
@@ -174,13 +177,12 @@ public class Tokenization {
 		String chunkResult[] = chunker.chunk(tokens, posTags);
 
 		return chunkResult;
-
 	}
 
 	public static Parse[] parse(String sentence) throws IOException {
 
 		// Parser Modell laden
-		InputStream modelInPars = new FileInputStream(path + "en-parser-chunking.bin");
+		InputStream modelInPars = new FileInputStream(NLPmodulePath + "en-parser-chunking.bin");
 		ParserModel modelPars = new ParserModel(modelInPars);
 
 		// Konstruktor Parser
@@ -190,7 +192,5 @@ public class Tokenization {
 		Parse topParses[] = ParserTool.parseLine(sentence, parser, 1);
 
 		return topParses;
-
 	}
-
 }

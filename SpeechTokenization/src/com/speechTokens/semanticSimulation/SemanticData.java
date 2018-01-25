@@ -45,12 +45,19 @@ public class SemanticData {
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}
-			newScan.nextLine();// to skip the line of the csv file with the headers
+			
+			String[] CSVHeader = newScan.nextLine().split(",");// to skip the line of the csv file with the headers
 			while (newScan.hasNextLine()) {
+				//cache csv entres of current inspected line
 				cacheCSVEntrys = newScan.nextLine().split(",");
 				for (int i = 0; i < cacheCSVEntrys.length; i++) {
 					// case insensitive comparison
+					// currently: Every chunk is compared with each entry of the CSV data set
+					// TODO: Intelligenteren vergleich erstellen
 					if (chunk.equalsIgnoreCase(cacheCSVEntrys[i])) {
+						for (int k = 0; k < cacheCSVEntrys.length; k++) {
+							cacheCSVEntrys[k]=CSVHeader[k]+": "+cacheCSVEntrys[k];
+						}
 						matches = cacheCSVEntrys;
 					}
 				}

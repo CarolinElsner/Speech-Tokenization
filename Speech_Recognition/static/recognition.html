@@ -1,9 +1,8 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
-	<script src="bower_components/watson-speech/dist/watson-speech.js"></script>
+  <title></title>
+  <script src="bower_components/watson-speech/dist/watson-speech.js"></script>
 <!-- window.fetch pollyfill for IE/Edge & Older Chrome/FireFox -->
 <script src="bower_components/fetch/fetch.js"></script>
 <script src="bower_components/angular-1.6.7/angular.js"></script>
@@ -29,6 +28,7 @@
         <center>
           <button class="btn btn-danger" ng-click="recognize()">Record</button>
           <button class="btn" ng-click="stopRec()">Stop</button>
+          <button class="btn" ng-click="downloadProtocol()">Protokoll Download</button>
         </center>
       </div>
     <div class="col-sd-2">
@@ -37,11 +37,32 @@
 </div>
 <script type="text/javascript">
   const myModule = angular.module("speech",[])
-  myModule.controller("myController",function($scope, $http){
+  myModule.controller("myController", function($scope, $http){
   $scope.output=[]; // initiate empty variable so it is defined by the executeion
 
+  $scope.downloadProtocol = function(){
+    var content="";
+    for (var i = 0; i < $scope.output.length; i++) {
+      content=content+$scope.output[i]+"\n";
+    }
+    var filename="Protokoll.txt";
+  var file = new Blob([content], {type: 'text/plain'});
+    if (window.navigator.msSaveOrOpenBlob) // IE10+
+        window.navigator.msSaveOrOpenBlob(file, filename);
+    else { // Others
+        var a = document.createElement("a"),
+                url = URL.createObjectURL(file);
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(function() {
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);  
+        }, 0); 
+    }
+  }
   $scope.recognize=function() {
-
   fetch('/api/speech-to-text/token')
   .then(function(response) {
       return response.text();
@@ -56,8 +77,7 @@
 
     stream.on('data', function(data) {
       // waits until one complete sentence is recognized. Then stored in the data variable as a string
-        console.log(data)
-        $scope.getRequest(data); // send one sentence to the application server
+        $scope.GETRequest(data); // send one sentence to the application server
         $scope.output.push(data); // push each sentence into the Array, it is possible to add e.g. Speaker X in front of the data object to specify
         $scope.$apply()
     });
@@ -76,7 +96,9 @@
       console.log(error);
   });
 };
-$scope.getRequest = function(recSentence){
+
+
+$scope.GETRequest = function(recSentence){
   $http({
     method: "GET", // This can easily be changed into a POST request
     url: "http://localhost:8080/SpeechTokenization/servletInterface",
@@ -88,95 +110,4 @@ $scope.getRequest = function(recSentence){
 
 </script>
 </body>
-=======
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-	<script src="bower_components/watson-speech/dist/watson-speech.js"></script>
-<!-- window.fetch pollyfill for IE/Edge & Older Chrome/FireFox -->
-<script src="bower_components/fetch/fetch.js"></script>
-<script src="bower_components/angular-1.6.7/angular.js"></script>
-<link rel="stylesheet" href="bower_components/bootstrap-3.1.1/css/bootstrap.css">
-</head>
-<body ng-app="speech">
-  <div class="container" ng-controller="myController">
-    <div class="col-sm-2">
-    </div>
-    <div class=".col-12 .col-md-8" id="textOutput">
-    <div class="row page-header">
-      <h1>Speech Tokenization <small> Das Cloud Computing Projekt</small></h1>
-    </div>
-    <div class="row panel panel-default">
-     <div class="panel-body">
-      <div ng-repeat="sentence in output">
-
-  {{sentence}}
-</div>
-        </div>
-      </div>
-      <div class="row" id="buttons">
-        <center>
-          <button class="btn btn-danger" ng-click="recognize()">Record</button>
-          <button class="btn" ng-click="stopRec()">Stop</button>
-        </center>
-      </div>
-    <div class="col-sd-2">
-    </div>
-
-</div>
-<script type="text/javascript">
-  const myModule = angular.module("speech",[])
-  myModule.controller("myController",function($scope, $http){
-  $scope.output=[]; // initiate empty variable so it is defined by the executeion
-
-  $scope.recognize=function() {
-
-  fetch('/api/speech-to-text/token')
-  .then(function(response) {
-      return response.text();
-  }).then(function (token) {
-
-    var stream = WatsonSpeech.SpeechToText.recognizeMicrophone({
-      token: token,
-      object_mode: false
-    });
-
-    stream.setEncoding('utf8'); // get text instead of Buffers for on data events
-
-    stream.on('data', function(data) {
-      // waits until one complete sentence is recognized. Then stored in the data variable as a string
-        console.log(data)
-        $scope.getRequest(data); // send one sentence to the application server
-        $scope.output.push(data); // push each sentence into the Array, it is possible to add e.g. Speaker X in front of the data object to specify
-        $scope.$apply()
-    });
-
-    stream.on('error', function(err) {
-        console.log(err);
-    });
-
-    $scope.stopRec = function(){
-      console.log("Stop")
-      stream.stop.bind(stream);
-      stream.end();
-    }
-
-  }).catch(function(error) {
-      console.log(error);
-  });
-};
-$scope.getRequest = function(recSentence){
-  $http({
-    method: "GET", // This can easily be changed into a POST request
-    url: "http://localhost:8080/SpeechTokenization/servletInterface",
-    params: {param:recSentence} // to add new parameters just use a comma inside the braces after the first parameter
-  });
-}
-
-});
-
-</script>
-</body>
->>>>>>> b1606bff9a30c31d329e7da5ccd251bc76afe08b
 </html>

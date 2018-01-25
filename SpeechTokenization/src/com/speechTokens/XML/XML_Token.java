@@ -25,7 +25,7 @@ public class XML_Token {
 	public static String thirdDOMone = "text";
 	public static String thirdDOMtwo = "semantic";
 	private static String thirdDOMtwoAttr = ""; // Semantic attributes
-	private static int sentenceCounter = 1;
+	public static int sentenceCounter = 1;
 
 	
 	
@@ -109,6 +109,6 @@ public class XML_Token {
 		} catch (TransformerException e) {
 			e.printStackTrace();
 		}
-		System.out.println("File saved as"+ xmlPath);
+		System.out.println("File saved as: "+ xmlPath);
 	}
 }

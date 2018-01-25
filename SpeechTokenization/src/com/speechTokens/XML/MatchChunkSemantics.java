@@ -14,7 +14,7 @@ import org.w3c.dom.Element;
 import java.io.File;
 import java.io.IOException;
 
-public class readXMLResponse {
+public class MatchChunkSemantics {
 	
 	//private static final String semanticFolderPath = "C:\\Users\\Menz\\Desktop\\CLOUD DATA"; // absolute Path
 	private static final String semanticFolderPath = "resources"; // relative path (to find yours, type: System.out.println(System.getProperty("user.dir").toString());)
