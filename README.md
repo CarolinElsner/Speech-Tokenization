@@ -19,9 +19,9 @@ ToDo:
   - [x] GUI
 - [ ] Upload des Back-End Code (Application Server)
   - [x] Schnittstelle
-  - [ ] Simulation der Semantik Gruppe
+  - [x] Simulation der Semantik Gruppe
   - [ ] Tokenizierung
     - [x] Chunking der Sätze
-    - [ ] Aufbau und Füllung eines Tokens
+    - [x] Aufbau und Füllung eines Tokens
     - [ ] Bezug/Interpretation bzgl. Informationen der Semantik Gruppe
  
