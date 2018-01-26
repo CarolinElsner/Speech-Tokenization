@@ -21,7 +21,7 @@ ToDo:
 - [x] Upload des Front-End Code (Web Server)
   - [x] Speech Recognition
   - [x] GUI
-- [x] Upload des Back-End Code (Application Server)
+- [x] Upload der Java Dateien
   - [x] Schnittstelle
   - [x] Simulation der Semantik Gruppe
   - [x] Tokenizierung
