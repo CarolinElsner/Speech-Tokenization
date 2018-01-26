@@ -17,15 +17,15 @@ Bei dem [SpeechTokenization](SpeechTokenization) Ordner handelt es sich um den J
 
 ToDo:
 - [x] Entwicklung einer geeigneten Schnittstelle zwischen JavaScript und Java
-- [ ] Implementierungs-/ Installationsanleitung schreiben in GitHub
+- [x] Implementierungs-/ Installationsanleitung schreiben in GitHub
 - [x] Upload des Front-End Code (Web Server)
   - [x] Speech Recognition
   - [x] GUI
-- [ ] Upload des Back-End Code (Application Server)
+- [x] Upload des Back-End Code (Application Server)
   - [x] Schnittstelle
   - [x] Simulation der Semantik Gruppe
-  - [ ] Tokenizierung
+  - [x] Tokenizierung
     - [x] Chunking der Sätze
     - [x] Aufbau und Füllung eines Tokens
-    - [ ] Bezug/Interpretation bzgl. Informationen der Semantik Gruppe
+    - [x] Bezug/Interpretation bzgl. Informationen der Semantik Gruppe
  
