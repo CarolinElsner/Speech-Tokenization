@@ -31,7 +31,7 @@ public class Tokenization {
 	private static String NLPmodulePath = "resources/"; // path where the opennlp/lib jars are stored
 	private static String XMLoutputPath = "Neuer Ordner/"; // path where the tokens should be stored as XML
 
-
+    //Test12
 	/**
 	 * @param sentence that should be tokenized
 	 * @return 
