@@ -34,13 +34,14 @@ public class Tokenization {
 
 	/**
 	 * @param sentence that should be tokenized
+	 * @return 
 	 * @Description
 	 * Main function which executes the XML_Token.createToken(), readXMLResponse.addSemantics() and XML_Token.createXML() functions.
 	 * In this function the sentence gets tokenized into an ArrayList, then sent to the createToken() function to create an XML Token.
 	 * The returned Object is a {@link Document} which contains the sentence as xml file and this is sent to the addSemantics() function.
 	 * The then returned Object is a modified {@link Document} which contains the semantics for each chunk.
 	 */
-	public static void doTokenization(String sentence) throws IOException {
+	public static List<String> doTokenization(String sentence) throws IOException {
 		// the actual spoken text devided by whitespaces
 		String tokens[] = tokenize(sentence);
 		// further grammatical information about that token
@@ -98,6 +99,7 @@ public class Tokenization {
 		 * for (int j = 0; j < chunkList.size(); j++) {
 		 * System.out.println(chunkList.get(j)); }
 		 */
+		return chunkList;
 	}
 
 
