@@ -30,8 +30,7 @@ public class Tokenization {
 	// to make sure you can find the directory with this code: System.out.println(System.getProperty("user.dir").toString());
 	private static String NLPmodulePath = "resources/"; // path where the opennlp/lib jars are stored
 	private static String XMLoutputPath = "Neuer Ordner/"; // path where the tokens should be stored as XML
-	//Ds ist das Haus vom niko
-	//fuk offs
+
 	/**
 	 * @param sentence that should be tokenized
 	 * @return 
