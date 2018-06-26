@@ -41,13 +41,13 @@ public class ServletInterface extends HttpServlet {
 		String sessionID = request.getParameter("sessionID");
 		// To execute the other class and its dependencies it is important to add these dependencies under "Deployment Assembly"
 		System.out.println(JsSentence);
-		WatsonEvent wat = new WatsonEvent();
+		/*WatsonEvent wat = new WatsonEvent();
 		wat.add(new eventprocessing.event.Property("sentence", JsSentence));
 		wat.add(new eventprocessing.event.Property("UserID", userID));// Hier die Properties an das neue Event übergebenübergeben
 		wat.add(new eventprocessing.event.Property("Timestamp", timestamp));
 		wat.add(new eventprocessing.event.Property("SessionID", sessionID));
 		String message = messageMapper.toJSON(wat);
-		despatcher.deliver(message, "SessionStart");	
+		despatcher.deliver(message, "SessionStart");*/
 		
 	}
 
