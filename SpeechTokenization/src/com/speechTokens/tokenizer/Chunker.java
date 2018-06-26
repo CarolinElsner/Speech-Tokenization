@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import scala.reflect.internal.Trees.Throw;
-
 /**
  * @author Menz
  *
