@@ -49,15 +49,15 @@ public class Tokenization {
 		// token with a B before
 		String chunkResult[] = chunk(tokens, posTags);
 
-		/*
-		 * Console outputs of the tokenized sentence
+		
+		// Console outputs of the tokenized sentence
 		Parse parseResult[] = parse(sentence);
 		for (Parse p : parseResult)
 			p.show();
 		for (int i = 0; i < chunkResult.length; i++) {
 			System.out.println(tokens[i] + " " + posTags[i] + " " + chunkResult[i]);
 		}
-		*/
+		
 		// has to be initialised empty with every Tokenization
 		List<String> chunkList = new ArrayList<String>();
 
@@ -83,6 +83,47 @@ public class Tokenization {
 
 		// execute the createToken function in the com.speechTokens.XML Package
 
+		//List for elements which should be delete
+				List<String> ListForDelete = new ArrayList<String>();
+				// counter for getting the right posTags
+				int counter = 0;
+				// zusatz is necessary to match the right posTags if the splittArray is > 1
+				int zusatz = 0;
+				for (int j = 0; j < chunkList.size(); j++) {
+					boolean substantiv = false;
+					String variable;
+					String[] splittArray = chunkList.get(j).split(" "); 
+						for(int k = 0; k < splittArray.length ;k++) {
+						// zur Überpürfung
+							System.out.println("-----------------------------");
+							System.out.println("Gesamte Länge von k ist gleich " +splittArray.length);
+							System.out.println(splittArray[k] + " k ist gleich " +  k );
+							System.out.println(chunkList.get(j));
+							counter = k+j+zusatz;
+							variable= posTags[counter];
+							System.out.println(splittArray[k] + " ----> "+ variable);
+							if(variable.contains("NN")) {
+							//	System.out.println(variable);
+								substantiv = true;
+							}
+						}
+						if(substantiv == false) {
+							ListForDelete.add(chunkList.get(j));
+						}
+						if(splittArray.length > 1) {
+							zusatz = zusatz +1;
+						}
+				}
+				System.out.println(ListForDelete);
+				//delete chunks which are or have no substantive
+				for(int o = 0; o < ListForDelete.size(); o++ ) {
+					for (int u = 0 ; u < chunkList.size(); u++) {
+						if(ListForDelete.get(o) == chunkList.get(u)) {
+							System.out.println(ListForDelete.get(o) + "--->" + chunkList.get(u) );
+							chunkList.remove(u);
+						}
+					}
+				}
 		// now the sentence was chunked and stored in an ArrayList. It is now sent to create a XML Token
 		Document docToken = XML_Token.createToken(chunkList);
 		
@@ -93,10 +134,10 @@ public class Tokenization {
 		// the sentenceCounter is added to create with every token an new file
 		XML_Token.createXML(modifiedDoc, XMLoutputPath+"sentence"+XML_Token.sentenceCounter+".xml");
 
-		/*
-		 * to show all the chunks in the List
-		 * for (int j = 0; j < chunkList.size(); j++) {
-		 * System.out.println(chunkList.get(j)); }
+
+/*		 //to show all the chunks in the List
+		 for (int j = 0; j < chunkList.size(); j++) {
+		 System.out.println(chunkList.get(j)); }
 		 */
 		return chunkList;
 	}
@@ -176,7 +217,6 @@ public class Tokenization {
 
 		// Generieren von Chunks
 		String chunkResult[] = chunker.chunk(tokens, posTags);
-
 		return chunkResult;
 	}
 
