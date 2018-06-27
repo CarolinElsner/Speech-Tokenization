@@ -18,6 +18,10 @@ public class Chunker{
 	public Chunker(){
 		
 	}
+	
+	public Integer size() {
+		return chunkList.size();
+	}
 
 	/**
 	 * @return a list containing all chunks in the {@link Chunker} List 
