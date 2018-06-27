@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <script src="bower_components/watson-speech/dist/watson-speech.js"></script>
+<!-- window.fetch pollyfill for IE/Edge & Older Chrome/FireFox -->
+<script src="bower_components/fetch/fetch.js"></script>
+<script src="recognition.js"></script>
+<link rel="stylesheet" href="bower_components/bootstrap-3.1.1/css/bootstrap.css">
+</head>
+<body>
+<button onclick="stopRec()">Stop</button>
+<button onclick="recognize('http://localhost:8080', 'userID', 'timestamp', 'sessionID')">Recor</button>
+</body>
+</html>
