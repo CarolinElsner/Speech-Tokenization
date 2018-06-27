@@ -2,6 +2,18 @@
     <wb-module deploy-name="SpeechTokenization">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <dependent-module archiveName="EvE-Framework.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/Users/Benedikt/Desktop/Studium/Master/2.Semester/Dev Lab/EvE-Framework.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="opennlp-uima-1.8.4.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/Users/Benedikt/Downloads/apache-opennlp-1.8.4/lib/opennlp-uima-1.8.4.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="opennlp-tools-1.8.4.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/Users/Benedikt/Downloads/apache-opennlp-1.8.4/lib/opennlp-tools-1.8.4.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="javax.servlet-api-3.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/Users/Benedikt/Desktop/Studium/Master/2.Semester/Dev Lab/javax.servlet-api-3.0.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="SpeechTokenization"/>
         <property name="java-output-path" value="/SpeechTokenization/build/classes"/>
     </wb-module>
