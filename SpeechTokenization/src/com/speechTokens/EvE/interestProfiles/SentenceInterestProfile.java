@@ -1,19 +1,17 @@
 package com.speechTokens.EvE.interestProfiles;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.speechTokens.EvE.events.SentenceEvent;
 import com.speechTokens.EvE.events.WatsonEvent;
-import com.speechTokens.tokenizer.Tokenization;
 
-import eventprocessing.agent.exceptions.NoValidEventException;
-import eventprocessing.agent.exceptions.NoValidTargetTopicException;
+import eventprocessing.agent.NoValidEventException;
+import eventprocessing.agent.NoValidTargetTopicException;
+import eventprocessing.agent.interestprofile.AbstractInterestProfile;
 import eventprocessing.event.AbstractEvent;
 import eventprocessing.event.Property;
-import eventprocessing.interestprofile.AbstractInterestProfile;
 import eventprocessing.utils.factory.LoggerFactory;
 
 /**
@@ -72,7 +70,7 @@ public class SentenceInterestProfile extends AbstractInterestProfile {
 		}
 
 		try {
-			getAgent().send(e, "TokenGeneration");
+			getAgent().send(e, "Chunks");
 		} catch (NoValidEventException e1) {
 			LOGGER.log(Level.WARNING, () -> String.format("%s", e));
 		} catch (NoValidTargetTopicException e1) {

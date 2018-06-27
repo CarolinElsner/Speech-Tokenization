@@ -1,19 +1,17 @@
 package com.speechTokens.EvE.interestProfiles;
 
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import com.speechTokens.EvE.events.SentenceEvent;
 import com.speechTokens.EvE.events.TokenEvent;
-import com.speechTokens.XML.XML_Token;
 
-import eventprocessing.agent.exceptions.NoValidEventException;
-import eventprocessing.agent.exceptions.NoValidTargetTopicException;
+import eventprocessing.agent.NoValidEventException;
+import eventprocessing.agent.NoValidTargetTopicException;
+import eventprocessing.agent.interestprofile.AbstractInterestProfile;
 import eventprocessing.event.AbstractEvent;
-import eventprocessing.event.Property;
-import eventprocessing.interestprofile.AbstractInterestProfile;
 import eventprocessing.utils.factory.LoggerFactory;
 
 /**

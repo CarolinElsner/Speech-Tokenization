@@ -3,20 +3,12 @@ package com.speechTokens.servlet;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.oracle.webservices.internal.api.message.PropertySet.Property;
-import com.speechTokens.EvE.events.WatsonEvent;
-
-import eventprocessing.output.kafka.Despatcher;
-import eventprocessing.output.kafka.settings.ProducerSettings;
-import eventprocessing.utils.mapping.MessageMapper;
 
 /**
  * Servlet implementation class ServletInterface
