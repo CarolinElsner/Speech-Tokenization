@@ -49,7 +49,7 @@ public class Tokenization {
 		// token with a B before
 		String chunkResult[] = chunk(tokens, posTags);
 
-		
+		//
 		// Console outputs of the tokenized sentence
 		Parse parseResult[] = parse(sentence);
 		for (Parse p : parseResult)
