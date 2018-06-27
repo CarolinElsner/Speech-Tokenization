@@ -1,6 +1,9 @@
 package com.speechTokens.servlet;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,9 +24,10 @@ import eventprocessing.utils.mapping.MessageMapper;
 @WebServlet(description = "Interface between Speech Recognition (JavaScript) and Tokenization (Java)", urlPatterns = { "/servletInterface" })
 public class ServletInterface extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final Despatcher despatcher = new Despatcher(ProducerSettings.INSTANCE);
+	//TODO: Klassen können noch nicht auf das EvE Framework zugreifen, wenn kein Kafka + Spark läuft
+	//private static final Despatcher despatcher = new Despatcher(ProducerSettings.INSTANCE);
 	// wandelt die Events in Nachrichten um.
-	private static final MessageMapper messageMapper = new MessageMapper();
+	//private static final MessageMapper messageMapper = new MessageMapper();
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -33,6 +37,14 @@ public class ServletInterface extends HttpServlet {
     
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		   response.setContentType("text/plain");
+		      // Actual logic goes here.
+		   OutputStream stream = response.getOutputStream();
+		   OutputStreamWriter writer = new OutputStreamWriter(stream, "UTF-8");
+		   writer.write("Hallo Weelt");
+		   writer.flush();
+		   response.setCharacterEncoding("UTF-8");
+
 		// TODO: A response can be added in the future which is caught in the JS Script and shown on the website
 		// TODO: Parameter entsprechend im NodeJS anpassen
 		String JsSentence = request.getParameter("sentence"); // receive Parameter from GET Request, where the spoken text is stored
@@ -48,7 +60,6 @@ public class ServletInterface extends HttpServlet {
 		wat.add(new eventprocessing.event.Property("SessionID", sessionID));
 		String message = messageMapper.toJSON(wat);
 		despatcher.deliver(message, "SessionStart");*/
-		
 	}
 
 }
