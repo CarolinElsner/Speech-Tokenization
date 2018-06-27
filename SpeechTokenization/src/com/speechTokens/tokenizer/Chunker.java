@@ -22,6 +22,10 @@ public class Chunker{
 	public Integer size() {
 		return chunkList.size();
 	}
+	
+	public String getChunkContentAt(int position) {
+		return (String) ((ArrayList<Object>) chunkList.get(position)).get(0);
+	}
 
 	/**
 	 * @return a list containing all chunks in the {@link Chunker} List 
