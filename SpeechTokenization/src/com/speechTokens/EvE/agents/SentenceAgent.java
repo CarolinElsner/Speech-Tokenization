@@ -3,12 +3,12 @@ package com.speechTokens.EvE.agents;
 import com.speechTokens.EvE.interestProfiles.SentenceInterestProfile;
 
 import eventprocessing.agent.AbstractAgent;
-import eventprocessing.agent.exceptions.NoValidConsumingTopicException;
+import eventprocessing.agent.NoValidConsumingTopicException;
+import eventprocessing.agent.dispatch.NoValidInterestProfileException;
+import eventprocessing.agent.interestprofile.AbstractInterestProfile;
+import eventprocessing.agent.interestprofile.predicates.statement.IsEventType;
+import eventprocessing.consume.kafka.ConsumerSettings;
 import eventprocessing.demo.ShowcaseValues;
-import eventprocessing.dispatch.NoValidInterestProfileException;
-import eventprocessing.input.kafka.ConsumerSettings;
-import eventprocessing.interestprofile.AbstractInterestProfile;
-import eventprocessing.interestprofile.predicates.statement.IsEventType;
 
 /**
  * Dieser Agent ist für die Diagnose des Verkehrs zuständig. Er wertet die
@@ -40,9 +40,6 @@ public class SentenceAgent extends AbstractAgent {
 		} catch (NoValidConsumingTopicException e) {
 			e.printStackTrace();
 		}
-		
-		this.setConsumerSettings(new ConsumerSettings(ShowcaseValues.INSTANCE.getIpKafka(),
-				ShowcaseValues.INSTANCE.getPortKafka(), ShowcaseValues.INSTANCE.getGroupIdDiagnosis()));
-
+		// TODO: Consumer Settings in der Hauptdatei verwalten, an Vorlage der Eventgruppe orientieren
 	}
 }
