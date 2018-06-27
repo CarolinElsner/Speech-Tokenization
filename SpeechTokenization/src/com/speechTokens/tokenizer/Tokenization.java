@@ -64,10 +64,10 @@ public class Tokenization {
 		// iterates through every token
 		for (int i = 0; i < chunkResult.length; i++) {
 			// add a new token, since B indicates it is a new token
-			if (chunkResult[i].charAt(0) == 'B') {
+			if (chunkResult[i].charAt(0) == 'B' && posTags[i].contains("NN")) {
 				chunkList.add(tokens[i]);
 				// add the token to the last chunk since it is not B
-			} else if (chunkResult[i].charAt(0) != 'B') {
+			} else if (chunkResult[i].charAt(0) != 'B' && posTags[i].contains("NN")) {
 				int lastElement = chunkList.size() - 1; // last element in ArrayList
 				if (lastElement >= 0) {
 					String cacheElement = chunkList.get(lastElement); // cache last Element of ArrayList to avoid
