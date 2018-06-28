@@ -1,4 +1,4 @@
-package com.speechTokens.semantic.simulation;
+package com.speechTokens.semantic.analysis;
 
 import org.json.JSONException;
 import org.json.JSONObject;
