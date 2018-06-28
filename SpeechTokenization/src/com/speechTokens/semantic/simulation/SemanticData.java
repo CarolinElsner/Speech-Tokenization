@@ -1,4 +1,4 @@
-package com.speechTokens.semanticSimulation;
+package com.speechTokens.semantic.simulation;
 
 import java.io.File;
 import java.io.FileNotFoundException;
