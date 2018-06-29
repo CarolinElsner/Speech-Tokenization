@@ -1,6 +1,7 @@
 package com.speechTokens.semantic.analysis;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 
 import org.json.JSONArray;
@@ -61,6 +62,7 @@ public class JsonHandler {
 		return jsonObj;
 	}
 	
+
 
 	/**
 	 * Starting point and recursive method to handle JSON Objects
@@ -127,19 +129,36 @@ public class JsonHandler {
 	
 	/**
 	 * Just a helper method to match the value we are looking for in the semantic data and the json value that was found
-	 * @param lookup the lookup value that we want to match to the semantic
+	 * @param lookup the lookup value that we want to match to the semantic is. Will be matched to a string
 	 * @param jsonValue the value that was found in the semantic data
 	 * @return the semantic JSON Object as a String that was found
 	 * always when no semantic match was found, the return value of this function is null
 	 */
 	private static String semanticMatch(Object lookup, Object jsonValue) {
-		String semString= null; // set the temporary semantic string to nulll
-		if(lookup.equals(jsonValue)) {
-			//System.out.println(resultArr.get(resultNumber-1).getClass());
-			if(resultArr.get(resultNumber-1) instanceof JSONObject) {
-				semString=resultArr.get(resultNumber-1).toString();
+		lookup=lookup.toString().toLowerCase();
+		String semString= null; // set the temporary semantic string to null
+		// the split method always creates a String Array, if it cant split a Array containing 1 Value exists
+		String[] splittedArray=concatStringArrs(jsonValue.toString().split("; "),jsonValue.toString().split("#"));
+		for (int i = 0; i < splittedArray.length; i++) {
+			if(lookup.equals(splittedArray[i].toLowerCase())) { // to make sure that we only have lower case characters
+				if(resultArr.get(resultNumber-1) instanceof JSONObject) {
+					semString=resultArr.get(resultNumber-1).toString();
+				}
 			}
 		}
 		return semString; // always when no semantic match was found, the return value of this function is null
 	}
+	
+	/**
+	 * helper method that concats two String arrays for a better keyword lookup match
+	 * @param arr1 first array
+	 * @param arr2 second array
+	 * @return combined string array
+	 */
+	private static String[] concatStringArrs(String[] arr1, String[] arr2) {
+		ArrayList<String> newList = new ArrayList<String>(Arrays.asList(arr1));
+		newList.addAll(Arrays.asList(arr2));
+		return newList.toArray(new String[newList.size()]);
+	}
 }
+
