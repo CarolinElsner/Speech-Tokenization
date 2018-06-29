@@ -10,14 +10,16 @@ import java.util.NoSuchElementException;
  */
 public class Chunker{
 
-	private static ArrayList<Object> chunkList = new ArrayList<Object>(); // {{chunk1},{chunk2}}
+	private ArrayList<Object> chunkList = new ArrayList<Object>(); // {{chunk1},{chunk2}}
 	//private static ArrayList<Object> chunkElement = new ArrayList<Object>(); // chunk1--> {{chunkContent},{semantic}}
-	private static String chunkContent = new String();
 	
 	public Chunker(){
-		
+		this.chunkList  = new ArrayList<Object>(); 
 	}
 	
+	/**
+	 * @return number of chunks in the List
+	 */
 	public Integer size() {
 		return chunkList.size();
 	}
@@ -42,66 +44,102 @@ public class Chunker{
 	}
 	
 	/**
+	 * Douplicates are not possible and will result in a single value
 	 * @param chunk (stored in the List)
 	 */
 	public void addChunkContent(String chunk) {
-		ArrayList<Object> chunkElement = new ArrayList<Object>(); // chunk1--> {{chunkContent},{semantic}}
-		chunkElement.add(chunk);
-		chunkList.add(chunkElement);
+		if(chunkList.size()==0) { // if the chunkList is empty, not douplicate is possible
+			ArrayList<Object> chunkElement = new ArrayList<Object>(); // chunk1--> {{chunkContent},{semantic}}
+			chunkElement.add(chunk);
+			chunkList.add(chunkElement);
+		}else { // there is at least one element so we have to check for duplicates
+			Boolean duplicate = false;
+			for (int i = 0; i < chunkList.size(); i++) {
+				if(((ArrayList<String>) chunkList.get(i)).get(0).equals(chunk)) { // if one chunk equals the new chunk
+					duplicate=true;
+				}
+			}
+			if(duplicate == false) {
+				ArrayList<Object> chunkElement = new ArrayList<Object>(); // chunk1--> {{chunkContent},{semantic}}
+				chunkElement.add(chunk);
+				chunkList.add(chunkElement);				
+			}else {
+				System.out.println("Douplicate chunk");
+			}
+		}
 	}
 	
 	/**
+	 * Adds Semantic to chunk, semantic can be as a String or as a ArrayList
 	 * @param chunk whereto the semantic information should be stored
-	 * @param semantics is a String usually containing the json data
+	 * @param semantics is a String OR a ArrayList usually containing the json data
 	 * @exception NoSuchElementException when chunk was not found
 	 */
-	public void addSemanticToChunk(String chunk, String semantics) {
+	public void addSemanticToChunk(String chunk, Object semantics) {
 		ArrayList<String> list = readChunks(); // get list of all chunks
-		ArrayList<String> chunkSem = new ArrayList<String>(); 
-		int count=0;
-		for (int i = 0; i < list.size(); i++) { //iterate through all existing chunks
-			if(chunk.equals(list.get(i))) { // make sure to insert semantic to the right chunk
-				chunkSem = ((ArrayList<String>) chunkList.get(i));
-				if(chunkSem.size()==1) { // just the chunk is included
-					((ArrayList<String>) chunkList.get(i)).add(1,semantics); // add the new Semantic to the chunkList
-				}else if(chunkSem.size()==2) { // there is already a semantic, so overwrite the latest
-					((ArrayList<String>) chunkList.get(i)).remove(1); // add the new Semantic to the chunkList
-					((ArrayList<String>) chunkList.get(i)).add(1,semantics); // add the new Semantic to the chunkList
-				}else { // something strange happened
-					try {
-						System.out.println(chunkList);
-						throw new Exception();
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+		if(semantics instanceof String) {
+			ArrayList<String> chunkSem = new ArrayList<String>(); 
+			int count=0;
+			for (int i = 0; i < list.size(); i++) { //iterate through all existing chunks
+				if(chunk.equals(list.get(i))) { // make sure to insert semantic to the right chunk
+					chunkSem = ((ArrayList<String>) chunkList.get(i));
+					if(chunkSem.size()==1) { // just the chunk is included
+						((ArrayList<String>) chunkList.get(i)).add(1,(String) semantics); // add the new Semantic to the chunkList
+					}else if(chunkSem.size()==2) { // there is already a semantic, so overwrite the latest
+						((ArrayList<String>) chunkList.get(i)).remove(1); // add the new Semantic to the chunkList
+						((ArrayList<String>) chunkList.get(i)).add(1,(String) semantics); // add the new Semantic to the chunkList
+					}else { // something strange happened
+						try {
+							throw new Exception();
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
 					}
-					
+					count++; //counts how often the chunk was found
 				}
-				count++; //counts how often the chunk was found
 			}
-		}
-		if(count==0) {// chunk was never found in List
-			throw new NoSuchElementException();
+			if(count==0) {// chunk was never found in List
+				throw new NoSuchElementException();
+			}
+		}else if(semantics instanceof ArrayList<?>) {
+			int count=0;
+			for (int i = 0; i < list.size(); i++) { //iterate through all existing chunks
+				if(chunk.equals(list.get(i)) && ((ArrayList<Object>) chunkList.get(i)).size()<2) { // make sure to insert semantic to the right chunk
+					((ArrayList<Object>) chunkList.get(i)).add(1,semantics);
+					count++; //counts how often the chunk was found
+				}
+			}
+			if(count==0) {// chunk was never found in List
+				throw new NoSuchElementException();
+			}
 		}
 	}
 	
 	// Sollte es mehrmals den gleichen Chunk geben, wird dieser überschrieben und es wird nur einmal dieser chunk ausgegeben
 	//das ist aber nicht weiter schlimm, da für den einen chunk immer die gleichen Semantiken niedergelegt sind
 	/**
+	 * reads the semantic information of a chunk which could be stored as an String or as a ArrayList
 	 * @param chunk, for which the semantic information should be displayed
 	 * @return Arraylist containing the found Objects that contain the semantic information regarding the one chunk
 	 * @exception NoSuchElementException when chunk was not found
 	 */
-	public String readSemanticOfChunk(String chunk){
-		String semantic = null;
-		ArrayList<String> chunkSem = new ArrayList<String>();
+	public Object readSemanticOfChunk(String chunk){
+		Object semantic = null;
+		ArrayList<Object> chunkSem = new ArrayList<Object>();
 		ArrayList<String> list = readChunks(); // get list of all chunks
 		int count=0;
 		for (int i = 0; i < list.size(); i++) { //iterate through all existing chunks
 			if(chunk.equals(list.get(i))) { // compare input value with chunk at position i
-				chunkSem = ((ArrayList<String>) chunkList.get(i)); // add semantic of found chunk to list
+				
+				chunkSem = ((ArrayList<Object>) chunkList.get(i)); // add semantic of found chunk to list
 				if(chunkSem.size()==2) { // if there are 2 entries in this level, it means first is chunk 2nd is semantic
-					semantic= chunkSem.get(1); 
+					if(chunkSem.get(1) instanceof String) { // checks whether it is a String
+						semantic = chunkSem.get(1); 
+					}else if(chunkSem.get(1) instanceof ArrayList<?>) {
+						semantic = (ArrayList<Object>) chunkSem.get(1);
+					}
 				}
 				count++; //counts how often the chunk was found
 			}
@@ -174,6 +212,17 @@ public class Chunker{
 		if(count==0) {
 			throw new NoSuchElementException();
 		}
+	}
+	
+	
+	/**
+	 * 
+	 * @param position of the chunkList
+	 * @return an Object containing the semantic information. Can be a JSON String or a ArrayList
+	 */
+	public Object getSemanticAt(int position) {
+		ArrayList<String> list = readChunks();
+		return readSemanticOfChunk(list.get(position));
 	}
 	
 	

@@ -51,6 +51,11 @@
   		<artifactId>opennlp-tools</artifactId>
   		<version>1.6.0</version>
   	</dependency>
+  	<dependency>
+  		<groupId>org.json</groupId>
+  		<artifactId>json</artifactId>
+  		<version>20180130</version>
+  	</dependency>
   </dependencies>
   <name>SpeechToken</name>
 </project>
