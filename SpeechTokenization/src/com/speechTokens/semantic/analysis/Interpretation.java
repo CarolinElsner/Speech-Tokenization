@@ -7,7 +7,7 @@ import org.json.JSONTokener;
 import com.speechTokens.tokenizer.Chunker;
 
 public class Interpretation {
-	private static String jsonString = "{\r\n" + 
+	public static String jsonString = "{\r\n" + 
 			"  \"head\": {\r\n" + 
 			"    \"vars\": [ \"Instanz\" , \"Keyword\" ]\r\n" + 
 			"  } ,\r\n" + 

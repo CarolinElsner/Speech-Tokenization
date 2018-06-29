@@ -7,17 +7,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+
 
 public class JsonHandler {
 	private static ArrayList<Object> jsonValues = new ArrayList<Object>();
-	/*
-	// Pretty print JSON variables
-	Gson gson = new GsonBuilder().setPrettyPrinting().create();
-	JsonParser jp = new JsonParser();
-	JsonElement je = jp.parse(jsonObj.toString());
-	String prettyJsonString = gson.toJson(je);
-	System.out.println(prettyJsonString);
-	*/
 
 	/** 
 	 * Looks for the key and values of the json Object on the lowest level
@@ -26,15 +23,41 @@ public class JsonHandler {
 	 * @exception {@link JSONException} when the jsonString is not in a JSON Format
 	 */
 	public static ArrayList<Object> handleJSONString(String jsonString) {
+			handleJsonObj(jsonParse(jsonString));
+		return jsonValues;
+	}
+	
+	public static void prettyPrint(String json) {
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		JsonParser jp = new JsonParser();
+		JsonElement je = jp.parse(json);
+		String prettyJsonString = gson.toJson(je);
+		System.out.println(prettyJsonString);
+	}
+	
+
+	
+	public static void semanticLookUp(String json,String lookup) {
+		//JSONObject jsonObj = jsonParse(json);
+		ArrayList<Object> list = handleJSONString(json);
+		System.out.println(list.contains(lookup)+"ES HAT DEN WERT!!!");
+	}
+
+	/**
+	 * parses a normal String to a JSONObject. Therefore the String has to be in JSON Format
+	 * @param jsonString a normal string in JSON Format
+	 * @return jsonObject a Java JSON Object containing the key value structure
+	 */
+	public static JSONObject jsonParse(String jsonString) {
+		JSONObject jsonObj = null;
 		try {
-			JSONObject jsonObj = new JSONObject(jsonString);
-			handleJsonObj(jsonObj);
+			jsonObj = new JSONObject(jsonString);
+			
 		}catch(JSONException e) { // It is not an JSON Object, not parseable to JSONObject
 			System.out.println(e);
 		}
-		return jsonValues;
+		return jsonObj;
 	}
-
 	
 	private static void handleJsonObj(JSONObject json) { // JSONObject hat so eine Form: {{key:value},{key1:value1}} --> d.h. kein Array, in dem "value" kann aber alles mögliche sein (nochmal ein Obj, oder ein Array)
 		Iterator<String> keyList = json.keys(); // daher müssen alle keys ausgelesen werden
