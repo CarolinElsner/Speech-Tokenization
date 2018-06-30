@@ -15,16 +15,8 @@ public class KeywordSearch {
 	 * @param ch chunker ArrayList, which contains the chunks with the sem Info
 	 */
 	public static void keywordCheck(Chunker ch) {
-		/*
-		ArrayList<Object> sem = new ArrayList<>();
-		ch.addChunkContent("documents");
-		ch.addChunkContent("blalala");
-		ch.addChunkContent("project");
-		ch.addChunkContent("person");
-		ch.addChunkContent("01.04.1992");
-		ch.addSemanticToChunk("documents", sem);
-		*/
-		
+
+		Chunker foundResults = new Chunker();
 		boolean semanticsgiven = CheckIfSemanticsGiven(ch);
 		
 		if(semanticsgiven == true) {
@@ -32,26 +24,23 @@ public class KeywordSearch {
 			ArrayList<String> foundkeywords = FindKeywords(ch);
 			
 			if(keywordcount == 0) {
+				foundResults = noKeyword(ch);
 				System.out.println("0 keywords"+foundkeywords);				
 				//Procedure for 0 found keywords
 				
 			}else if (keywordcount == 1) {
-				Interpretation.oneKeyword(foundkeywords.get(0), ch);
-				//Test
+				foundResults = oneKeyword(foundkeywords.get(0), ch);
 				System.out.println("1 keyword"+foundkeywords);
-				
 				//Procedure for 1 found keyword
 			}else {
-				for (int i = 0; i < foundkeywords.size(); i++) {
-					Interpretation.oneKeyword(foundkeywords.get(i), ch);
-				}
+				// TODO: Mehr als 1 Keywort erkannt funktioniert noch nicht
 				System.out.println(">1 keywords"+foundkeywords);								
 			}
-		}		
+		}
 	}
 	
 	//Check if Chunker contains any semantic information
-	public static boolean CheckIfSemanticsGiven(Chunker ch) {
+	private static boolean CheckIfSemanticsGiven(Chunker ch) {
 		
 		boolean semanticgiven = false;
 		
@@ -130,6 +119,60 @@ public class KeywordSearch {
 		}
 		
 		
+	}
+	
+	/**
+	 * Searches a Chunker object for one keyword and returns a new Chunker object with the chunks whose sem info contains the keyword
+	 * @param keyword which will be searched for in the Chunker
+	 * @param chunks a Chunker wich will be searched
+	 * @return a new Chunker Object containing the found sem infos in a arraylist Format: {chunk,{sem1,sem2}}
+	 */
+	private static Chunker oneKeyword(String keyword, Chunker chunks){
+		Chunker results= new Chunker();
+		for (int j = 0; j < chunks.size(); j++) {
+			ArrayList<String> foundSemOfChunk = new ArrayList<String>(); // the semantics that were found by the keyword and belong to ONE chunk
+			Boolean semanticExistance = chunks.getSemanticAt(j) != null;
+			Boolean isSemanticString = (chunks.getSemanticAt(j) instanceof String);
+			Boolean keywordIsChunk = chunks.getChunkContentAt(j).equals(keyword); // check whether the keyword equals the current chunk
+			if(semanticExistance && isSemanticString && !keywordIsChunk){
+				JsonHandler js = new JsonHandler();
+				foundSemOfChunk = js.semanticLookUp((String) chunks.readSemanticOfChunk(chunks.getChunkContentAt(j)), keyword);
+			}else {
+				System.out.println("No semantic or not a String or keyword is a chunk");
+			}
+			if(!foundSemOfChunk.isEmpty()) {
+				results.addChunkContent(chunks.getChunkContentAt(j));
+				results.addSemanticToChunk(chunks.getChunkContentAt(j), foundSemOfChunk);
+			}
+		}
+		return results;		
+	}
+	
+	
+	
+	
+	
+	/**
+	 * Each chunk will be used to search in the other sem infos and a new Chunker object will be returned
+	 * @param chunks a Chunker Object
+	 * @return a new Chunker Object containing the found sem infos in a arraylist Format: {chunk,{sem1,sem2}}
+	 */
+	private static Chunker noKeyword(Chunker chunks) {
+		Chunker newChunker = new Chunker();
+		ArrayList<String> list = chunks.readChunks();
+		for (int i = 0; i < list.size(); i++) {
+			Chunker tempChunker = oneKeyword(chunks.getChunkContentAt(i), chunks); // returns a Chunker which can be empty or has one chunk with sem Information
+			if(tempChunker.size()>0) { // If the chunker that was returned by the oneKeyword function has a chunk go further
+				for (int j = 0; j < tempChunker.size(); j++) {
+					String chunk = tempChunker.getChunkContentAt(j);
+					if(tempChunker.hasSemInfo(chunk)){ // if the chunk still has Semantic Information go further
+						newChunker.addChunkContent(chunk);
+						newChunker.addSemanticToChunk(chunk, tempChunker.readSemanticOfChunk(chunk));
+					}	
+				}
+			}
+		}
+		return newChunker;
 	}
 	
 	
