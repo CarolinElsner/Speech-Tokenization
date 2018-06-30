@@ -27,6 +27,9 @@ public class SentenceAgent extends AbstractAgent {
 
 	@Override
 	protected void doOnInit() {
+		
+		this.setId("SentenceAgend");
+		
 		try {
 			AbstractInterestProfile ip = new SentenceInterestProfile();
 			ip.add(new IsEventType("WatsonEvent")); // Da es der erste Agent in der Prozesskette ist abonniert er keine Events
