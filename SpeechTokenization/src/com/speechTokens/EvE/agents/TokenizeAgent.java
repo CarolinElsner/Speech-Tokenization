@@ -20,15 +20,15 @@ public class TokenizeAgent extends AbstractAgent {
 	protected void doOnInit() {
 		
 		this.setId("TokenizeAgent");
-		
-		AbstractInterestProfile tokenizeIP = new TokenizeInterestProfile();		
-		
-		/*######
-		Hier Event definieren, das von der Dokumentenrepräsenation kommt
-		Beispielhaft "FeedbackEvent"
-		######*/
-		tokenizeIP.add(new IsEventType("FeedbackEvent"));
-		
+				
+		try {
+			AbstractInterestProfile tokenizeIP = new TokenizeInterestProfile();		
+			tokenizeIP.add(new IsEventType("FeedbackEvent"));
+			this.add(tokenizeIP);
+		} catch (NoValidInterestProfileException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		try {
 			//Topic angeben --> Dokumentenrepresentation
 			

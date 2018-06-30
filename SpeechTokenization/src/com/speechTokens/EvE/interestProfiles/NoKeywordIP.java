@@ -71,7 +71,7 @@ public class NoKeywordIP extends AbstractInterestProfile {
 					uncertainEvent.add(new Property<>("Sentence",EventUtils.findPropertyByKey(event, "SentenceID")));
 					uncertainEvent.add(new Property<>("Chunks", tokenChunker));
 					try {
-						this.getAgent().send(uncertainEvent, "Action");
+						this.getAgent().send(uncertainEvent, "TokenGeneration");
 						
 					} catch (NoValidEventException e) {
 						// TODO Auto-generated catch block

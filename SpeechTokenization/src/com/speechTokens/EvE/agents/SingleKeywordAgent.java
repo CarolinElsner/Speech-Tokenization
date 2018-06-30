@@ -1,6 +1,7 @@
 package com.speechTokens.EvE.agents;
 
 import com.speechTokens.EvE.interestProfiles.SentenceInterestProfile;
+import com.speechTokens.EvE.interestProfiles.SingleKeywordIP;
 
 import eventprocessing.agent.AbstractAgent;
 import eventprocessing.agent.NoValidConsumingTopicException;
@@ -31,7 +32,7 @@ public class SingleKeywordAgent extends AbstractAgent {
 		this.setId("SingleKeywordAgent");
 		
 		try {
-			AbstractInterestProfile ip = new SentenceInterestProfile();
+			AbstractInterestProfile ip = new SingleKeywordIP();
 			ip.add(new IsEventType("SingleKeywordEvent")); // Da es der erste Agent in der Prozesskette ist abonniert er keine Events
 			this.add(ip);
 		} catch (NoValidInterestProfileException e1) {
@@ -39,7 +40,7 @@ public class SingleKeywordAgent extends AbstractAgent {
 		}
 		
 		try {
-			this.add("TokenGeneration"); // Topic
+			this.add("Keywords"); // Topic
 		} catch (NoValidConsumingTopicException e) {
 			e.printStackTrace();
 		}

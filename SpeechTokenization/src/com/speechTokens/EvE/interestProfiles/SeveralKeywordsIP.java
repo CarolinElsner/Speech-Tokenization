@@ -63,7 +63,7 @@ public class SeveralKeywordsIP extends AbstractInterestProfile {
 		actionEvent.add(new Property<>("Chunks", semFoundChunks));
 		// TODO: ACTIONEVENT oder spezifische Events hier erstellen
 		try {
-			this.getAgent().send(actionEvent, "Action");
+			this.getAgent().send(actionEvent, "TokenGeneration");
 			
 		} catch (NoValidEventException e) {
 			// TODO Auto-generated catch block
