@@ -9,14 +9,18 @@ public class DetectTermin {
 	private static final Pattern Date_Expression = 
 		    Pattern.compile("(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)", Pattern.CASE_INSENSITIVE);
 	private ArrayList<String> dateDetect = new ArrayList<String>();
+	private String foundDate = null;
+	public DetectTermin() {
+		this.foundDate= null;
+	}
 	
-		public static boolean validate(String sentence) {
+		public boolean validate(String sentence) {
 		        Matcher matcher = Date_Expression.matcher(sentence);
 		        if(matcher.find()) {
 		        	int beginn = matcher.start();
 		        	int finish = matcher.end();
 		        	String termin = sentence.substring(beginn, finish);
-		        	System.out.println(termin);
+		        	foundDate = termin;
 		        	return true;
 		        }
 		        return matcher.find();
@@ -66,4 +70,9 @@ public class DetectTermin {
 			dateDetect.removeAll(dateDetect);
 		}
 	
+		public String getfoundetDate(){
+			return foundDate;
+		}
+		
+		
 }
