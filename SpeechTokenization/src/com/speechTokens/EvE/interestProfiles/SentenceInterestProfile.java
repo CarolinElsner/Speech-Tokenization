@@ -74,6 +74,7 @@ public class SentenceInterestProfile extends AbstractInterestProfile {
 			calendarevent.add(new Property<>("Timestamp", EventUtils.findPropertyByKey(event, "Timestamp")));
 			calendarevent.add(new Property<>("SessionID", EventUtils.findPropertyByKey(event, "SessionID")));
 			calendarevent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID")));
+			calendarevent.add(new Property<>("Termin", detector.getfoundetDate()));
 			
 			try {
 				this.getAgent().send(calendarevent, "TokenGeneration");
@@ -95,6 +96,7 @@ public class SentenceInterestProfile extends AbstractInterestProfile {
 		
 		
 		AbstractEvent chunkEvent = eventFactory.createEvent("AtomicEvent");
+		chunkEvent.setType("ChunkEvent");
 		chunkEvent.add(new Property<>("UserID",EventUtils.findPropertyByKey(event, "UserID")));
 		chunkEvent.add(new Property<>("Timestamp",EventUtils.findPropertyByKey(event, "Timestamp")));
 		chunkEvent.add(new Property<>("SessionID",EventUtils.findPropertyByKey(event, "SessionID")));
