@@ -27,6 +27,15 @@ public class Chunker{
 	public String getChunkContentAt(int position) {
 		return (String) ((ArrayList<Object>) chunkList.get(position)).get(0);
 	}
+	public Boolean hasChunk(String chunk) {
+		Boolean hasChunk = false;
+		for (int j = 0; j < readChunks().size(); j++) {
+			if(readChunks().get(j).equals(chunk)) {
+				hasChunk = true;
+			}
+		}
+		return hasChunk;
+	}
 
 	/**
 	 * @return a list containing all chunks in the {@link Chunker} List 
@@ -64,7 +73,7 @@ public class Chunker{
 				chunkElement.add(chunk);
 				chunkList.add(chunkElement);				
 			}else {
-				System.out.println("Douplicate chunk");
+				System.out.println("Trying to add already existing chunk");
 			}
 		}
 	}
@@ -106,9 +115,16 @@ public class Chunker{
 		}else if(semantics instanceof ArrayList<?>) {
 			int count=0;
 			for (int i = 0; i < list.size(); i++) { //iterate through all existing chunks
-				if(chunk.equals(list.get(i)) && ((ArrayList<Object>) chunkList.get(i)).size()<2) { // make sure to insert semantic to the right chunk
-					((ArrayList<Object>) chunkList.get(i)).add(1,semantics);
+				ArrayList<Object> chunksAtPos = (ArrayList<Object>) chunkList.get(i);
+				ArrayList<String> semArray = (ArrayList<String>) semantics;
+				if(chunk.equals(list.get(i)) && chunksAtPos.size()<2) { // make sure to insert semantic to the right chunk and has to be smaller than 2 bec the semantic info has to be inserted into one Arraylist on the level of the chunks
+					((ArrayList<Object>) chunkList.get(i)).add(1,semantics); // Add the semantic ArrayList besides the Chunk
 					count++; //counts how often the chunk was found
+				}else if(chunk.equals(list.get(i)) && chunksAtPos.size()==2) { // There is already a semantic ArrayList besides the Chunk
+					for (int j = 0; j < semArray.size(); j++) { // add the contents of the new Semantic Array to the existing semantic in the chunker
+						((ArrayList<String>)((ArrayList<Object>) chunkList.get(i)).get(1)).add(semArray.get(j));
+						count++;
+					}
 				}
 			}
 			if(count==0) {// chunk was never found in List
