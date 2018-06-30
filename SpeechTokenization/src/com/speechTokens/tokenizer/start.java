@@ -11,7 +11,7 @@ public class start {
 	public static void main(String[] args) throws IOException {
 			
 		//String sentence = "During the French Revolution in the 1790s, \"The Law of the Maximum\" was imposed in an attempt to decrease inflation. It consisted of limits on wages and food prices. Many dissidents were executed for breaking this law. The law was repealed 14 months after its introduction.";
-		Tokenization tester = new Tokenization();
+		Tokenization_neu tester = new Tokenization_neu();
 		ArrayList<String> chunks = new ArrayList<String>();
 		String sentence = "Please show me the documents from the HighNet project and what we do on April  .";
 
