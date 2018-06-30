@@ -15,12 +15,18 @@ import com.google.gson.JsonParser;
 
 
 public class JsonHandler {
-	private static ArrayList<Object> jsonValues = new ArrayList<Object>();
-	private static int resultNumber = 0; // counts the results that were found regarding the keyword
-	private static ArrayList<String> semInfo= new ArrayList<String>(); // the found semantic infos regarding the lookup
-	private static JSONArray resultArr; // the sem info found regarding the keyword
+	private ArrayList<Object> jsonValues = new ArrayList<Object>();
+	private int resultNumber = 0; // counts the results that were found regarding the keyword
+	private ArrayList<String> semInfo= new ArrayList<String>(); // the found semantic infos regarding the lookup
+	private JSONArray resultArr= new JSONArray(); // the sem info found regarding the keyword
 	
 	
+	public JsonHandler(){
+		this.jsonValues = new ArrayList<Object>();
+		this.resultNumber = 0; // counts the results that were found regarding the keyword
+		this.semInfo= new ArrayList<String>(); // the found semantic infos regarding the lookup
+		this.resultArr = new JSONArray(); // the sem info found regarding the keyword
+	}
 	/**
 	 * Prints a String in a pretty json Format
 	 * @param json --> String in a JSON Format
@@ -40,7 +46,7 @@ public class JsonHandler {
 	 * @param lookup the lookup value that we want to search for in the
 	 * @return returns a ArrayList of Strings where each String is one JSON Object where a value was a match with a lookup
 	 */
-	public static ArrayList<String> semanticLookUp(String json,String lookup) {
+	public ArrayList<String> semanticLookUp(String json,String lookup) {
 		JSONObject jsonObj = jsonParse(json);
 		handleJsonObj(jsonObj, lookup);
 		return semInfo;
@@ -52,7 +58,7 @@ public class JsonHandler {
 	 * @exception JSON Exception when it is not in the right format
 	 * @return jsonObject a Java JSON Object containing the key value structure
 	 */
-	public static JSONObject jsonParse(String jsonString) {
+	public JSONObject jsonParse(String jsonString) {
 		JSONObject jsonObj = null;
 		try {
 			jsonObj = new JSONObject(jsonString);
@@ -72,7 +78,7 @@ public class JsonHandler {
 	 * @param json the JSON Object where the function looks into all its keys and iterates through the values for each key
 	 * @param lookup the value that the function is searching for
 	 */
-	private static void handleJsonObj(JSONObject json, Object lookup) { // JSONObject hat so eine Form: {{key:value},{key1:value1}} --> d.h. kein Array, in dem "value" kann aber alles mögliche sein (nochmal ein Obj, oder ein Array)
+	private void handleJsonObj(JSONObject json, Object lookup) { // JSONObject hat so eine Form: {{key:value},{key1:value1}} --> d.h. kein Array, in dem "value" kann aber alles mögliche sein (nochmal ein Obj, oder ein Array)
 		Iterator<String> keyList = json.keys(); // daher müssen alle keys ausgelesen werden
 		while(keyList.hasNext()) { // und solange wie es einen neuen key gibt durch das JSON Object iteriert werden
 			String nextKey = keyList.next(); // keys auf OBERSTER EBENE	
@@ -101,7 +107,7 @@ public class JsonHandler {
 	 * @param jsonArr the Array Object where the function iterates through
 	 * @param lookup the value that the function is searching for
 	 */
-	private static void handleJsonArr(String key, JSONArray jsonArr, Object lookup) { // es handelt sich um ein JSONArray z.B. folgende Form {key:[val1,val2]}
+	private void handleJsonArr(String key, JSONArray jsonArr, Object lookup) { // es handelt sich um ein JSONArray z.B. folgende Form {key:[val1,val2]}
 		if(key.equals("bindings")) {
 			resultArr=jsonArr;
 		}
@@ -134,7 +140,7 @@ public class JsonHandler {
 	 * @return the semantic JSON Object as a String that was found
 	 * always when no semantic match was found, the return value of this function is null
 	 */
-	private static String semanticMatch(Object lookup, Object jsonValue) {
+	private String semanticMatch(Object lookup, Object jsonValue) {
 		lookup=lookup.toString().toLowerCase();
 		String semString= null; // set the temporary semantic string to null
 		// the split method always creates a String Array, if it cant split a Array containing 1 Value exists
@@ -143,6 +149,7 @@ public class JsonHandler {
 			if(lookup.equals(splittedArray[i].toLowerCase())) { // to make sure that we only have lower case characters
 				if(resultArr.get(resultNumber-1) instanceof JSONObject) {
 					semString=resultArr.get(resultNumber-1).toString();
+					//System.out.println(semString);
 				}
 			}
 		}
@@ -155,7 +162,7 @@ public class JsonHandler {
 	 * @param arr2 second array
 	 * @return combined string array
 	 */
-	private static String[] concatStringArrs(String[] arr1, String[] arr2) {
+	private String[] concatStringArrs(String[] arr1, String[] arr2) {
 		ArrayList<String> newList = new ArrayList<String>(Arrays.asList(arr1));
 		newList.addAll(Arrays.asList(arr2));
 		return newList.toArray(new String[newList.size()]);

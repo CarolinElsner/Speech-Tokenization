@@ -5,50 +5,40 @@ import java.util.ArrayList;
 import com.speechTokens.tokenizer.Chunker;
 
 public class Interpretation {
-	public static String jsonString = "{\r\n" + 
-			"  \"head\": {\r\n" + 
-			"    \"vars\": [ \"Instanz\" , \"Keyword\" ]\r\n" + 
-			"  } ,\r\n" + 
-			"  \"results\": {\r\n" + 
-			"    \"bindings\": [\r\n" + 
-			"      {\r\n" + 
-			"        \"Instanz\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#CostPlan\" } ,\r\n" + 
-			"        \"Keyword\": { \"type\": \"literal\" , \"value\": \"cost; expenses; expense; costs;\" }\r\n" + 
-			"      } ,\r\n" + 
-			"      {\r\n" + 
-			"        \"Instanz\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#BudgetPlan\" } ,\r\n" + 
-			"        \"Keyword\": { \"type\": \"literal\" , \"value\": \"budget; cost; plan;\" }\r\n" + 
-			"      } ,\r\n" + 
-			"      {\r\n" + 
-			"        \"Instanz\": { \"type\": \"uri1\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#Receipt\" } ,\r\n" + 
-			"        \"Keyword\": { \"type\": \"literal\" , \"value\": \"bill; receipt; cost; expense;\" }\r\n" + 
-			"      } ,\r\n" + 
-			"      {\r\n" + 
-			"        \"Instanz\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#CostStatement\" } ,\r\n" + 
-			"        \"Keyword\": { \"type\": \"literal\" , \"value\": \"cost; costs; expense; expenses; statement\" }\r\n" + 
-			"      }\r\n" + 
-			"    ]\r\n" + 
-			"  }\r\n" + 
-			"}\r\n" + 
-			"";
 
-
+	/*
 	/**
 	 * Searches a keyword in the Semantic information in the given Chunker object
+	 * If there is a chunk with an equal name like the keyword, its semantic information
 	 * @param keyword the keyword that is searched for in the Chunker Object
 	 * @param chunks the Chunker Object containing all the chunks with the sem infos
 	 * @return a new Chunker Object, which only contains the Chunks whereto something was found plus the semantic data which was found
-	 */
+	 
 	public static Chunker oneKeyword(String keyword, Chunker chunks){
 		// TODO: Das identifiziertes Keywort aus dem Chunker löschen
 		// TODO: Evtl Fehlerbehebung
 		Chunker results= new Chunker();
+		System.out.println(chunks.size());
 		for (int j = 0; j < chunks.size(); j++) {
 			ArrayList<String> foundSemOfChunk = new ArrayList<String>(); // the semantics that were found by the keyword and belong to ONE chunk
-			Boolean semanticExistance = chunks.readSemanticOfChunk(chunks.getChunkContentAt(j)) != null;
-			Boolean isSemanticString = (chunks.readSemanticOfChunk(chunks.getChunkContentAt(j)) instanceof String);
-			if(semanticExistance && isSemanticString){
-				foundSemOfChunk = JsonHandler.semanticLookUp((String) chunks.readSemanticOfChunk(chunks.getChunkContentAt(j)), keyword);
+			Boolean semanticExistance = chunks.getSemanticAt(j) != null;
+			Boolean isSemanticString = (chunks.getSemanticAt(j) instanceof String);
+			Boolean keywordIsChunk = chunks.getChunkContentAt(j).equals(keyword); // check whether the keyword equals the current chunk
+			if(semanticExistance && isSemanticString && !keywordIsChunk){
+			Object semOfChunk = chunks.getSemanticAt(j);
+
+				if(semOfChunk instanceof String){ // The semantic information in the array is
+					System.out.println(j);
+					foundSemOfChunk = JsonHandler.semanticLookUp((String) semOfChunk, keyword);
+				}else if(semOfChunk instanceof ArrayList<?>){
+					ArrayList<String> list = (ArrayList<String>) semOfChunk;
+					for (String string : list) {
+						foundSemOfChunk = JsonHandler.semanticLookUp(string, keyword);	
+					}
+				}else{
+					System.out.println("Error with sem info");
+				}
+				
 			}else {
 				System.out.println("No semantic or not a String");
 			}
@@ -58,5 +48,54 @@ public class Interpretation {
 			}
 		}
 		return results;		
+	}
+*/
+	
+	
+	
+	
+	public static Chunker oneKeyword(String keyword, Chunker chunks){
+		// TODO: Das identifiziertes Keywort aus dem Chunker löschen
+		// TODO: Evtl Fehlerbehebung
+		Chunker results= new Chunker();
+		for (int j = 0; j < chunks.size(); j++) {
+			ArrayList<String> foundSemOfChunk = new ArrayList<String>(); // the semantics that were found by the keyword and belong to ONE chunk
+			Boolean semanticExistance = chunks.getSemanticAt(j) != null;
+			Boolean isSemanticString = (chunks.getSemanticAt(j) instanceof String);
+			Boolean keywordIsChunk = chunks.getChunkContentAt(j).equals(keyword); // check whether the keyword equals the current chunk
+			if(semanticExistance && isSemanticString && !keywordIsChunk){
+				JsonHandler js = new JsonHandler();
+				foundSemOfChunk = js.semanticLookUp((String) chunks.readSemanticOfChunk(chunks.getChunkContentAt(j)), keyword);
+			}else {
+				System.out.println("No semantic or not a String or keyword is a chunk");
+			}
+			if(!foundSemOfChunk.isEmpty()) {
+				results.addChunkContent(chunks.getChunkContentAt(j));
+				results.addSemanticToChunk(chunks.getChunkContentAt(j), foundSemOfChunk);
+			}
+		}
+		return results;		
+	}
+	
+	
+	
+	
+	
+	
+	public static Chunker noKeyword(Chunker chunks) {
+		Chunker tempChunker = new Chunker();
+		Chunker newChunker = new Chunker();
+		ArrayList<String> list = chunks.readChunks();
+		for (int i = 0; i < list.size(); i++) {
+			tempChunker = oneKeyword(chunks.getChunkContentAt(i), chunks); // returns a Chunker which can be empty or has one chunk with sem Information
+			if(tempChunker.size()>0) { // If the chunker that was returned by the oneKeyword function has a chunk go further
+				String chunk = tempChunker.getChunkContentAt(0);
+				if(tempChunker.hasSemInfo(chunk)){ // if the chunk still has Semantic Information go further
+					newChunker.addChunkContent(chunk);
+					newChunker.addSemanticToChunk(chunk, tempChunker.readSemanticOfChunk(chunk));
+				}
+			}
+		}
+		return newChunker;
 	}
 }
