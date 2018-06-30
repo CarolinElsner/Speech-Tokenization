@@ -67,7 +67,23 @@ public class SentenceInterestProfile extends AbstractInterestProfile {
 		
 		//Wenn Datum gefunden, dann Kalenderevent
 		if(foundDate == true) {
+			AbstractEvent calendarevent = eventFactory.createEvent("AtomicEvent");
+			calendarevent.setType("CalendarEvent");
+			//Besitzt event nur eine UserID??
+			calendarevent.add(new Property<>("UserID", EventUtils.findPropertyByKey(event, "UserID")));
+			calendarevent.add(new Property<>("Timestamp", EventUtils.findPropertyByKey(event, "Timestamp")));
+			calendarevent.add(new Property<>("SessionID", EventUtils.findPropertyByKey(event, "SessionID")));
+			calendarevent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID")));
 			
+			try {
+				this.getAgent().send(calendarevent, "TokenGeneration");
+			} catch (NoValidEventException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NoValidTargetTopicException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		//Chunker befüllen und alle Chunks in Kleinbuchstaben
 		Chunker chunk = new Chunker();
@@ -87,6 +103,7 @@ public class SentenceInterestProfile extends AbstractInterestProfile {
 
 		try {
 			this.getAgent().send(chunkEvent, "ChunkGeneration");
+			
 		} catch (NoValidEventException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
