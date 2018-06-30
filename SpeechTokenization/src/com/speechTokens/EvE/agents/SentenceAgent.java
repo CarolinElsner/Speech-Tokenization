@@ -11,7 +11,7 @@ import eventprocessing.consume.kafka.ConsumerSettings;
 import eventprocessing.demo.ShowcaseValues;
 
 /**
- * Dieser Agent ist fÃ¼r die Diagnose des Verkehrs zustÃ¤ndig. Er wertet die
+ * Dieser Agent ist für die Diagnose des Verkehrs zuständig. Er wertet die
  * Verkehrsdaten aus und leitet daraus entsprechende Handlungen ab.
  * 
  * @author IngoT
@@ -27,6 +27,9 @@ public class SentenceAgent extends AbstractAgent {
 
 	@Override
 	protected void doOnInit() {
+		
+		this.setId("SentenceAgend");
+		
 		try {
 			AbstractInterestProfile ip = new SentenceInterestProfile();
 			ip.add(new IsEventType("WatsonEvent")); // Da es der erste Agent in der Prozesskette ist abonniert er keine Events

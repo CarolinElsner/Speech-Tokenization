@@ -127,7 +127,7 @@ public class KeywordSearch {
 	 * @param chunks a Chunker wich will be searched
 	 * @return a new Chunker Object containing the found sem infos in a arraylist Format: {chunk,{sem1,sem2}}
 	 */
-	private static Chunker oneKeyword(String keyword, Chunker chunks){
+	public static Chunker oneKeyword(String keyword, Chunker chunks){
 		Chunker results= new Chunker();
 		for (int j = 0; j < chunks.size(); j++) {
 			ArrayList<String> foundSemOfChunk = new ArrayList<String>(); // the semantics that were found by the keyword and belong to ONE chunk
@@ -157,7 +157,7 @@ public class KeywordSearch {
 	 * @param chunks a Chunker Object
 	 * @return a new Chunker Object containing the found sem infos in a arraylist Format: {chunk,{sem1,sem2}}
 	 */
-	private static Chunker noKeyword(Chunker chunks) {
+	public static Chunker noKeyword(Chunker chunks) {
 		Chunker newChunker = new Chunker();
 		ArrayList<String> list = chunks.readChunks();
 		for (int i = 0; i < list.size(); i++) {

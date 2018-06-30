@@ -23,15 +23,5 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry combineaccessrules="false" kind="src" path="/EvE-Framework"/>
-	<classpathentry kind="lib" path="C:/Users/Menz/.m2/repository/org/json/json/20180130/json-20180130.jar">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="org.eclipse.jst.component.archivename" value="json-20180130.jar"/>
-			<attribute name="maven.groupId" value="org.json"/>
-			<attribute name="maven.artifactId" value="json"/>
-			<attribute name="maven.version" value="20180130"/>
-			<attribute name="maven.scope" value="compile"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
