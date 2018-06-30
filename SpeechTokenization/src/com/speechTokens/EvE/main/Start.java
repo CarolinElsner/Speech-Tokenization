@@ -51,6 +51,7 @@ public class Start {
 		despatcher = new Despatcher(new ProducerSettings(server,port));
 		AbstractAgent sentenceAgent = new SentenceAgent();
 		AbstractAgent tokenAgent = new TokenAgent();
+
 		
 		sentenceAgent.setConsumerSettings(new ConsumerSettings(server, port, "sessionAgent"));
 		sentenceAgent.setProducerSettings(new ProducerSettings(server,port));

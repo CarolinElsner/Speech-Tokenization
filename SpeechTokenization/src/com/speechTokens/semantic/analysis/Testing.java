@@ -39,7 +39,7 @@ public class Testing {
 			"  \"results\": {\r\n" + 
 			"    \"bindings\": [\r\n" + 
 			"      {\r\n" + 
-			"        \"Instanz\": { \"type\": \"uri\"} ,\r\n" + 
+			"        \"Instanz\": { \"type\": \"uri1\"} ,\r\n" + 
 			"        \"Keyword\": { \"type\": \"Test1\"}\r\n" + 
 			"      } ,\r\n" + 
 			"      {\r\n" + 
@@ -67,7 +67,7 @@ public class Testing {
 			"    \"bindings\": [\r\n" + 
 			"      {\r\n" + 
 			"        \"Instanz\": { \"type\": \"Document\"} ,\r\n" + 
-			"        \"Keyword\": { \"type\": \"uri\"}\r\n" + 
+			"        \"Keyword\": { \"type\": \"test\"}\r\n" + 
 			"      } ,\r\n" + 
 			"      {\r\n" + 
 			"        \"Instanz\": { \"type\": \"Project\"} ,\r\n" + 
@@ -75,7 +75,7 @@ public class Testing {
 			"      } ,\r\n" + 
 			"      {\r\n" + 
 			"        \"Instanz\": { \"type\": \"Application\" } ,\r\n" + 
-			"        \"Keyword\": { \"type\": \"Welt\" }\r\n" + 
+			"        \"Keyword\": { \"type\": \"Mueller\" }\r\n" + 
 			"      } ,\r\n" + 
 			"      {\r\n" + 
 			"        \"Instanz\": { \"type\": \"Welt\"} ,\r\n" + 
@@ -104,13 +104,42 @@ public class Testing {
 		
 		chunks.addChunkContent("post");
 		chunks.addChunkContent("Hallo");
-		chunks.addSemanticToChunk("post", jsonString);
+		//chunks.addSemanticToChunk("post", jsonString);
 		//chunks.addSemanticToChunk("Hallo", jsonString1);
-		//chunks.addSemanticToChunk("Mond", jsonString2);
-
+		chunks.addSemanticToChunk("Mond", jsonString2);
+		//KeywordSearch.noKeyword(chunks).printList();
 		//chunks.addSemanticToChunk("Geeeht", "test");
-
+		test(chunks);
 	
+	}
+
+	public static void test(Chunker chunks) {
+		Chunker semFoundChunks = KeywordSearch.noKeyword(chunks);
+		for (int i = 0; i < semFoundChunks.size(); i++) {
+			Object semantic = semFoundChunks.getSemanticAt(i);
+			if(semantic instanceof ArrayList<?>) {
+				ArrayList<?> newSemantic = (ArrayList<?>) semantic; 
+				if(newSemantic.size()>1) {// more than one sem data off the respective chunk, so we dont know which type
+					String chunk = semFoundChunks.getChunkContentAt(i);
+					Object sem = semFoundChunks.getSemanticAt(i);
+					Chunker tokenChunker = new Chunker();
+					tokenChunker.addChunkContent(chunk);
+					tokenChunker.addSemanticToChunk(chunk, sem);
+					
+					//
+					// TODO HIER DIE ERSTELLUNG VON EVENTS EINBINDEN WO DER TYP NICHT KLAR IST
+				}else { // just one semantic entry was found for the chunk
+					// Hier geht es um ein Event, die eine spezifische Aktion erfordert
+					String chunk = semFoundChunks.getChunkContentAt(i);
+					Object sem = semFoundChunks.getSemanticAt(i);
+					Chunker tokenChunker = new Chunker();
+					tokenChunker.addChunkContent(chunk);
+					tokenChunker.addSemanticToChunk(chunk, sem);
+					tokenChunker.printList();
+					// TODO: ACTIONEVENT oder spezifische Events hier erstellen
+				}
+			}
+		}
 	}
 
 }

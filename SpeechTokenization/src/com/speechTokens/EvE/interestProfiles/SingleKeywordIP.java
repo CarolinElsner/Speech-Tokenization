@@ -54,17 +54,17 @@ public class SingleKeywordIP extends AbstractInterestProfile {
 
 		Chunker semFoundChunks = KeywordSearch.oneKeyword(keyword, chunks);
 
-		
-		AbstractEvent singleKeywordEvent = eventFactory.createEvent("AtomicEvent");
-		singleKeywordEvent.setType("noKeywordEvent");
-		singleKeywordEvent.add(new Property<>("UserID",EventUtils.findPropertyByKey(event, "UserID")));
-		singleKeywordEvent.add(new Property<>("Timestamp",EventUtils.findPropertyByKey(event, "Timestamp")));
-		singleKeywordEvent.add(new Property<>("SessionID",EventUtils.findPropertyByKey(event, "SessionID")));
-		singleKeywordEvent.add(new Property<>("Sentence",EventUtils.findPropertyByKey(event, "SentenceID")));
-		singleKeywordEvent.add(new Property<>("Chunks",semFoundChunks));
-
+		//TODO: HIER EVENTS WIE DOCUMENT ETC EVENTS ERSTELLEN; IMMMER BEZÜGLICH DES ERKANNTEN TYPES
+		AbstractEvent actionEvent = eventFactory.createEvent("AtomicEvent");
+		actionEvent.setType("actionEvent");
+		actionEvent.add(new Property<>("UserID",EventUtils.findPropertyByKey(event, "UserID")));
+		actionEvent.add(new Property<>("Timestamp",EventUtils.findPropertyByKey(event, "Timestamp")));
+		actionEvent.add(new Property<>("SessionID",EventUtils.findPropertyByKey(event, "SessionID")));
+		actionEvent.add(new Property<>("Sentence",EventUtils.findPropertyByKey(event, "SentenceID")));
+		actionEvent.add(new Property<>("Chunks", semFoundChunks));
+		// TODO: ACTIONEVENT oder spezifische Events hier erstellen
 		try {
-			this.getAgent().send(singleKeywordEvent, "Keywords");
+			this.getAgent().send(actionEvent, "Action");
 			
 		} catch (NoValidEventException e) {
 			// TODO Auto-generated catch block

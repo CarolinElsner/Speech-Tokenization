@@ -175,5 +175,10 @@ public class KeywordSearch {
 		return newChunker;
 	}
 	
+	public static Chunker severalKeywords(ArrayList<String> keywords, Chunker chunks) {
+		
+		return null;
+	}
+	
 	
 }
