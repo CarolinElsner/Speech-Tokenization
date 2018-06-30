@@ -87,8 +87,6 @@ public class Interpretation {
 		ArrayList<String> list = chunks.readChunks();
 		for (int i = 0; i < list.size(); i++) {
 			Chunker tempChunker = oneKeyword(chunks.getChunkContentAt(i), chunks); // returns a Chunker which can be empty or has one chunk with sem Information
-			tempChunker.printList();
-			System.out.println("fds");
 			if(tempChunker.size()>0) { // If the chunker that was returned by the oneKeyword function has a chunk go further
 				for (int j = 0; j < tempChunker.size(); j++) {
 					String chunk = tempChunker.getChunkContentAt(j);
