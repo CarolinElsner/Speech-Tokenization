@@ -1,7 +1,6 @@
 package com.speechTokens.tokenizer;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 /**
@@ -9,7 +8,7 @@ import java.util.NoSuchElementException;
  *
  */
 public class Chunker{
-
+//TODO: Bisher wird in jeder Funktion die globale Variable "chunkList" verändert, es ist aber besser es so zu machen, dass der CHunker der verändert werden soll als übergabewert übergeben wird
 	private ArrayList<Object> chunkList = new ArrayList<Object>(); // {{chunk1},{chunk2}}
 	//private static ArrayList<Object> chunkElement = new ArrayList<Object>(); // chunk1--> {{chunkContent},{semantic}}
 	
@@ -117,14 +116,21 @@ public class Chunker{
 			for (int i = 0; i < list.size(); i++) { //iterate through all existing chunks
 				ArrayList<Object> chunksAtPos = (ArrayList<Object>) chunkList.get(i);
 				ArrayList<String> semArray = (ArrayList<String>) semantics;
+				
 				if(chunk.equals(list.get(i)) && chunksAtPos.size()<2) { // make sure to insert semantic to the right chunk and has to be smaller than 2 bec the semantic info has to be inserted into one Arraylist on the level of the chunks
 					((ArrayList<Object>) chunkList.get(i)).add(1,semantics); // Add the semantic ArrayList besides the Chunk
 					count++; //counts how often the chunk was found
+				
 				}else if(chunk.equals(list.get(i)) && chunksAtPos.size()==2) { // There is already a semantic ArrayList besides the Chunk
+					ArrayList<String> tempSemArray = ((ArrayList<String>)((ArrayList<Object>) chunkList.get(i)).get(1));
 					for (int j = 0; j < semArray.size(); j++) { // add the contents of the new Semantic Array to the existing semantic in the chunker
-						((ArrayList<String>)((ArrayList<Object>) chunkList.get(i)).get(1)).add(semArray.get(j));
-						count++;
+						if(!tempSemArray.contains(semArray.get(j))) { // check if the semantic array already exists
+							tempSemArray.add(semArray.get(j));
+						}
 					}
+					count++;
+					((ArrayList<Object>) chunkList.get(i)).remove(1); // remove the 
+					((ArrayList<Object>) chunkList.get(i)).add(1, tempSemArray);
 				}
 			}
 			if(count==0) {// chunk was never found in List

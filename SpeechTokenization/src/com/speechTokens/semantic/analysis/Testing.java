@@ -12,7 +12,7 @@ public class Testing {
 			"  \"results\": {\r\n" + 
 			"    \"bindings\": [\r\n" + 
 			"      {\r\n" + 
-			"        \"Instanz\": { \"type\": \"uri\"} ,\r\n" + 
+			"        \"Instanz\": { \"type\": \"uri\", } ,\r\n" + 
 			"        \"Keyword\": { \"type\": \"Test\"}\r\n" + 
 			"      } ,\r\n" + 
 			"      {\r\n" + 
@@ -39,7 +39,7 @@ public class Testing {
 			"  \"results\": {\r\n" + 
 			"    \"bindings\": [\r\n" + 
 			"      {\r\n" + 
-			"        \"Instanz\": { \"type\": \"uri1\"} ,\r\n" + 
+			"        \"Instanz\": { \"type\": \"uri\"} ,\r\n" + 
 			"        \"Keyword\": { \"type\": \"Test1\"}\r\n" + 
 			"      } ,\r\n" + 
 			"      {\r\n" + 
@@ -93,24 +93,38 @@ public class Testing {
 		//JsonHandler.prettyPrint(Interpretation.jsonString);
 		Chunker chunks = new Chunker();
 
-		
+		ArrayList<String> test1 =new ArrayList<>();
+		test1.add("fdsfdsfdsa");
+		test1.add("dsaffdsafds");
 		ArrayList<String> test =new ArrayList<>();
-		test.add("fdsfdsfdsa");
-
+		test.add("fds");
+		test.add("fdsafdsfdsfdsafdsafdfdsa");
+		ArrayList<String> test2 =new ArrayList<>();
 		
+		System.out.println(test2.isEmpty());
 		chunks.addChunkContent("uri");
-		chunks.addChunkContent("Welt");
+		chunks.addChunkContent("fhad");
 		chunks.addChunkContent("Mond");
 		
 		chunks.addChunkContent("post");
 		chunks.addChunkContent("Hallo");
 		//chunks.addSemanticToChunk("post", jsonString);
 		//chunks.addSemanticToChunk("Hallo", jsonString1);
-		chunks.addSemanticToChunk("Mond", jsonString2);
+		chunks.addSemanticToChunk("Mond", jsonString);
+		chunks.addSemanticToChunk("post", jsonString1);
+		chunks.addSemanticToChunk("Hallo", jsonString2);
+		ArrayList<String> keys= new ArrayList<>();
+		keys.add("Welt");
+		keys.add("Person");
+		keys.add("uri");
+		KeywordSearch.severalKeywords(keys, chunks).printList();
+
+		//chunks.printList();
 		//KeywordSearch.noKeyword(chunks).printList();
 		//chunks.addSemanticToChunk("Geeeht", "test");
-		test(chunks);
-	
+		System.out.println(chunks.readSemanticOfChunk("post"));
+		//JsonHandler js = new JsonHandler();
+		//System.out.println(js.semanticLookUp(jsonString1, "uri1"));
 	}
 
 	public static void test(Chunker chunks) {

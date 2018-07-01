@@ -1,17 +1,12 @@
 package com.speechTokens.EvE.interestProfiles;
 
-import java.util.ArrayList;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import eventprocessing.agent.NoValidEventException;
 import eventprocessing.agent.NoValidTargetTopicException;
 import eventprocessing.agent.interestprofile.AbstractInterestProfile;
 import eventprocessing.event.AbstractEvent;
-import eventprocessing.event.AtomicEvent;
-import eventprocessing.event.EventIdProvider;
 import eventprocessing.event.Property;
-import eventprocessing.utils.*;
 import eventprocessing.utils.factory.AbstractFactory;
 import eventprocessing.utils.factory.FactoryProducer;
 import eventprocessing.utils.factory.FactoryValues;

@@ -2,8 +2,6 @@ package com.speechTokens.EvE.interestProfiles;
 
 import java.util.logging.Logger;
 
-import com.speechTokens.tokenizer.Chunker;
-
 import eventprocessing.agent.NoValidEventException;
 import eventprocessing.agent.NoValidTargetTopicException;
 import eventprocessing.agent.interestprofile.AbstractInterestProfile;

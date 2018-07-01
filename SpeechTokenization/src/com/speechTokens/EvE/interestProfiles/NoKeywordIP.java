@@ -1,17 +1,10 @@
 package com.speechTokens.EvE.interestProfiles;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.speechTokens.EvE.events.SentenceEvent;
-import com.speechTokens.EvE.events.WatsonEvent;
 import com.speechTokens.semantic.analysis.KeywordSearch;
 import com.speechTokens.tokenizer.Chunker;
-import com.speechTokens.tokenizer.DetectTermin;
-import com.speechTokens.tokenizer.Tokenization;
 
 import eventprocessing.agent.NoValidEventException;
 import eventprocessing.agent.NoValidTargetTopicException;

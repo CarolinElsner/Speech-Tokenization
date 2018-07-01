@@ -1,13 +1,12 @@
 package com.speechTokens.EvE.interestProfiles;
 
+import java.awt.Checkbox;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.speechTokens.EvE.events.SentenceEvent;
-import com.speechTokens.EvE.events.WatsonEvent;
 import com.speechTokens.tokenizer.Chunker;
 import com.speechTokens.tokenizer.DetectTermin;
 import com.speechTokens.tokenizer.Tokenization;
@@ -49,6 +48,8 @@ public class SentenceInterestProfile extends AbstractInterestProfile {
 
 		
 		String sentence = EventUtils.findPropertyByKey(event, "Sentence").getValue().toString();
+		
+	
 		
 		
 		Tokenization chunking = new Tokenization();
@@ -92,19 +93,20 @@ public class SentenceInterestProfile extends AbstractInterestProfile {
 			chunk.addChunkContent(chunks.get(i).toLowerCase());
 		}
 		
+		
 		detector.deleteAllDates();
 		
 		
-		AbstractEvent chunkEvent = eventFactory.createEvent("AtomicEvent");
-		chunkEvent.setType("ChunkEvent");
-		chunkEvent.add(new Property<>("UserID",EventUtils.findPropertyByKey(event, "UserID")));
-		chunkEvent.add(new Property<>("Timestamp",EventUtils.findPropertyByKey(event, "Timestamp")));
-		chunkEvent.add(new Property<>("SessionID",EventUtils.findPropertyByKey(event, "SessionID")));
-		chunkEvent.add(new Property<>("Sentence",EventUtils.findPropertyByKey(event, "SentenceID")));
-		chunkEvent.add(new Property<>("Chunks",chunk));
-
+		AbstractEvent sentenceEvent = eventFactory.createEvent("AtomicEvent");
+		sentenceEvent.setType("SentenceEvent");
+		sentenceEvent.add(new Property<>("UserID",EventUtils.findPropertyByKey(event, "UserID")));
+		sentenceEvent.add(new Property<>("Timestamp",EventUtils.findPropertyByKey(event, "Timestamp")));
+		sentenceEvent.add(new Property<>("SessionID",EventUtils.findPropertyByKey(event, "SessionID")));
+		sentenceEvent.add(new Property<>("Sentence",EventUtils.findPropertyByKey(event, "SentenceID")));
+		sentenceEvent.add(new Property<>("Chunks",chunk));
+		
 		try {
-			this.getAgent().send(chunkEvent, "ChunkGeneration");
+			this.getAgent().send(sentenceEvent, "ChunkGeneration");
 			
 		} catch (NoValidEventException e) {
 			// TODO Auto-generated catch block

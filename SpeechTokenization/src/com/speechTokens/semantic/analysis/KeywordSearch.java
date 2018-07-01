@@ -1,8 +1,7 @@
 package com.speechTokens.semantic.analysis;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
-
-import com.speechTokens.semantic.analysis.Interpretation;
 import com.speechTokens.tokenizer.Chunker;
 
 public class KeywordSearch {
@@ -14,6 +13,7 @@ public class KeywordSearch {
 	 * The found Keyword and its semantic will be deleted from the Chunker Object
 	 * @param ch chunker ArrayList, which contains the chunks with the sem Info
 	 */
+	@Deprecated
 	public static void keywordCheck(Chunker ch) {
 
 		Chunker foundResults = new Chunker();
@@ -174,10 +174,34 @@ public class KeywordSearch {
 		}
 		return newChunker;
 	}
-	
+	/**
+	 * Reads the keywords that are given and searches for them in the semantic of each chunker Object. A new chunker object will be returned
+	 * with all the semantic data and its chunks that were found by the keyword
+	 * @param keywords which will be searched for in the sem information of the chunk
+	 * @param chunks Chunker object which will be searched for every keyword
+	 * @return a new Chunker Object which contains of the chunk including the semantic information where the keyword was found
+	 */
 	public static Chunker severalKeywords(ArrayList<String> keywords, Chunker chunks) {
-		
-		return null;
+		Chunker tempChunker = new Chunker();
+		Chunker newChunker = new Chunker();
+		for (int j = 0; j < chunks.size(); j++) {
+			newChunker.addChunkContent(chunks.getChunkContentAt(j));
+		}
+		for (int i = 0; i < keywords.size(); i++) {
+			tempChunker = oneKeyword(keywords.get(i), chunks);
+			tempChunker.printList();
+			for (int j = 0; j < tempChunker.size(); j++) {
+				String currChunk =  tempChunker.getChunkContentAt(j);
+				Object tempSemChunk = tempChunker.getSemanticAt(j);
+				newChunker.printList();
+				if(tempSemChunk instanceof ArrayList<?> && !((ArrayList<String>) tempSemChunk).isEmpty()) {
+					newChunker.addSemanticToChunk(currChunk, (ArrayList<String>)tempSemChunk);	
+				}else {
+					System.out.println("KeywordSearch.severalKeywords(): semantic empty or not a ArrayList");
+				}
+			}
+		}
+		return newChunker;
 	}
 	
 	

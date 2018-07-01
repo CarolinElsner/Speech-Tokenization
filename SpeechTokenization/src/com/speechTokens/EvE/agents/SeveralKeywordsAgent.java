@@ -1,6 +1,5 @@
 package com.speechTokens.EvE.agents;
 
-import com.speechTokens.EvE.interestProfiles.SentenceInterestProfile;
 import com.speechTokens.EvE.interestProfiles.SeveralKeywordsIP;
 
 import eventprocessing.agent.AbstractAgent;
@@ -8,8 +7,6 @@ import eventprocessing.agent.NoValidConsumingTopicException;
 import eventprocessing.agent.dispatch.NoValidInterestProfileException;
 import eventprocessing.agent.interestprofile.AbstractInterestProfile;
 import eventprocessing.agent.interestprofile.predicates.statement.IsEventType;
-import eventprocessing.consume.kafka.ConsumerSettings;
-import eventprocessing.demo.ShowcaseValues;
 
 /**
  * Dieser Agent ist für die Diagnose des Verkehrs zuständig. Er wertet die

@@ -1,20 +1,19 @@
 package com.speechTokens.EvE.agents;
 
-import java.util.ArrayList;
-
 import com.speechTokens.EvE.interestProfiles.TokenizeInterestProfile;
 
 import eventprocessing.agent.AbstractAgent;
 import eventprocessing.agent.NoValidConsumingTopicException;
 import eventprocessing.agent.dispatch.NoValidInterestProfileException;
 import eventprocessing.agent.interestprofile.AbstractInterestProfile;
-import eventprocessing.agent.interestprofile.predicates.NullPredicateException;
-import eventprocessing.agent.interestprofile.predicates.logical.Or;
-import eventprocessing.agent.interestprofile.predicates.statement.GetEverything;
 import eventprocessing.agent.interestprofile.predicates.statement.IsEventType;
-import eventprocessing.event.AbstractEvent;
 
 public class TokenizeAgent extends AbstractAgent {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6013105775118845557L;
 
 	@Override
 	protected void doOnInit() {

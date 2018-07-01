@@ -1,17 +1,10 @@
 package com.speechTokens.EvE.interestProfiles;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.speechTokens.EvE.events.SentenceEvent;
-import com.speechTokens.EvE.events.WatsonEvent;
 import com.speechTokens.semantic.analysis.KeywordSearch;
 import com.speechTokens.tokenizer.Chunker;
-import com.speechTokens.tokenizer.DetectTermin;
-import com.speechTokens.tokenizer.Tokenization;
 
 import eventprocessing.agent.NoValidEventException;
 import eventprocessing.agent.NoValidTargetTopicException;
@@ -48,10 +41,10 @@ public class SeveralKeywordsIP extends AbstractInterestProfile {
 	@Override
 	public void doOnReceive(AbstractEvent event) {
 
-		String[] keywords = (String[]) EventUtils.findPropertyByKey(event, "Keywords").getValue();		
+		ArrayList<String> keywords = (ArrayList<String>) EventUtils.findPropertyByKey(event, "Keywords").getValue();		
 		Chunker chunks = (Chunker) EventUtils.findPropertyByKey(event, "Chunks").getValue();
 
-		Chunker semFoundChunks = KeywordSearch.noKeyword(chunks);
+		Chunker semFoundChunks = KeywordSearch.severalKeywords(keywords, chunks);
 
 		//TODO: HIER EVENTS WIE DOCUMENT ETC EVENTS ERSTELLEN; IMMMER BEZÜGLICH DES ERKANNTEN TYPES
 		AbstractEvent actionEvent = eventFactory.createEvent("AtomicEvent");
