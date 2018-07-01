@@ -24,16 +24,15 @@ public class EventCreationHelper {
 		actionEvent.add(new Property<>("Sentence",EventUtils.findPropertyByKey(oldEvent, "SentenceID")));
 
 		ArrayList<String> semanticStr = (ArrayList<String>) chunks.getSemanticAt(0);
-		JsonHandler js = new JsonHandler();
-		if(js.semanticLookUp(semanticStr.get(0), "Document").size()==1) {
+		if(semanticStr.get(0).contains("Document")== true) {
 			actionEvent.setType("DocumentEvent");
 			actionEvent.add(new Property<>("Chunks", chunks));
 			
-		}else if(js.semanticLookUp(semanticStr.get(0), "Project").size()==1) {
+		}else if(semanticStr.get(0).contains("Project")== true) {
 			actionEvent.setType("ProjectEvent");
 			actionEvent.add(new Property<>("Chunks", chunks));
 						
-		}else if(js.semanticLookUp(semanticStr.get(0), "Person").size()==1) {
+		}else if(semanticStr.get(0).contains("Person")== true) {
 			actionEvent.setType("PersonEvent");
 			actionEvent.add(new Property<>("Chunks", chunks));
 						
