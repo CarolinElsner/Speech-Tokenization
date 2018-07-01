@@ -17,9 +17,8 @@ public class KeywordSearch {
 	public static void keywordCheck(Chunker ch) {
 
 		Chunker foundResults = new Chunker();
-		boolean semanticsgiven = CheckIfSemanticsGiven(ch);
 		
-		if(semanticsgiven == true) {
+		if(CheckIfSemanticsGiven(ch) == true) {
 			
 			ArrayList<String> foundkeywords = FindKeywords(ch);
 			
@@ -40,7 +39,7 @@ public class KeywordSearch {
 	}
 	
 	//Check if Chunker contains any semantic information
-	private static boolean CheckIfSemanticsGiven(Chunker ch) {
+	static boolean CheckIfSemanticsGiven(Chunker ch) {
 		
 		boolean semanticgiven = false;
 		
@@ -57,7 +56,7 @@ public class KeywordSearch {
 	
 	//Search through Chunker to find spoken Keywords
 	
-	private static ArrayList<String> FindKeywords(Chunker ch) {
+	static ArrayList<String> FindKeywords(Chunker ch) {
 		
 		keywordcount = 0;
 		

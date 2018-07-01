@@ -22,7 +22,19 @@ import opennlp.tools.chunker.*;
 
 public class Tokenization {
 	
+	// with Tomcat you have to use absolute paths or relative paths starting at the Desktop
+	// to make sure you can find the directory with this code: 
+	//System.out.println(System.getProperty("user.dir").toString());
 	
+	/**
+	 * @param sentence that should be tokenized
+	 * @return 
+	 * @Description
+	 * Main function which executes the XML_Token.createToken(), readXMLResponse.addSemantics() and XML_Token.createXML() functions.
+	 * In this function the sentence gets tokenized into an ArrayList, then sent to the createToken() function to create an XML Token.
+	 * The returned Object is a {@link Document} which contains the sentence as xml file and this is sent to the addSemantics() function.
+	 * The then returned Object is a modified {@link Document} which contains the semantics for each chunk.
+	 */
 	public static List<String> doTokenization(String sentence) throws IOException {
 		// the actual spoken text devided by whitespaces
 		String tokens[] = tokenize(sentence);

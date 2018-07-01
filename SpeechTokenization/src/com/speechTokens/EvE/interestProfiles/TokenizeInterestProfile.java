@@ -24,11 +24,10 @@ public class TokenizeInterestProfile extends AbstractInterestProfile {
 	@Override
 	protected void doOnReceive(AbstractEvent event) {
 		
-		//if(keywordcount == 0) {	
+		//if(keywordcount == 0) {
 		
 		AbstractEvent noKeywordEvent = eventFactory.createEvent("AtomicEvent");
 		noKeywordEvent.setType("NoKeywordsEvent");
-
 		//Besitzt event nur eine UserID??
 		noKeywordEvent.add(new Property<>("UserID", EventUtils.findPropertyByKey(event, "UserID")));
 		noKeywordEvent.add(new Property<>("Timestamp", EventUtils.findPropertyByKey(event, "Timestamp")));

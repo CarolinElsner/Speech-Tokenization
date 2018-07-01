@@ -1,8 +1,11 @@
 package com.speechTokens.semantic.analysis;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.speechTokens.tokenizer.Chunker;
+import com.speechTokens.tokenizer.Tokenization;
 
 public class Testing {
 	public static String jsonString = "{\r\n" + 
@@ -40,7 +43,7 @@ public class Testing {
 			"    \"bindings\": [\r\n" + 
 			"      {\r\n" + 
 			"        \"Instanz\": { \"type\": \"uri\"} ,\r\n" + 
-			"        \"Keyword\": { \"type\": \"Test1\"}\r\n" + 
+			"        \"Keyword\": { \"type\": \"Highnet\"}\r\n" + 
 			"      } ,\r\n" + 
 			"      {\r\n" + 
 			"        \"Instanz\": { \"type\": \"Welt\"} ,\r\n" + 
@@ -100,8 +103,6 @@ public class Testing {
 		test.add("fds");
 		test.add("fdsafdsfdsfdsafdsafdfdsa");
 		ArrayList<String> test2 =new ArrayList<>();
-		
-		System.out.println(test2.isEmpty());
 		chunks.addChunkContent("uri");
 		chunks.addChunkContent("fhad");
 		chunks.addChunkContent("Mond");
@@ -117,43 +118,48 @@ public class Testing {
 		keys.add("Welt");
 		keys.add("Person");
 		keys.add("uri");
-		KeywordSearch.severalKeywords(keys, chunks).printList();
+		//KeywordSearch.severalKeywords(keys, chunks).printList();
 
 		//chunks.printList();
 		//KeywordSearch.noKeyword(chunks).printList();
 		//chunks.addSemanticToChunk("Geeeht", "test");
-		System.out.println(chunks.readSemanticOfChunk("post"));
 		//JsonHandler js = new JsonHandler();
 		//System.out.println(js.semanticLookUp(jsonString1, "uri1"));
-	}
+		String satz= "Thomas how are you doing at Highnet?";
+		try {
+			List<String> tokens = Tokenization.doTokenization(satz);
+			System.out.println(tokens);
+			Chunker chunk = new Chunker();
+			for (int i=0; i<tokens.size();i++) {
+				chunk.addChunkContent(tokens.get(i).toLowerCase());
+			}
+			chunk.addSemanticToChunk("highnet", jsonString2);
+			chunk.addSemanticToChunk("thomas", jsonString1);
 
-	public static void test(Chunker chunks) {
-		Chunker semFoundChunks = KeywordSearch.noKeyword(chunks);
-		for (int i = 0; i < semFoundChunks.size(); i++) {
-			Object semantic = semFoundChunks.getSemanticAt(i);
-			if(semantic instanceof ArrayList<?>) {
-				ArrayList<?> newSemantic = (ArrayList<?>) semantic; 
-				if(newSemantic.size()>1) {// more than one sem data off the respective chunk, so we dont know which type
-					String chunk = semFoundChunks.getChunkContentAt(i);
-					Object sem = semFoundChunks.getSemanticAt(i);
-					Chunker tokenChunker = new Chunker();
-					tokenChunker.addChunkContent(chunk);
-					tokenChunker.addSemanticToChunk(chunk, sem);
+			Chunker foundResults = new Chunker();
+			int keywordcount=0;
+			if(KeywordSearch.CheckIfSemanticsGiven(chunk) == true) {
+				 
+				ArrayList<String> foundkeywords = KeywordSearch.FindKeywords(chunk);
+				
+				if(keywordcount == 0) {
+					foundResults = KeywordSearch.noKeyword(chunk);
+					System.out.println("0 keywords"+foundkeywords);				
+					//Procedure for 0 found keywords
 					
-					//
-					// TODO HIER DIE ERSTELLUNG VON EVENTS EINBINDEN WO DER TYP NICHT KLAR IST
-				}else { // just one semantic entry was found for the chunk
-					// Hier geht es um ein Event, die eine spezifische Aktion erfordert
-					String chunk = semFoundChunks.getChunkContentAt(i);
-					Object sem = semFoundChunks.getSemanticAt(i);
-					Chunker tokenChunker = new Chunker();
-					tokenChunker.addChunkContent(chunk);
-					tokenChunker.addSemanticToChunk(chunk, sem);
-					tokenChunker.printList();
-					// TODO: ACTIONEVENT oder spezifische Events hier erstellen
+				}else if (keywordcount == 1) {
+					foundResults = KeywordSearch.oneKeyword(foundkeywords.get(0), chunk);
+					System.out.println("1 keyword"+foundkeywords);
+					//Procedure for 1 found keyword
+				}else {
+					// TODO: Mehr als 1 Keywort erkannt funktioniert noch nicht
+					System.out.println(">1 keywords"+foundkeywords);								
 				}
 			}
+			foundResults.printList();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
-
 }
