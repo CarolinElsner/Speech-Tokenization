@@ -55,9 +55,11 @@ public class SentenceInterestProfile extends AbstractInterestProfile {
 		Tokenization chunking = new Tokenization();
 		//Variable um zu prüfen ob Datum in Satz enthalten ist
 		boolean foundDate;
-		List<String> chunks = new ArrayList<String>();
+		boolean foundDayMonth = DetectTermin.dayMonthfound;
+		
+		ArrayList<String> chunks = new ArrayList<String>();
 		try {
-			chunks = chunking.doTokenization(sentence);
+			chunks = (ArrayList<String>) chunking.doTokenization(sentence);
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -65,9 +67,12 @@ public class SentenceInterestProfile extends AbstractInterestProfile {
 		//Zu erst pürfen ob ein exaktes Datum angegeben wurde
 		DetectTermin detector = new DetectTermin();
 		foundDate = detector.validate(sentence);
+		ArrayList<String> chunkscleaned = detector.searchDate(chunks);
 		
 		//Wenn Datum gefunden, dann Kalenderevent
-		if(foundDate == true) {
+		
+		if(foundDayMonth == true) {
+			
 			AbstractEvent calendarevent = eventFactory.createEvent("AtomicEvent");
 			calendarevent.setType("CalendarEvent");
 			//Besitzt event nur eine UserID??
@@ -75,7 +80,28 @@ public class SentenceInterestProfile extends AbstractInterestProfile {
 			calendarevent.add(new Property<>("Timestamp", EventUtils.findPropertyByKey(event, "Timestamp")));
 			calendarevent.add(new Property<>("SessionID", EventUtils.findPropertyByKey(event, "SessionID")));
 			calendarevent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID")));
-			calendarevent.add(new Property<>("Termin", detector.getfoundetDate()));
+			
+			try {
+				this.getAgent().send(calendarevent, "TokenGeneration");
+			} catch (NoValidEventException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NoValidTargetTopicException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+		}else if(foundDate == true) {
+			
+			AbstractEvent calendarevent = eventFactory.createEvent("AtomicEvent");
+			calendarevent.setType("CalendarEvent");
+			//Besitzt event nur eine UserID??
+			calendarevent.add(new Property<>("UserID", EventUtils.findPropertyByKey(event, "UserID")));
+			calendarevent.add(new Property<>("Timestamp", EventUtils.findPropertyByKey(event, "Timestamp")));
+			calendarevent.add(new Property<>("SessionID", EventUtils.findPropertyByKey(event, "SessionID")));
+			calendarevent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID")));
+			calendarevent.add(new Property<>("Termin", detector.getfoundDate()));
 			
 			try {
 				this.getAgent().send(calendarevent, "TokenGeneration");
@@ -89,8 +115,8 @@ public class SentenceInterestProfile extends AbstractInterestProfile {
 		}
 		//Chunker befüllen und alle Chunks in Kleinbuchstaben
 		Chunker chunk = new Chunker();
-		for (int i=0; i<chunks.size();i++) {
-			chunk.addChunkContent(chunks.get(i).toLowerCase());
+		for (int i=0; i<chunkscleaned.size();i++) {
+			chunk.addChunkContent(chunkscleaned.get(i).toLowerCase());
 		}
 		
 		detector.deleteAllDates();
@@ -103,6 +129,7 @@ public class SentenceInterestProfile extends AbstractInterestProfile {
 		
 		if(foundapps != null) {
 			for(int i = 0; i < foundapps.size(); i++) {
+				
 								
 				AbstractEvent applicationEvent = eventFactory.createEvent("AtomicEvent");
 				applicationEvent.setType("ApplicationEvent");

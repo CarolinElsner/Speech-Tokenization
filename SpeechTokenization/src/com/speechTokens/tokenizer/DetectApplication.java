@@ -11,6 +11,7 @@ public class DetectApplication {
 			//Hier Keywords definieren, die für die Erzeugung von ApplicationEvents relevant sind
 			String[][] appkeywords = {
 					{"google mail","mail"},
+					{"mails","mail"},
 					{"mail","mail"},
 					{"google presentation","presentation"}, 
 					{"google docs","docs"}				
