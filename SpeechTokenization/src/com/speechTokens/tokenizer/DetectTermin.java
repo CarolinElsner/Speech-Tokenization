@@ -6,6 +6,9 @@ import java.util.regex.Pattern;
 
 public class DetectTermin {
 	
+
+	public static boolean dayMonthfound = false;
+	
 	private static final Pattern Date_Expression = 
 		    Pattern.compile("(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)", Pattern.CASE_INSENSITIVE);
 	private ArrayList<String> dateDetect = new ArrayList<String>();
@@ -25,26 +28,38 @@ public class DetectTermin {
 		        }
 		        return matcher.find();
 		}
+		
+			
 
-		public ArrayList<String> serachDate (ArrayList<String> chunk) {
+		public ArrayList<String> searchDate (ArrayList<String> chunk) {
 
-			ArrayList<String> month = new ArrayList<String>();
-			month.add("January");
-			month.add("February");
-			month.add("March");
-			month.add("April");
-			month.add("May");
-			month.add("June");
-			month.add("July");
-			month.add("August");
-			month.add("September");
-			month.add("October");
-			month.add("November");
-			month.add("December");
+			ArrayList<String> dayMonth = new ArrayList<String>();
+			dayMonth.add("January");
+			dayMonth.add("February");
+			dayMonth.add("March");
+			dayMonth.add("April");
+			dayMonth.add("May");
+			dayMonth.add("June");
+			dayMonth.add("July");
+			dayMonth.add("August");
+			dayMonth.add("September");
+			dayMonth.add("October");
+			dayMonth.add("November");
+			dayMonth.add("December");
+			dayMonth.add("Monday");
+			dayMonth.add("Tuesday");
+			dayMonth.add("Wednesday");
+			dayMonth.add("Thursday");
+			dayMonth.add("Friday");
+			dayMonth.add("Saturday");
+			dayMonth.add("Sunday");
+			dayMonth.add("Calendar");
+			dayMonth.add("Appointment");
 			
 			for (int i = 0; i< chunk.size(); i++) {
-				for (int j = 0; j< month.size(); j++) {
-					if(chunk.get(i).contains(month.get(j))) {
+				for (int j = 0; j< dayMonth.size(); j++) {
+					if(chunk.get(i).contains(dayMonth.get(j))) {
+						dayMonthfound = true;
 						dateDetect.add(chunk.get(i));
 						chunk.remove(i);
 						i--;
@@ -70,9 +85,8 @@ public class DetectTermin {
 			dateDetect.removeAll(dateDetect);
 		}
 	
-		public String getfoundetDate(){
+		public String getfoundDate(){
 			return foundDate;
 		}
-		
-		
 }
+
