@@ -20,7 +20,7 @@ public class KeywordSearch {
 		
 		if(CheckIfSemanticsGiven(ch) == true) {
 			
-			ArrayList<String> foundkeywords = FindKeywords(ch);
+			ArrayList<String> foundkeywords = findKeywords(ch);
 			
 			if(keywordcount == 0) {
 				foundResults = noKeyword(ch);
@@ -55,8 +55,8 @@ public class KeywordSearch {
 	}
 	
 	//Search through Chunker to find spoken Keywords
-	
-	static ArrayList<String> FindKeywords(Chunker ch) {
+
+	public static ArrayList<String> findKeywords(Chunker ch) {
 		
 		keywordcount = 0;
 		
@@ -68,7 +68,6 @@ public class KeywordSearch {
 				
 				System.out.println("document detected");
 				foundkeywords.add("document");
-				ch.removeChunkAndSem(ch.getChunkContentAt(i));
 				i--;
 				keywordcount++;
 				
@@ -76,7 +75,6 @@ public class KeywordSearch {
 				
 				System.out.println("project detected");
 				foundkeywords.add("project");
-				ch.removeChunkAndSem(ch.getChunkContentAt(i));
 				i--;
 				keywordcount++;
 				
@@ -84,7 +82,6 @@ public class KeywordSearch {
 				
 				System.out.println("person detected");
 				foundkeywords.add("person");
-				ch.removeChunkAndSem(ch.getChunkContentAt(i));
 				i--;
 				keywordcount++;
 				
@@ -92,7 +89,6 @@ public class KeywordSearch {
 				
 				System.out.println("activity detected");
 				foundkeywords.add("activity");
-				ch.removeChunkAndSem(ch.getChunkContentAt(i));
 				i--;
 				keywordcount++;
 			}

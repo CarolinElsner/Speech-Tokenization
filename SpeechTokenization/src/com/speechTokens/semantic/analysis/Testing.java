@@ -140,7 +140,7 @@ public class Testing {
 			int keywordcount=0;
 			if(KeywordSearch.CheckIfSemanticsGiven(chunk) == true) {
 				 
-				ArrayList<String> foundkeywords = KeywordSearch.FindKeywords(chunk);
+				ArrayList<String> foundkeywords = KeywordSearch.findKeywords(chunk);
 				
 				if(keywordcount == 0) {
 					foundResults = KeywordSearch.noKeyword(chunk);

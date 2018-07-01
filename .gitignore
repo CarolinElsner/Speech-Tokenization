@@ -159,3 +159,6 @@ Speech_Recognition/bower_components/fetch/bower.json
 Speech_Recognition/bower_components/fetch/LICENSE
 Speech_Recognition/bower_components/fetch/.bower.json
 Speech_Recognition/bower_components/watson-speech/dist/watson-speech.js
+SpeechTokenization/ressources/projectSet.csv
+SpeechTokenization/ressources/employeeSet.csv
+SpeechTokenization/ressources/documentSet.csv
