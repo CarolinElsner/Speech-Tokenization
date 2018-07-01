@@ -3,6 +3,7 @@ package com.speechTokens.EvE.interestProfiles;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
+import com.speechTokens.EvE.events.EventCreationHelper;
 import com.speechTokens.semantic.analysis.KeywordSearch;
 import com.speechTokens.tokenizer.Chunker;
 
@@ -45,25 +46,47 @@ public class SeveralKeywordsIP extends AbstractInterestProfile {
 		Chunker chunks = (Chunker) EventUtils.findPropertyByKey(event, "Chunks").getValue();
 
 		Chunker semFoundChunks = KeywordSearch.severalKeywords(keywords, chunks);
-
-		//TODO: HIER EVENTS WIE DOCUMENT ETC EVENTS ERSTELLEN; IMMMER BEZÜGLICH DES ERKANNTEN TYPES
-		AbstractEvent actionEvent = eventFactory.createEvent("AtomicEvent");
-		actionEvent.setType("actionEvent");
-		actionEvent.add(new Property<>("UserID",EventUtils.findPropertyByKey(event, "UserID")));
-		actionEvent.add(new Property<>("Timestamp",EventUtils.findPropertyByKey(event, "Timestamp")));
-		actionEvent.add(new Property<>("SessionID",EventUtils.findPropertyByKey(event, "SessionID")));
-		actionEvent.add(new Property<>("Sentence",EventUtils.findPropertyByKey(event, "SentenceID")));
-		actionEvent.add(new Property<>("Chunks", semFoundChunks));
-		// TODO: ACTIONEVENT oder spezifische Events hier erstellen
-		try {
-			this.getAgent().send(actionEvent, "TokenGeneration");
-			
-		} catch (NoValidEventException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoValidTargetTopicException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		for (int i = 0; i < semFoundChunks.size(); i++) {
+			Object semantic = semFoundChunks.getSemanticAt(i);
+			if(semantic instanceof ArrayList<?>) {
+				ArrayList<?> newSemantic = (ArrayList<?>) semantic; 
+				if(newSemantic.size()>1) {
+					Chunker tempChunker = new Chunker();
+					String currChunk = semFoundChunks.getChunkContentAt(i);
+					tempChunker.addChunkContent(currChunk);
+					tempChunker.addSemanticToChunk(currChunk, tempChunker.readSemanticOfChunk(currChunk));
+					AbstractEvent uncertainEvent = eventFactory.createEvent("AtomicEvent");
+					uncertainEvent.setType("UncertainEvent");
+					uncertainEvent.add(new Property<>("UserID",EventUtils.findPropertyByKey(event, "UserID")));
+					uncertainEvent.add(new Property<>("Timestamp",EventUtils.findPropertyByKey(event, "Timestamp")));
+					uncertainEvent.add(new Property<>("SessionID",EventUtils.findPropertyByKey(event, "SessionID")));
+					uncertainEvent.add(new Property<>("Sentence",EventUtils.findPropertyByKey(event, "SentenceID")));
+					uncertainEvent.add(new Property<>("Chunks", tempChunker));
+					try {
+						this.getAgent().send(uncertainEvent, "TokenGeneration");
+						
+					} catch (NoValidEventException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (NoValidTargetTopicException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}else {
+					AbstractEvent actionEvent = eventFactory.createEvent("AtomicEvent");
+					actionEvent = EventCreationHelper.createEvent(semFoundChunks, actionEvent, event);
+					try {
+						this.getAgent().send(actionEvent, "TokenGeneration");
+						
+					} catch (NoValidEventException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (NoValidTargetTopicException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
 		}
 	}
 }

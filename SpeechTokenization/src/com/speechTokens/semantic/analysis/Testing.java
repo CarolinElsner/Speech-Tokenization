@@ -92,15 +92,12 @@ public class Testing {
 	
 	public static void main(String[] args) {
 
-		//System.out.println(JsonHandler.semanticLookUp("{}", "litrgdsteral").isEmpty());
-		//JsonHandler.prettyPrint(Interpretation.jsonString);
 		Chunker chunks = new Chunker();
 
 		ArrayList<String> test1 =new ArrayList<>();
 		test1.add("fdsfdsfdsa");
 		test1.add("dsaffdsafds");
 		ArrayList<String> test =new ArrayList<>();
-		test.add("fds");
 		test.add("fdsafdsfdsfdsafdsafdfdsa");
 		ArrayList<String> test2 =new ArrayList<>();
 		chunks.addChunkContent("uri");
@@ -109,17 +106,21 @@ public class Testing {
 		
 		chunks.addChunkContent("post");
 		chunks.addChunkContent("Hallo");
-		//chunks.addSemanticToChunk("post", jsonString);
-		//chunks.addSemanticToChunk("Hallo", jsonString1);
-		chunks.addSemanticToChunk("Mond", jsonString);
-		chunks.addSemanticToChunk("post", jsonString1);
-		chunks.addSemanticToChunk("Hallo", jsonString2);
+		chunks.addSemanticToChunk("post", jsonString);
+		JsonHandler js = new JsonHandler();
+		System.out.println(js.semanticLookUp(jsonString1, "fdsafdsa").size());
+		chunks.addSemanticToChunk("Hallo", test);
+		//System.out.println(chunks.getSemanticAt(4));
+		//chunks.addSemanticToChunk("Mond", jsonString);
+		//chunks.addSemanticToChunk("post", jsonString1);
+		//chunks.addSemanticToChunk("Hallo", jsonString2);
+		/*
 		ArrayList<String> keys= new ArrayList<>();
 		keys.add("Welt");
 		keys.add("Person");
 		keys.add("uri");
-		//KeywordSearch.severalKeywords(keys, chunks).printList();
-
+		KeywordSearch.severalKeywords(keys, chunks).printList();
+		*/
 		//chunks.printList();
 		//KeywordSearch.noKeyword(chunks).printList();
 		//chunks.addSemanticToChunk("Geeeht", "test");

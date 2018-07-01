@@ -3,6 +3,7 @@ package com.speechTokens.EvE.interestProfiles;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
+import com.speechTokens.EvE.events.EventCreationHelper;
 import com.speechTokens.semantic.analysis.KeywordSearch;
 import com.speechTokens.tokenizer.Chunker;
 
@@ -46,23 +47,22 @@ public class NoKeywordIP extends AbstractInterestProfile {
 
 		Chunker semFoundChunks = KeywordSearch.noKeyword(chunks);
 		
-		for (int i = 0; i < semFoundChunks.size(); i++) {
+		for (int i = 0; i < semFoundChunks.size(); i++) { // iterate through all the chunks that 
 			Object semantic = semFoundChunks.getSemanticAt(i);
 			if(semantic instanceof ArrayList<?>) {
 				ArrayList<?> newSemantic = (ArrayList<?>) semantic; 
 				if(newSemantic.size()>1) {// more than one sem data off the respective chunk, so we dont know which type
-					String chunk = semFoundChunks.getChunkContentAt(i);
-					Object sem = semFoundChunks.getSemanticAt(i);
-					Chunker tokenChunker = new Chunker();
-					tokenChunker.addChunkContent(chunk);
-					tokenChunker.addSemanticToChunk(chunk, sem);
+					Chunker tempChunker = new Chunker();
+					String currChunk = semFoundChunks.getChunkContentAt(i);
+					tempChunker.addChunkContent(currChunk);
+					tempChunker.addSemanticToChunk(currChunk, tempChunker.readSemanticOfChunk(currChunk));
 					AbstractEvent uncertainEvent = eventFactory.createEvent("AtomicEvent");
-					uncertainEvent.setType("uncertainEvent");
+					uncertainEvent.setType("UncertainEvent");
 					uncertainEvent.add(new Property<>("UserID",EventUtils.findPropertyByKey(event, "UserID")));
 					uncertainEvent.add(new Property<>("Timestamp",EventUtils.findPropertyByKey(event, "Timestamp")));
 					uncertainEvent.add(new Property<>("SessionID",EventUtils.findPropertyByKey(event, "SessionID")));
 					uncertainEvent.add(new Property<>("Sentence",EventUtils.findPropertyByKey(event, "SentenceID")));
-					uncertainEvent.add(new Property<>("Chunks", tokenChunker));
+					uncertainEvent.add(new Property<>("Chunks", tempChunker));
 					try {
 						this.getAgent().send(uncertainEvent, "TokenGeneration");
 						
@@ -73,7 +73,6 @@ public class NoKeywordIP extends AbstractInterestProfile {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					// TODO HIER DIE ERSTELLUNG VON EVENTS EINBINDEN WO DER TYP NICHT KLAR IST
 				}else { // just one semantic entry was found for the chunk
 					// Hier geht es um ein Event, die eine spezifische Aktion erfordert
 					String chunk = semFoundChunks.getChunkContentAt(i);
@@ -82,13 +81,7 @@ public class NoKeywordIP extends AbstractInterestProfile {
 					tokenChunker.addChunkContent(chunk);
 					tokenChunker.addSemanticToChunk(chunk, sem);
 					AbstractEvent actionEvent = eventFactory.createEvent("AtomicEvent");
-					actionEvent.setType("actionEvent");
-					actionEvent.add(new Property<>("UserID",EventUtils.findPropertyByKey(event, "UserID")));
-					actionEvent.add(new Property<>("Timestamp",EventUtils.findPropertyByKey(event, "Timestamp")));
-					actionEvent.add(new Property<>("SessionID",EventUtils.findPropertyByKey(event, "SessionID")));
-					actionEvent.add(new Property<>("Sentence",EventUtils.findPropertyByKey(event, "SentenceID")));
-					actionEvent.add(new Property<>("Chunks", tokenChunker));
-					// TODO: ACTIONEVENT oder spezifische Events hier erstellen
+					actionEvent = EventCreationHelper.createEvent(semFoundChunks, actionEvent, event);
 					try {
 						this.getAgent().send(actionEvent, "Action");
 						
