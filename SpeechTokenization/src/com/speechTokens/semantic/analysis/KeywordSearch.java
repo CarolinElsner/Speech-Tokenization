@@ -6,8 +6,6 @@ import com.speechTokens.tokenizer.Chunker;
 
 public class KeywordSearch {
 	
-	public static int keywordcount = 0;
-
 	/**
 	 * Looks for Keywords in the Chunker, and scanns for singular and plural of those by just looking into "contains"
 	 * The found Keyword and its semantic will be deleted from the Chunker Object
@@ -21,13 +19,13 @@ public class KeywordSearch {
 		if(CheckIfSemanticsGiven(ch) == true) {
 			
 			ArrayList<String> foundkeywords = findKeywords(ch);
-			
-			if(keywordcount == 0) {
+			int count= foundkeywords.size();
+			if(count == 0) {
 				foundResults = noKeyword(ch);
 				System.out.println("0 keywords"+foundkeywords);				
 				//Procedure for 0 found keywords
 				
-			}else if (keywordcount == 1) {
+			}else if (count == 1) {
 				foundResults = oneKeyword(foundkeywords.get(0), ch);
 				System.out.println("1 keyword"+foundkeywords);
 				//Procedure for 1 found keyword
@@ -58,7 +56,6 @@ public class KeywordSearch {
 
 	public static ArrayList<String> findKeywords(Chunker ch) {
 		
-		keywordcount = 0;
 		
 		ArrayList<String> foundkeywords = new ArrayList<>();
 		
@@ -69,28 +66,24 @@ public class KeywordSearch {
 				System.out.println("document detected");
 				foundkeywords.add("document");
 				i--;
-				keywordcount++;
 				
 			}else if (ch.getChunkContentAt(i).contains("project")) {
 				
 				System.out.println("project detected");
 				foundkeywords.add("project");
 				i--;
-				keywordcount++;
 				
 			}else if (ch.getChunkContentAt(i).contains("person")) {
 				
 				System.out.println("person detected");
 				foundkeywords.add("person");
 				i--;
-				keywordcount++;
 				
 			}else if (ch.getChunkContentAt(i).contains("activit")) {
 				
 				System.out.println("activity detected");
 				foundkeywords.add("activity");
 				i--;
-				keywordcount++;
 			}
 		} 
 		
