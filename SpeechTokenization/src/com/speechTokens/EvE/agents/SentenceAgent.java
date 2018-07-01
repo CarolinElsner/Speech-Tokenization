@@ -26,7 +26,10 @@ public class SentenceAgent extends AbstractAgent {
 	@Override
 	protected void doOnInit() {
 		
+<<<<<<< HEAD
 		this.setId("SentenceAgend");
+=======
+>>>>>>> 91733bf9d964a6c6bc0e320408dbb835c4b13bb6
 		
 		try {
 			AbstractInterestProfile ip = new SentenceInterestProfile();
