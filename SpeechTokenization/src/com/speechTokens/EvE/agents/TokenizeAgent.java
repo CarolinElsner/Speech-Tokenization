@@ -31,7 +31,7 @@ public class TokenizeAgent extends AbstractAgent {
 		try {
 			//Topic angeben --> Dokumentenrepresentation
 			
-			this.add("TokenGeneration");	
+			this.add("SemanticChunks");	
 		} catch (NoValidConsumingTopicException e) {			
 			e.printStackTrace();
 		}

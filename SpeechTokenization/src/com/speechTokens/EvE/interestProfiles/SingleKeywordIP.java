@@ -43,7 +43,6 @@ public class SingleKeywordIP extends AbstractInterestProfile {
 		
 		String keyword = EventUtils.findPropertyByKey(event, "Keyword").getValue().toString();
 		Chunker chunks = (Chunker) EventUtils.findPropertyByKey(event, "Chunks").getValue();
-
 		Chunker semFoundChunks = KeywordSearch.oneKeyword(keyword, chunks);
 
 		//TODO: HIER EVENTS WIE DOCUMENT ETC EVENTS ERSTELLEN; IMMMER BEZÜGLICH DES ERKANNTEN TYPES
