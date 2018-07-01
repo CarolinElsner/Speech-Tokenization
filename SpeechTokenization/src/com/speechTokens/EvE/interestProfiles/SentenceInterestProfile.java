@@ -1,23 +1,34 @@
 package com.speechTokens.EvE.interestProfiles;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.speechTokens.EvE.events.SentenceEvent;
 import com.speechTokens.EvE.events.WatsonEvent;
+import com.speechTokens.tokenizer.Chunker;
+import com.speechTokens.tokenizer.DetectApplication;
+import com.speechTokens.tokenizer.DetectTermin;
+import com.speechTokens.tokenizer.Tokenization;
 
 import eventprocessing.agent.NoValidEventException;
 import eventprocessing.agent.NoValidTargetTopicException;
 import eventprocessing.agent.interestprofile.AbstractInterestProfile;
 import eventprocessing.event.AbstractEvent;
 import eventprocessing.event.Property;
+import eventprocessing.utils.factory.AbstractFactory;
+import eventprocessing.utils.factory.FactoryProducer;
+import eventprocessing.utils.factory.FactoryValues;
 import eventprocessing.utils.factory.LoggerFactory;
+import eventprocessing.utils.model.EventUtils;
+
 
 /**
  * Trifft anhand der Sensoren, Durchschnittsgeschwindigkeit sowie mit
- * "Fachwissen" die Entscheidung, ob eine GeschwindigkeitsÃ¼berschreitung
- * stattgefunden hat oder nicht. In beiden FÃ¤llen wird ein
+ * "Fachwissen" die Entscheidung, ob eine GeschwindigkeitsÃƒÂ¼berschreitung
+ * stattgefunden hat oder nicht. In beiden FÃƒÂ¤llen wird ein
  * <code>ComplexEvent</code> erzeugt und auf ein separates Topic weitergeleitet
  * 
  * @author IngoT
@@ -25,10 +36,9 @@ import eventprocessing.utils.factory.LoggerFactory;
  */
 public class SentenceInterestProfile extends AbstractInterestProfile {
 
+	private static AbstractFactory eventFactory = FactoryProducer.getFactory(FactoryValues.INSTANCE.getEventFactory());
 	private static final long serialVersionUID = -6108185466150892913L;
 	private static Logger LOGGER = LoggerFactory.getLogger(SentenceInterestProfile.class);
-	// Factory fÃ¼r die Erzeugung der Events
-	private List<String> chunkList;
 
 	/**
 	 * Verarbeitung des empfangenen Events.
@@ -37,44 +47,105 @@ public class SentenceInterestProfile extends AbstractInterestProfile {
 	 */
 	@Override
 	public void doOnReceive(AbstractEvent event) {
+
 		
-		List<List> test= null;
-		List<Object> sublist = null;
-		sublist.add("chunk");
-		sublist.add("semantic2");
-		test.add(sublist);
+		String sentence = EventUtils.findPropertyByKey(event, "Sentence").getValue().toString();
 		
-		SentenceEvent e = new SentenceEvent(); // geht das auch so oder muss ich es wie in der Zeile drüber machen
-		// Pruefe ob das empfangene Event vom Typ WatsonEvent ist
-		if (event instanceof WatsonEvent) {
-			// TODO: PROBLEM: Es ist ungünsting wenn jedes mal an das neue Event die 3 standarddaten übergeben werdne müssen
-			WatsonEvent watsonEvent = (WatsonEvent) event;
-			// Alle benoetigten Informationen werden aus dem Event entnommen
-			e.add(new Property("UserID", "watsonEvent.userID"));// Hier die Properties an das neue Event übergebenübergeben
-			e.add(new Property("Timestamp", "watsonEvent.timestamp"));
-			e.add(new Property("SessionID", "watsonEvent.sessionID"));
-			List<?> list = watsonEvent.getProperties();
-			/*
-			for (int j = 0; j < list.size(); j++) {
-				if(list.get(j).getKey().equals("sentence")) {
-					try {
-						chunkList = Tokenization.doTokenization(list.get(j).getValue());
-						//TODO: PROBLEM: Wir haben hier eine chunk list und können sie nicht als Property hinzugügen
-						e.add(new Property("chunks", "chunklist"));
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				}
-			}*/
+		
+		Tokenization chunking = new Tokenization();
+		//Variable um zu prÃ¼fen ob Datum in Satz enthalten ist
+		boolean foundDate;
+		List<String> chunks = new ArrayList<String>();
+		try {
+			chunks = chunking.doTokenization(sentence);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
+		//Zu erst pÃ¼rfen ob ein exaktes Datum angegeben wurde
+		DetectTermin detector = new DetectTermin();
+		foundDate = detector.validate(sentence);
+		
+		//Wenn Datum gefunden, dann Kalenderevent
+		if(foundDate == true) {
+			AbstractEvent calendarevent = eventFactory.createEvent("AtomicEvent");
+			calendarevent.setType("CalendarEvent");
+			//Besitzt event nur eine UserID??
+			calendarevent.add(new Property<>("UserID", EventUtils.findPropertyByKey(event, "UserID")));
+			calendarevent.add(new Property<>("Timestamp", EventUtils.findPropertyByKey(event, "Timestamp")));
+			calendarevent.add(new Property<>("SessionID", EventUtils.findPropertyByKey(event, "SessionID")));
+			calendarevent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID")));
+			calendarevent.add(new Property<>("Termin", detector.getfoundetDate()));
+			
+			try {
+				this.getAgent().send(calendarevent, "TokenGeneration");
+			} catch (NoValidEventException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NoValidTargetTopicException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		//Chunker befÃ¼llen und alle Chunks in Kleinbuchstaben
+		Chunker chunk = new Chunker();
+		for (int i=0; i<chunks.size();i++) {
+			chunk.addChunkContent(chunks.get(i).toLowerCase());
+		}
+		
+		detector.deleteAllDates();
+		
+		//Detecting Application Keywords and publishing ApplicationEvent
+			
+		DetectApplication appdetection = new DetectApplication();
+		
+		ArrayList<String> foundapps = appdetection.detection(chunk);
+		
+		if(foundapps != null) {
+			for(int i = 0; i < foundapps.size(); i++) {
+								
+				AbstractEvent applicationEvent = eventFactory.createEvent("AtomicEvent");
+				applicationEvent.setType("ApplicationEvent");
+				applicationEvent.add(new Property<>("ApplicationType",foundapps.get(i)));
+				applicationEvent.add(new Property<>("UserID",EventUtils.findPropertyByKey(event, "UserID")));
+				applicationEvent.add(new Property<>("Timestamp",EventUtils.findPropertyByKey(event, "Timestamp")));
+				applicationEvent.add(new Property<>("SessionID",EventUtils.findPropertyByKey(event, "SessionID")));
+				applicationEvent.add(new Property<>("Sentence",EventUtils.findPropertyByKey(event, "SentenceID")));
+				
+				try {
+					this.getAgent().send(applicationEvent, "TokenGeneration");
+					
+				} catch (NoValidEventException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NoValidTargetTopicException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		
+		//SentenceEvent________________________________
+		
+		
+		AbstractEvent sentenceEvent = eventFactory.createEvent("AtomicEvent");
+		sentenceEvent.setType("SentenceEvent");
+		sentenceEvent.add(new Property<>("UserID",EventUtils.findPropertyByKey(event, "UserID")));
+		sentenceEvent.add(new Property<>("Timestamp",EventUtils.findPropertyByKey(event, "Timestamp")));
+		sentenceEvent.add(new Property<>("SessionID",EventUtils.findPropertyByKey(event, "SessionID")));
+		sentenceEvent.add(new Property<>("Sentence",EventUtils.findPropertyByKey(event, "SentenceID")));
+		sentenceEvent.add(new Property<>("Chunks",chunk));
 
 		try {
-			getAgent().send(e, "Chunks");
-		} catch (NoValidEventException e1) {
-			LOGGER.log(Level.WARNING, () -> String.format("%s", e));
-		} catch (NoValidTargetTopicException e1) {
-			LOGGER.log(Level.WARNING, () -> String.format("%s", e));
+			this.getAgent().send(sentenceEvent, "ChunkGeneration");
+			
+		} catch (NoValidEventException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoValidTargetTopicException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }

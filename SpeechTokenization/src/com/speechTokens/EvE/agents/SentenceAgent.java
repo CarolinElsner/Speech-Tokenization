@@ -36,7 +36,7 @@ public class SentenceAgent extends AbstractAgent {
 		}
 		
 		try {
-			this.add("SessionStart"); // Topic
+			this.add("ChunkGeneration"); // Topic
 		} catch (NoValidConsumingTopicException e) {
 			e.printStackTrace();
 		}
