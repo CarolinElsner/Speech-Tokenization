@@ -1,6 +1,5 @@
 package com.speechTokens.EvE.main;
 
-import com.speechTokens.EvE.agents.CalendarAgent;
 import com.speechTokens.EvE.agents.NoKeywordAgent;
 import com.speechTokens.EvE.agents.SentenceAgent;
 import com.speechTokens.EvE.agents.SeveralKeywordsAgent;
@@ -43,28 +42,24 @@ public class Start {
 		String port ="9092";
 		despatcher = new Despatcher(new ProducerSettings(server,port));
 		AbstractAgent sentenceAgent = new SentenceAgent();
-		AbstractAgent calendarAgent = new CalendarAgent();
 		AbstractAgent noKeywordAgent = new NoKeywordAgent();
 		AbstractAgent severalKeywordsAgent = new SeveralKeywordsAgent();
 		AbstractAgent singleKeywordAgent = new SingleKeywordAgent();
 		AbstractAgent tokenizeAgent = new TokenizeAgent();
 		
 		
-		sentenceAgent.setConsumerSettings(new ConsumerSettings(server, port, "sessionAgent"));
+		sentenceAgent.setConsumerSettings(new ConsumerSettings(server, port, "SessionAgent"));
 		sentenceAgent.setProducerSettings(new ProducerSettings(server,port));
-		calendarAgent.setConsumerSettings(new ConsumerSettings(server, port, "calendarAgent"));
-		calendarAgent.setProducerSettings(new ProducerSettings(server,port));
-		noKeywordAgent.setConsumerSettings(new ConsumerSettings(server, port, "noKeywordAgent"));
+		noKeywordAgent.setConsumerSettings(new ConsumerSettings(server, port, "SoKeywordAgent"));
 		noKeywordAgent.setProducerSettings(new ProducerSettings(server,port));
-		severalKeywordsAgent.setConsumerSettings(new ConsumerSettings(server, port, "severalKeywordsAgent"));
+		severalKeywordsAgent.setConsumerSettings(new ConsumerSettings(server, port, "SeveralKeywordsAgent"));
 		severalKeywordsAgent.setProducerSettings(new ProducerSettings(server,port));
-		singleKeywordAgent.setConsumerSettings(new ConsumerSettings(server, port, "singleKeywordAgent"));
+		singleKeywordAgent.setConsumerSettings(new ConsumerSettings(server, port, "SingleKeywordAgent"));
 		singleKeywordAgent.setProducerSettings(new ProducerSettings(server,port));
-		tokenizeAgent.setConsumerSettings(new ConsumerSettings(server, port, "tokenizeAgent"));
+		tokenizeAgent.setConsumerSettings(new ConsumerSettings(server, port, "TokenizeAgent"));
 		tokenizeAgent.setProducerSettings(new ProducerSettings(server,port));
 
 		StreamingExecution.add(sentenceAgent);
-		StreamingExecution.add(calendarAgent);
 		StreamingExecution.add(noKeywordAgent);
 		StreamingExecution.add(severalKeywordsAgent);
 		StreamingExecution.add(singleKeywordAgent);

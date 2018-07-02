@@ -11,6 +11,7 @@ import eventprocessing.utils.model.EventUtils;
 
 public class EventCreationHelper {
 	/**
+	 * The chunker may only contain one Chunk and the Chunk may only contain one Semantic Information in the Array, further sem infos wont be read
 	 * Looks in the semantic of a Chunker Object with one chunk and one sem info and returns the proprate event type
 	 * @param chunks contains just one Element with one semantic information, otherwise we would not be sure which actionEvent to send
 	 * @param actionEvent will be configured to the new event that will be sent, can be DocumentEvent, PersonEvent or ProjectEvent
