@@ -30,8 +30,9 @@ import eventprocessing.utils.model.EventUtils;
  */
 public class SeveralKeywordsIP extends AbstractInterestProfile {
 
+
+	private static final long serialVersionUID = -4840475713048922580L;
 	private static AbstractFactory eventFactory = FactoryProducer.getFactory(FactoryValues.INSTANCE.getEventFactory());
-	private static final long serialVersionUID = -6108185466150892913L;
 	private static Logger LOGGER = LoggerFactory.getLogger(SeveralKeywordsIP.class);
 
 	/**

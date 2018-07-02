@@ -18,10 +18,12 @@ import eventprocessing.agent.interestprofile.predicates.statement.IsEventType;
 public class SeveralKeywordsAgent extends AbstractAgent {
 
 
+
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 4224913594653783860L;
+	private static final long serialVersionUID = 8624939079782101956L;
 
 	@Override
 	protected void doOnInit() {

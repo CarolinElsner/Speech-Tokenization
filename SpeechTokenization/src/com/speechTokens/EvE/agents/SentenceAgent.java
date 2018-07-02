@@ -18,6 +18,8 @@ import eventprocessing.agent.interestprofile.predicates.statement.IsEventType;
 public class SentenceAgent extends AbstractAgent {
 
 
+
+
 	/**
 	 * 
 	 */

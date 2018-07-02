@@ -19,9 +19,10 @@ import eventprocessing.utils.model.EventUtils;
 
 public class TokenizeInterestProfile extends AbstractInterestProfile {
 
-	private static final long serialVersionUID = 1L;
+
+	private static final long serialVersionUID = -8805054035365429362L;
 	private static AbstractFactory eventFactory = FactoryProducer.getFactory(FactoryValues.INSTANCE.getEventFactory());
-	Logger l = LoggerFactory.getLogger("SessionState");
+	private static Logger LOGGER = LoggerFactory.getLogger(TokenizeInterestProfile.class);
 	
 	
 	
@@ -31,7 +32,7 @@ public class TokenizeInterestProfile extends AbstractInterestProfile {
 		
 		Chunker chunks = (Chunker) EventUtils.findPropertyByKey(event, "Chunks").getValue();
 		ArrayList<String> keywords = KeywordSearch.findKeywords(chunks);
-		if(keywords.size() == 0) {
+		if(keywords.size() == 0) { // no keyword was found
 		
 		AbstractEvent noKeywordEvent = eventFactory.createEvent("AtomicEvent");
 		noKeywordEvent.setType("NoKeywordsEvent");
@@ -40,7 +41,7 @@ public class TokenizeInterestProfile extends AbstractInterestProfile {
 		noKeywordEvent.add(new Property<>("Timestamp", EventUtils.findPropertyByKey(event, "Timestamp")));
 		noKeywordEvent.add(new Property<>("SessionID", EventUtils.findPropertyByKey(event, "SessionID")));
 		noKeywordEvent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID")));
-		noKeywordEvent.add(new Property<>("Chunks", EventUtils.findPropertyByKey(event, "Chunks")));		
+		noKeywordEvent.add(new Property<>("Chunks", EventUtils.findPropertyByKey(event, "Chunks")));
 		
 		try {
 			this.getAgent().send(noKeywordEvent, "TokenGeneration");
@@ -52,7 +53,7 @@ public class TokenizeInterestProfile extends AbstractInterestProfile {
 			e.printStackTrace();
 		}
 		
-		}else if (keywords.size() == 1) {
+		}else if (keywords.size() == 1) { // one Keyword was found
 
 			chunks.removeChunkAndSem(keywords.get(0));// remove keyword chunk
 			AbstractEvent singleKeywordEvent = eventFactory.createEvent("AtomicEvent");		
@@ -64,7 +65,7 @@ public class TokenizeInterestProfile extends AbstractInterestProfile {
 			singleKeywordEvent.add(new Property<>("SessionID", EventUtils.findPropertyByKey(event, "SessionID")));
 			singleKeywordEvent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID")));
 			singleKeywordEvent.add(new Property<>("Chunks", chunks)); // Give the new chunker object where keyword chunk is removed
-			singleKeywordEvent.add(new Property<>("Keywords", keywords));
+			singleKeywordEvent.add(new Property<>("Keywords", keywords.get(0))); // Pushes the Keyword as an String (the Keyword) into the Event
 
 			try {
 				this.getAgent().send(singleKeywordEvent, "TokenGeneration");
@@ -76,7 +77,7 @@ public class TokenizeInterestProfile extends AbstractInterestProfile {
 				e.printStackTrace();
 			}
 		
-		}else {
+		}else { // size of Keywords Arraylist is bigger than one, so more keywords were found
 			
 			for (int i = 0; i < keywords.size(); i++) {
 				chunks.removeSemanticOfChunk(keywords.get(i)); // there have to be more than one keyword included, remove them
@@ -89,7 +90,7 @@ public class TokenizeInterestProfile extends AbstractInterestProfile {
 			severalKeywordsEvent.add(new Property<>("SessionID", EventUtils.findPropertyByKey(event, "SessionID")));
 			severalKeywordsEvent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID")));
 			severalKeywordsEvent.add(new Property<>("Chunks", chunks));// add new chunker object
-			severalKeywordsEvent.add(new Property<>("Keywords", keywords));
+			severalKeywordsEvent.add(new Property<>("Keywords", keywords)); // Pushes the Keyword as an ArrayList<String> with multiple entries (the Keywords) into the Event
 	
 			
 			try {

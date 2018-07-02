@@ -36,8 +36,11 @@ import eventprocessing.utils.model.EventUtils;
  */
 public class SentenceInterestProfile extends AbstractInterestProfile {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6623427848645226550L;
 	private static AbstractFactory eventFactory = FactoryProducer.getFactory(FactoryValues.INSTANCE.getEventFactory());
-	private static final long serialVersionUID = -6108185466150892913L;
 	private static Logger LOGGER = LoggerFactory.getLogger(SentenceInterestProfile.class);
 
 	/**
@@ -137,6 +140,8 @@ public class SentenceInterestProfile extends AbstractInterestProfile {
 				applicationEvent.add(new Property<>("UserID",EventUtils.findPropertyByKey(event, "UserID")));
 				applicationEvent.add(new Property<>("Timestamp",EventUtils.findPropertyByKey(event, "Timestamp")));
 				applicationEvent.add(new Property<>("SessionID",EventUtils.findPropertyByKey(event, "SessionID")));
+				applicationEvent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID")));
+
 				
 				try {
 					this.getAgent().send(applicationEvent, "TokenGeneration");
@@ -160,6 +165,8 @@ public class SentenceInterestProfile extends AbstractInterestProfile {
 			sentenceEvent.add(new Property<>("UserID",EventUtils.findPropertyByKey(event, "UserID")));
 			sentenceEvent.add(new Property<>("Timestamp",EventUtils.findPropertyByKey(event, "Timestamp")));
 			sentenceEvent.add(new Property<>("SessionID",EventUtils.findPropertyByKey(event, "SessionID")));
+			sentenceEvent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID")));
+
 			sentenceEvent.add(new Property<>("Chunks",chunk));
 	
 			try {

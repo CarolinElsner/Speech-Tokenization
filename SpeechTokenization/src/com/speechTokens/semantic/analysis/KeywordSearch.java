@@ -53,7 +53,11 @@ public class KeywordSearch {
 	}
 	
 	//Search through Chunker to find spoken Keywords
-
+	/**
+	 * Looks in the chunks for a specific keyword. Can detect singular and plural of Keywords
+	 * @param ch chunker Object which contains the Chunks including the Sem infou found by the DR Group
+	 * @return an ArrayList<String> with the KEywords that were found
+	 */
 	public static ArrayList<String> findKeywords(Chunker ch) {
 		
 		

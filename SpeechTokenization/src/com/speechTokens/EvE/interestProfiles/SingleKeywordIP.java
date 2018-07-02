@@ -30,8 +30,11 @@ import eventprocessing.utils.model.EventUtils;
  */
 public class SingleKeywordIP extends AbstractInterestProfile {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6922837623061511383L;
 	private static AbstractFactory eventFactory = FactoryProducer.getFactory(FactoryValues.INSTANCE.getEventFactory());
-	private static final long serialVersionUID = -6108185466150892913L;
 	private static Logger LOGGER = LoggerFactory.getLogger(SingleKeywordIP.class);
 
 	/**
@@ -41,13 +44,13 @@ public class SingleKeywordIP extends AbstractInterestProfile {
 	 */
 	@Override
 	public void doOnReceive(AbstractEvent event) {
-
 		
-		String keyword = EventUtils.findPropertyByKey(event, "Keyword").getValue().toString();
+		// TODO: Hier suchen wir exakt nach dem Keywort das wir als Chunk erhalten haben in den Semantischen Informationen. Sollte es als Plural (Projects Documents, Persons) hinterlegt sein wird es nicht gefunden
+		String keyword = EventUtils.findPropertyByKey(event, "Keywords").getValue().toString(); // is one String containing the Keyword that was found as a Chunk
 		Chunker chunks = (Chunker) EventUtils.findPropertyByKey(event, "Chunks").getValue();
-		Chunker semFoundChunks = KeywordSearch.oneKeyword(keyword, chunks);
-		for (int i = 0; i < semFoundChunks.size(); i++) {
-			Object semantic = semFoundChunks.getSemanticAt(i);
+		Chunker semFoundChunks = KeywordSearch.oneKeyword(keyword, chunks); // Chunker object with all the chunks where sem info regarding the Keyword was found
+		for (int i = 0; i < semFoundChunks.size(); i++) { // A Token will just consist of one Chunk, with the sem Data, therefore iterate through the Chunks
+			Object semantic = semFoundChunks.getSemanticAt(i);// get the sem info for the current chunk
 			if(semantic instanceof ArrayList<?>) {
 				ArrayList<?> newSemantic = (ArrayList<?>) semantic; 
 				if(newSemantic.size()>1) {
