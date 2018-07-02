@@ -59,7 +59,6 @@ public class ServletInterface extends HttpServlet {
 		AbstractEvent watsonEvent = eventFactory.createEvent("AtomicEvent");
 		watsonEvent.setType("WatsonEvent");
 		watsonEvent.add(new Property<>("UserID",userID));
-		watsonEvent.add(new Property<>("Timestamp",timestamp));
 		watsonEvent.add(new Property<>("SessionID", sessionID));
 		watsonEvent.add(new Property<>("Sentence", JsSentence));
 		watsonEvent.add(new Property<>("SentenceID", sentenceID));

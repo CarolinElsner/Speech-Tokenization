@@ -80,7 +80,6 @@ public class SentenceInterestProfile extends AbstractInterestProfile {
 			calendarevent.setType("CalendarEvent");
 			//Besitzt event nur eine UserID??
 			calendarevent.add(new Property<>("UserID", EventUtils.findPropertyByKey(event, "UserID")));
-			calendarevent.add(new Property<>("Timestamp", EventUtils.findPropertyByKey(event, "Timestamp")));
 			calendarevent.add(new Property<>("SessionID", EventUtils.findPropertyByKey(event, "SessionID")));
 			calendarevent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID")));
 			
@@ -101,7 +100,6 @@ public class SentenceInterestProfile extends AbstractInterestProfile {
 			calendarevent.setType("CalendarEvent");
 			//Besitzt event nur eine UserID??
 			calendarevent.add(new Property<>("UserID", EventUtils.findPropertyByKey(event, "UserID")));
-			calendarevent.add(new Property<>("Timestamp", EventUtils.findPropertyByKey(event, "Timestamp")));
 			calendarevent.add(new Property<>("SessionID", EventUtils.findPropertyByKey(event, "SessionID")));
 			calendarevent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID")));
 			calendarevent.add(new Property<>("Termin", detector.getfoundDate()));
@@ -138,7 +136,6 @@ public class SentenceInterestProfile extends AbstractInterestProfile {
 				applicationEvent.setType("ApplicationEvent");
 				applicationEvent.add(new Property<>("ApplicationType",foundapps.get(i)));
 				applicationEvent.add(new Property<>("UserID",EventUtils.findPropertyByKey(event, "UserID")));
-				applicationEvent.add(new Property<>("Timestamp",EventUtils.findPropertyByKey(event, "Timestamp")));
 				applicationEvent.add(new Property<>("SessionID",EventUtils.findPropertyByKey(event, "SessionID")));
 				applicationEvent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID")));
 
@@ -163,7 +160,6 @@ public class SentenceInterestProfile extends AbstractInterestProfile {
 			AbstractEvent sentenceEvent = eventFactory.createEvent("AtomicEvent");
 			sentenceEvent.setType("SentenceEvent");
 			sentenceEvent.add(new Property<>("UserID",EventUtils.findPropertyByKey(event, "UserID")));
-			sentenceEvent.add(new Property<>("Timestamp",EventUtils.findPropertyByKey(event, "Timestamp")));
 			sentenceEvent.add(new Property<>("SessionID",EventUtils.findPropertyByKey(event, "SessionID")));
 			sentenceEvent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID")));
 

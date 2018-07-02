@@ -147,7 +147,8 @@ public class Chunker implements Serializable{
 				}
 			}
 			if(count==0) {// chunk was never found in List
-				throw new NoSuchElementException();
+				System.out.println("Chunker.addSemanticToChunk: Chunk not found in List");
+				//throw new NoSuchElementException();
 			}
 		}
 	}
@@ -180,8 +181,9 @@ public class Chunker implements Serializable{
 			}
 		}
 		if(count==0) {// chunk was never found in List
-			throw new NoSuchElementException();
-		}
+			System.out.println("Chunker.readSemanticOfChunk: Chunk not found in List");
+			//throw new NoSuchElementException();
+			}
 			return semantic;
 	}
 	

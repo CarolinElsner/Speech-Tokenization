@@ -20,7 +20,6 @@ public class EventCreationHelper {
 	public static AbstractEvent createEvent(Chunker chunks, AbstractEvent actionEvent, AbstractEvent oldEvent) {
 
 		actionEvent.add(new Property<>("UserID",EventUtils.findPropertyByKey(oldEvent, "UserID")));
-		actionEvent.add(new Property<>("Timestamp",EventUtils.findPropertyByKey(oldEvent, "Timestamp")));
 		actionEvent.add(new Property<>("SessionID",EventUtils.findPropertyByKey(oldEvent, "SessionID")));
 		actionEvent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(oldEvent, "SentenceID")));
 

@@ -79,13 +79,10 @@ public class KeywordSearch {
 				
 				System.out.println("person detected");
 				foundkeywords.add("person");
-				
-			}else if (ch.getChunkContentAt(i).contains("activit")) {
-				
-				System.out.println("activity detected");
-				foundkeywords.add("activity");
+			}else {
+				System.out.println("KeywordSerch.findKeywords: Keywort nicht erkannt");
 			}
-		} 
+		}
 		
 		return foundkeywords;
 	}

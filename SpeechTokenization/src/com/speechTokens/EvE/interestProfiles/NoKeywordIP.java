@@ -59,7 +59,6 @@ public class NoKeywordIP extends AbstractInterestProfile {
 					AbstractEvent uncertainEvent = eventFactory.createEvent("AtomicEvent");
 					uncertainEvent.setType("UncertainEvent");
 					uncertainEvent.add(new Property<>("UserID",EventUtils.findPropertyByKey(event, "UserID")));
-					uncertainEvent.add(new Property<>("Timestamp",EventUtils.findPropertyByKey(event, "Timestamp")));
 					uncertainEvent.add(new Property<>("SessionID",EventUtils.findPropertyByKey(event, "SessionID")));
 					uncertainEvent.add(new Property<>("Chunks", tempChunker));
 					try {
