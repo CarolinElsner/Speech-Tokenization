@@ -222,13 +222,14 @@ public class Chunker implements Serializable{
 	public void removeChunkAndSem(String chunk) {
 		int count=0;
 		for (int i = 0; i < chunkList.size(); i++) {
-			if((String) ((ArrayList<Object>) chunkList.get(i)).get(0) == chunk) {
+			if(((String) ((ArrayList<Object>) chunkList.get(i)).get(0)).equals(chunk)) { // get from the position i the chunk (get(0) bec chunk is at first pos)
 				count++;
 				chunkList.remove(i);
 			}
 		}
 		if(count==0) {// chunk was never found in List
-			throw new NoSuchElementException();
+			System.out.println("Chunker.removeChunkAndSem:Chunk was never found in List");
+			//throw new NoSuchElementException();
 		}
 	}
 	
@@ -247,7 +248,8 @@ public class Chunker implements Serializable{
 			}
 		}
 		if(count==0) {
-			throw new NoSuchElementException();
+			System.out.println("removeSemanticOfChunk: No sem Info or chunk not found");
+			//throw new NoSuchElementException();
 		}
 	}
 	
