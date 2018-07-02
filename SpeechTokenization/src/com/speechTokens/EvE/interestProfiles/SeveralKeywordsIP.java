@@ -49,19 +49,19 @@ public class SeveralKeywordsIP extends AbstractInterestProfile {
 		Chunker semFoundChunks = KeywordSearch.severalKeywords(keywords, chunks);
 		for (int i = 0; i < semFoundChunks.size(); i++) {
 			Object semantic = semFoundChunks.getSemanticAt(i);
+			Chunker tempChunker = new Chunker(); // create a temporary chunker which consists of just one chunk
+			String currChunk = semFoundChunks.getChunkContentAt(i);
+			tempChunker.addChunkContent(currChunk);
+			tempChunker.addSemanticToChunk(currChunk, tempChunker.readSemanticOfChunk(currChunk));
 			if(semantic instanceof ArrayList<?>) {
 				ArrayList<?> newSemantic = (ArrayList<?>) semantic; 
 				if(newSemantic.size()>1) {
-					Chunker tempChunker = new Chunker();
-					String currChunk = semFoundChunks.getChunkContentAt(i);
-					tempChunker.addChunkContent(currChunk);
-					tempChunker.addSemanticToChunk(currChunk, tempChunker.readSemanticOfChunk(currChunk));
 					AbstractEvent uncertainEvent = eventFactory.createEvent("AtomicEvent");
 					uncertainEvent.setType("UncertainEvent");
 					uncertainEvent.add(new Property<>("UserID",EventUtils.findPropertyByKey(event, "UserID")));
 					uncertainEvent.add(new Property<>("Timestamp",EventUtils.findPropertyByKey(event, "Timestamp")));
 					uncertainEvent.add(new Property<>("SessionID",EventUtils.findPropertyByKey(event, "SessionID")));
-					uncertainEvent.add(new Property<>("Chunks", tempChunker));
+					uncertainEvent.add(new Property<>("Chunks", tempChunker.returnList())); // the chunker Object cant be pushed as it is and has to be parsed to the ArrayList
 					try {
 						this.getAgent().send(uncertainEvent, "TokenGeneration");
 						
@@ -74,7 +74,7 @@ public class SeveralKeywordsIP extends AbstractInterestProfile {
 					}
 				}else {
 					AbstractEvent actionEvent = eventFactory.createEvent("AtomicEvent");
-					actionEvent = EventCreationHelper.createEvent(semFoundChunks, actionEvent, event);
+					actionEvent = EventCreationHelper.createEvent(tempChunker, actionEvent, event);
 					try {
 						this.getAgent().send(actionEvent, "TokenGeneration");
 						

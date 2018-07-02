@@ -25,6 +25,10 @@ public class Chunker implements Serializable{
 	public ArrayList<Object> returnList(){
 		return chunkList;
 	}
+	
+	public void parseArrayList(ArrayList<Object> newChunkList) {
+		chunkList= newChunkList;
+	}
 	/**
 	 * @return number of chunks in the List
 	 */

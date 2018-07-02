@@ -167,7 +167,7 @@ public class SentenceInterestProfile extends AbstractInterestProfile {
 			sentenceEvent.add(new Property<>("SessionID",EventUtils.findPropertyByKey(event, "SessionID")));
 			sentenceEvent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID")));
 
-			sentenceEvent.add(new Property<>("Chunks",chunk));
+			sentenceEvent.add(new Property<>("Chunks", chunk.returnList()));// the chunker Object cant be pushed as it is and has to be parsed to the ArrayList
 	
 			try {
 				this.getAgent().send(sentenceEvent, "ChunkGeneration");

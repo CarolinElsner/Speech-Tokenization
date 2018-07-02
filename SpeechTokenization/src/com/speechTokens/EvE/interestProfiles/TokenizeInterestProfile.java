@@ -30,7 +30,9 @@ public class TokenizeInterestProfile extends AbstractInterestProfile {
 	protected void doOnReceive(AbstractEvent event) {
 		
 		
-		Chunker chunks = (Chunker) EventUtils.findPropertyByKey(event, "Chunks").getValue();
+		ArrayList<Object> chunkObjectList = (ArrayList<Object>) EventUtils.findPropertyByKey(event, "Chunks").getValue();
+		Chunker chunks = new Chunker();
+		chunks.parseArrayList(chunkObjectList); // The EVE Framework can't work with chunker Objects therefore, they are sent as ArrayLists and then parsed to Chunker Objects
 		ArrayList<String> keywords = KeywordSearch.findKeywords(chunks);
 		if(keywords.size() == 0) { // no keyword was found
 		
@@ -64,7 +66,7 @@ public class TokenizeInterestProfile extends AbstractInterestProfile {
 			singleKeywordEvent.add(new Property<>("Timestamp", EventUtils.findPropertyByKey(event, "Timestamp")));
 			singleKeywordEvent.add(new Property<>("SessionID", EventUtils.findPropertyByKey(event, "SessionID")));
 			singleKeywordEvent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID")));
-			singleKeywordEvent.add(new Property<>("Chunks", chunks)); // Give the new chunker object where keyword chunk is removed
+			singleKeywordEvent.add(new Property<>("Chunks", chunks.returnList())); // Give the new chunker object where keyword chunk is removed
 			singleKeywordEvent.add(new Property<>("Keywords", keywords.get(0))); // Pushes the Keyword as an String (the Keyword) into the Event
 
 			try {
@@ -89,7 +91,7 @@ public class TokenizeInterestProfile extends AbstractInterestProfile {
 			severalKeywordsEvent.add(new Property<>("Timestamp", EventUtils.findPropertyByKey(event, "Timestamp")));
 			severalKeywordsEvent.add(new Property<>("SessionID", EventUtils.findPropertyByKey(event, "SessionID")));
 			severalKeywordsEvent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID")));
-			severalKeywordsEvent.add(new Property<>("Chunks", chunks));// add new chunker object
+			severalKeywordsEvent.add(new Property<>("Chunks", chunks.returnList()));// add new chunker object
 			severalKeywordsEvent.add(new Property<>("Keywords", keywords)); // Pushes the Keyword as an ArrayList<String> with multiple entries (the Keywords) into the Event
 	
 			
