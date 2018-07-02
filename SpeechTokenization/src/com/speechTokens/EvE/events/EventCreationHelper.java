@@ -21,7 +21,7 @@ public class EventCreationHelper {
 		actionEvent.add(new Property<>("UserID",EventUtils.findPropertyByKey(oldEvent, "UserID")));
 		actionEvent.add(new Property<>("Timestamp",EventUtils.findPropertyByKey(oldEvent, "Timestamp")));
 		actionEvent.add(new Property<>("SessionID",EventUtils.findPropertyByKey(oldEvent, "SessionID")));
-		actionEvent.add(new Property<>("Sentence",EventUtils.findPropertyByKey(oldEvent, "SentenceID")));
+		actionEvent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(oldEvent, "SentenceID")));
 
 		ArrayList<String> semanticStr = (ArrayList<String>) chunks.getSemanticAt(0);
 		if(semanticStr.get(0).contains("Document")== true) {

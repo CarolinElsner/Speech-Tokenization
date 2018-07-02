@@ -61,7 +61,6 @@ public class NoKeywordIP extends AbstractInterestProfile {
 					uncertainEvent.add(new Property<>("UserID",EventUtils.findPropertyByKey(event, "UserID")));
 					uncertainEvent.add(new Property<>("Timestamp",EventUtils.findPropertyByKey(event, "Timestamp")));
 					uncertainEvent.add(new Property<>("SessionID",EventUtils.findPropertyByKey(event, "SessionID")));
-					uncertainEvent.add(new Property<>("Sentence",EventUtils.findPropertyByKey(event, "SentenceID")));
 					uncertainEvent.add(new Property<>("Chunks", tempChunker));
 					try {
 						this.getAgent().send(uncertainEvent, "TokenGeneration");

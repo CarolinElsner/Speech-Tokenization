@@ -137,7 +137,6 @@ public class SentenceInterestProfile extends AbstractInterestProfile {
 				applicationEvent.add(new Property<>("UserID",EventUtils.findPropertyByKey(event, "UserID")));
 				applicationEvent.add(new Property<>("Timestamp",EventUtils.findPropertyByKey(event, "Timestamp")));
 				applicationEvent.add(new Property<>("SessionID",EventUtils.findPropertyByKey(event, "SessionID")));
-				applicationEvent.add(new Property<>("Sentence",EventUtils.findPropertyByKey(event, "SentenceID")));
 				
 				try {
 					this.getAgent().send(applicationEvent, "TokenGeneration");
@@ -161,7 +160,6 @@ public class SentenceInterestProfile extends AbstractInterestProfile {
 			sentenceEvent.add(new Property<>("UserID",EventUtils.findPropertyByKey(event, "UserID")));
 			sentenceEvent.add(new Property<>("Timestamp",EventUtils.findPropertyByKey(event, "Timestamp")));
 			sentenceEvent.add(new Property<>("SessionID",EventUtils.findPropertyByKey(event, "SessionID")));
-			sentenceEvent.add(new Property<>("Sentence",EventUtils.findPropertyByKey(event, "SentenceID")));
 			sentenceEvent.add(new Property<>("Chunks",chunk));
 	
 			try {
