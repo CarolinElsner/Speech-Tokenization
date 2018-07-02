@@ -43,8 +43,9 @@ public class NoKeywordIP extends AbstractInterestProfile {
 	public void doOnReceive(AbstractEvent event) {
 
 				
-		Chunker chunks = (Chunker) EventUtils.findPropertyByKey(event, "Chunks").getValue();
-
+		ArrayList<Object> chunkArrList = (ArrayList<Object>) EventUtils.findPropertyByKey(event, "Chunks").getValue();
+		Chunker chunks = new Chunker();
+		chunks.parseArrayList(chunkArrList);
 		Chunker semFoundChunks = KeywordSearch.noKeyword(chunks);
 		
 		for (int i = 0; i < semFoundChunks.size(); i++) { // iterate through all the chunks that 
@@ -60,7 +61,7 @@ public class NoKeywordIP extends AbstractInterestProfile {
 					uncertainEvent.setType("UncertainEvent");
 					uncertainEvent.add(new Property<>("UserID",EventUtils.findPropertyByKey(event, "UserID")));
 					uncertainEvent.add(new Property<>("SessionID",EventUtils.findPropertyByKey(event, "SessionID")));
-					uncertainEvent.add(new Property<>("Chunks", tempChunker));
+					uncertainEvent.add(new Property<>("Chunks", tempChunker.returnList()));
 					try {
 						this.getAgent().send(uncertainEvent, "TokenGeneration");
 						

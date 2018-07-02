@@ -38,7 +38,7 @@ public class EventCreationHelper {
 						
 		}else {
 			actionEvent.setType("UncertainEvent");
-			actionEvent.add(new Property<>("Chunks", chunks));
+			actionEvent.add(new Property<>("Chunks", chunks.returnList()));
 			System.out.println("No specific type detected, uncertain event has to be pushed");
 		}
 		return actionEvent;

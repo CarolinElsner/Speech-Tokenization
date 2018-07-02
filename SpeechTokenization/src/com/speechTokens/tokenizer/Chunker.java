@@ -14,7 +14,6 @@ public class Chunker implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -8644047868665686507L;
-//TODO: Bisher wird in jeder Funktion die globale Variable "chunkList" verändert, es ist aber besser es so zu machen, dass der CHunker der verändert werden soll als übergabewert übergeben wird
 	private ArrayList<Object> chunkList = new ArrayList<Object>(); // {{chunk1},{chunk2}}
 	//private static ArrayList<Object> chunkElement = new ArrayList<Object>(); // chunk1--> {{chunkContent},{semantic}}
 	

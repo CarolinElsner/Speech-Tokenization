@@ -47,7 +47,11 @@ public class SingleKeywordIP extends AbstractInterestProfile {
 		
 		// TODO: Hier suchen wir exakt nach dem Keywort das wir als Chunk erhalten haben in den Semantischen Informationen. Sollte es als Plural (Projects Documents, Persons) hinterlegt sein wird es nicht gefunden
 		String keyword = EventUtils.findPropertyByKey(event, "Keywords").getValue().toString(); // is one String containing the Keyword that was found as a Chunk
-		Chunker chunks = (Chunker) EventUtils.findPropertyByKey(event, "Chunks").getValue();
+		ArrayList<Object> chunkArrList = (ArrayList<Object>) EventUtils.findPropertyByKey(event, "Chunks").getValue();
+		Chunker chunks = new Chunker();
+		chunks.parseArrayList(chunkArrList);
+		
+		
 		Chunker semFoundChunks = KeywordSearch.oneKeyword(keyword, chunks); // Chunker object with all the chunks where sem info regarding the Keyword was found
 		for (int i = 0; i < semFoundChunks.size(); i++) { // A Token will just consist of one Chunk, with the sem Data, therefore iterate through the Chunks
 			Object semantic = semFoundChunks.getSemanticAt(i);// get the sem info for the current chunk

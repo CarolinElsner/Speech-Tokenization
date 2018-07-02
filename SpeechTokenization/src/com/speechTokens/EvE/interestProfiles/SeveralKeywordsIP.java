@@ -44,8 +44,10 @@ public class SeveralKeywordsIP extends AbstractInterestProfile {
 	public void doOnReceive(AbstractEvent event) {
 
 		ArrayList<String> keywords = (ArrayList<String>) EventUtils.findPropertyByKey(event, "Keywords").getValue();		
-		Chunker chunks = (Chunker) EventUtils.findPropertyByKey(event, "Chunks").getValue();
-
+		ArrayList<Object> chunkArrList = (ArrayList<Object>) EventUtils.findPropertyByKey(event, "Chunks").getValue();
+		Chunker chunks = new Chunker();
+		chunks.parseArrayList(chunkArrList);
+		
 		Chunker semFoundChunks = KeywordSearch.severalKeywords(keywords, chunks);
 		for (int i = 0; i < semFoundChunks.size(); i++) {
 			Object semantic = semFoundChunks.getSemanticAt(i);

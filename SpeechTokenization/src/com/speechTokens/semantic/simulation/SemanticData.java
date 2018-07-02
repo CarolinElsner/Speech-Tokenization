@@ -20,7 +20,6 @@ public class SemanticData {
 		for (final File fileEntry : folder.listFiles()) {
 			String filePath = fileEntry.getAbsolutePath();
 			if (fileEntry.isFile() && filePath.substring(filePath.length() - 4).equals(".csv")) {
-				// TODO: Hier evtl rekursion einbauen, sodass es egal ist ob es Unterordner gibt
 				files.add(fileEntry.getAbsolutePath());
 			}
 		}
@@ -53,7 +52,7 @@ public class SemanticData {
 				for (int i = 0; i < cacheCSVEntrys.length; i++) {
 					// case insensitive comparison
 					// currently: Every chunk is compared with each entry of the CSV data set
-					// TODO: Intelligenteren vergleich erstellen
+				
 					if (chunk.equalsIgnoreCase(cacheCSVEntrys[i])) {
 						for (int k = 0; k < cacheCSVEntrys.length; k++) {
 							cacheCSVEntrys[k]=CSVHeader[k]+": "+cacheCSVEntrys[k];
