@@ -47,10 +47,10 @@ public class TokenizeInterestProfile extends AbstractInterestProfile {
 		try {
 			this.getAgent().send(noKeywordEvent, "Keywords");
 		} catch (NoValidEventException e) {
-			// TODO Auto-generated catch block
+		
 			e.printStackTrace();
 		} catch (NoValidTargetTopicException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		
@@ -70,10 +70,9 @@ public class TokenizeInterestProfile extends AbstractInterestProfile {
 			try {
 				this.getAgent().send(singleKeywordEvent, "Keywords");
 			} catch (NoValidEventException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (NoValidTargetTopicException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		
@@ -95,10 +94,10 @@ public class TokenizeInterestProfile extends AbstractInterestProfile {
 			try {
 				this.getAgent().send(severalKeywordsEvent, "Keywords");
 			} catch (NoValidEventException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			} catch (NoValidTargetTopicException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		}

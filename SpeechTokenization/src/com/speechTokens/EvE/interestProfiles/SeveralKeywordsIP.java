@@ -65,10 +65,10 @@ public class SeveralKeywordsIP extends AbstractInterestProfile {
 						this.getAgent().send(uncertainEvent, "TokenGeneration");
 						
 					} catch (NoValidEventException e) {
-						// TODO Auto-generated catch block
+						
 						e.printStackTrace();
 					} catch (NoValidTargetTopicException e) {
-						// TODO Auto-generated catch block
+						
 						e.printStackTrace();
 					}
 				}else {
@@ -78,10 +78,10 @@ public class SeveralKeywordsIP extends AbstractInterestProfile {
 						this.getAgent().send(actionEvent, "TokenGeneration");
 						
 					} catch (NoValidEventException e) {
-						// TODO Auto-generated catch block
+
 						e.printStackTrace();
 					} catch (NoValidTargetTopicException e) {
-						// TODO Auto-generated catch block
+						
 						e.printStackTrace();
 					}
 				}

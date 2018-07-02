@@ -25,7 +25,7 @@ public class TokenizeAgent extends AbstractAgent {
 			tokenizeIP.add(new IsEventType("FeedbackEvent"));
 			this.add(tokenizeIP);
 		} catch (NoValidInterestProfileException e1) {
-			// TODO Auto-generated catch block
+		
 			e1.printStackTrace();
 		}
 		try {

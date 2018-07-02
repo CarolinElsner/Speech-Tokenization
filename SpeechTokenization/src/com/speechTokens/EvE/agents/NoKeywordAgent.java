@@ -24,7 +24,7 @@ public class NoKeywordAgent extends AbstractAgent {
 		nokeywordIP.add(new IsEventType("NoKeywordEvent"));
 			this.add(nokeywordIP);
 		} catch (NoValidInterestProfileException e1) {
-			// TODO Auto-generated catch block
+			
 			e1.printStackTrace();
 		}
 		try {

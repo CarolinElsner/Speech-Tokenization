@@ -67,10 +67,10 @@ public class SingleKeywordIP extends AbstractInterestProfile {
 						this.getAgent().send(uncertainEvent, "TokenGeneration");
 						
 					} catch (NoValidEventException e) {
-						// TODO Auto-generated catch block
+						
 						e.printStackTrace();
 					} catch (NoValidTargetTopicException e) {
-						// TODO Auto-generated catch block
+					
 						e.printStackTrace();
 					}
 				}else { // the chunk has exactly one sem information
@@ -80,10 +80,10 @@ public class SingleKeywordIP extends AbstractInterestProfile {
 						this.getAgent().send(actionEvent, "TokenGeneration");
 						
 					} catch (NoValidEventException e) {
-						// TODO Auto-generated catch block
+						
 						e.printStackTrace();
 					} catch (NoValidTargetTopicException e) {
-						// TODO Auto-generated catch block
+						
 						e.printStackTrace();
 					}
 				}

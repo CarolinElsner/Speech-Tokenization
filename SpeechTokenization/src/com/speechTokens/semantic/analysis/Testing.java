@@ -110,20 +110,25 @@ public class Testing {
 		chunks.addChunkContent("fhad");
 		chunks.addChunkContent("Mond");
 		
-		chunks.addChunkContent("Document");
+		chunks.addChunkContent("hilfe");
 		chunks.addChunkContent("Hallo");
 		chunks.addSemanticToChunk("Hallo", jsonString);
-		JsonHandler js = new JsonHandler();
-		//System.out.println(js.semanticLookUp(jsonString1, "fdsafdsa").size());
 		chunks.addSemanticToChunk("Mond", jsonString1);
+		chunks.addSemanticToChunk("uri", jsonString2);
+
+		
+
+		
+		//chunks.printList();
 		Chunker newChunker = new Chunker();
 		newChunker.addChunkContent("test");
-		newChunker.addSemanticToChunk("test", test1);
+		//newChunker.addSemanticToChunk("test", test1);
+
+		newChunker.removeChunkAndSem("test");
 		newChunker.printList();
 		//KeywordSearch.noKeyword(chunks).printList();
 		System.out.println("adsf");
 	
-		createEvent(newChunker);
 		//System.out.println(chunks.getSemanticAt(4));
 		//chunks.addSemanticToChunk("Mond", jsonString);
 		//chunks.addSemanticToChunk("post", jsonString1);
@@ -173,7 +178,6 @@ public class Testing {
 			}
 			foundResults.printList();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		*/

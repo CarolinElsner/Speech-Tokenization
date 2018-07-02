@@ -64,7 +64,7 @@ public class SentenceInterestProfile extends AbstractInterestProfile {
 		try {
 			chunks = (ArrayList<String>) chunking.doTokenization(sentence);
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
+		
 			e1.printStackTrace();
 		}
 		//Zu erst pürfen ob ein exaktes Datum angegeben wurde
@@ -86,10 +86,10 @@ public class SentenceInterestProfile extends AbstractInterestProfile {
 			try {
 				this.getAgent().send(calendarevent, "TokenGeneration");
 			} catch (NoValidEventException e) {
-				// TODO Auto-generated catch block
+			
 				e.printStackTrace();
 			} catch (NoValidTargetTopicException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 			
@@ -107,10 +107,10 @@ public class SentenceInterestProfile extends AbstractInterestProfile {
 			try {
 				this.getAgent().send(calendarevent, "TokenGeneration");
 			} catch (NoValidEventException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			} catch (NoValidTargetTopicException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		}
@@ -144,10 +144,8 @@ public class SentenceInterestProfile extends AbstractInterestProfile {
 					this.getAgent().send(applicationEvent, "TokenGeneration");
 					
 				} catch (NoValidEventException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (NoValidTargetTopicException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -169,10 +167,10 @@ public class SentenceInterestProfile extends AbstractInterestProfile {
 				this.getAgent().send(sentenceEvent, "ChunkGeneration");
 				
 			} catch (NoValidEventException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			} catch (NoValidTargetTopicException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		}

@@ -65,10 +65,10 @@ public class NoKeywordIP extends AbstractInterestProfile {
 						this.getAgent().send(uncertainEvent, "TokenGeneration");
 						
 					} catch (NoValidEventException e) {
-						// TODO Auto-generated catch block
+						
 						e.printStackTrace();
 					} catch (NoValidTargetTopicException e) {
-						// TODO Auto-generated catch block
+						
 						e.printStackTrace();
 					}
 				}else { // just one semantic entry was found for the chunk
@@ -84,10 +84,9 @@ public class NoKeywordIP extends AbstractInterestProfile {
 						this.getAgent().send(actionEvent, "Action");
 						
 					} catch (NoValidEventException e) {
-						// TODO Auto-generated catch block
+						
 						e.printStackTrace();
 					} catch (NoValidTargetTopicException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
