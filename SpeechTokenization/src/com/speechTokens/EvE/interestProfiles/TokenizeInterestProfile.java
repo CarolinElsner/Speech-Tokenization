@@ -45,7 +45,7 @@ public class TokenizeInterestProfile extends AbstractInterestProfile {
 		noKeywordEvent.add(new Property<>("Chunks", EventUtils.findPropertyByKey(event, "Chunks")));
 		
 		try {
-			this.getAgent().send(noKeywordEvent, "TokenGeneration");
+			this.getAgent().send(noKeywordEvent, "Keywords");
 		} catch (NoValidEventException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -62,14 +62,13 @@ public class TokenizeInterestProfile extends AbstractInterestProfile {
 			singleKeywordEvent.setType("SingleKeywordEvent");
 			//Besitzt event nur eine UserID??
 			singleKeywordEvent.add(new Property<>("UserID", EventUtils.findPropertyByKey(event, "UserID")));
-			singleKeywordEvent.add(new Property<>("Timestamp", EventUtils.findPropertyByKey(event, "Timestamp")));
 			singleKeywordEvent.add(new Property<>("SessionID", EventUtils.findPropertyByKey(event, "SessionID")));
 			singleKeywordEvent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID")));
 			singleKeywordEvent.add(new Property<>("Chunks", chunks.returnList())); // Give the new chunker object where keyword chunk is removed
 			singleKeywordEvent.add(new Property<>("Keywords", keywords.get(0))); // Pushes the Keyword as an String (the Keyword) into the Event
 
 			try {
-				this.getAgent().send(singleKeywordEvent, "TokenGeneration");
+				this.getAgent().send(singleKeywordEvent, "Keywords");
 			} catch (NoValidEventException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -87,7 +86,6 @@ public class TokenizeInterestProfile extends AbstractInterestProfile {
 			severalKeywordsEvent.setType("SeveralKeywordsEvent");
 			//Besitzt event nur eine UserID??
 			severalKeywordsEvent.add(new Property<>("UserID", EventUtils.findPropertyByKey(event, "UserID")));
-			severalKeywordsEvent.add(new Property<>("Timestamp", EventUtils.findPropertyByKey(event, "Timestamp")));
 			severalKeywordsEvent.add(new Property<>("SessionID", EventUtils.findPropertyByKey(event, "SessionID")));
 			severalKeywordsEvent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID")));
 			severalKeywordsEvent.add(new Property<>("Chunks", chunks.returnList()));// add new chunker object
@@ -95,7 +93,7 @@ public class TokenizeInterestProfile extends AbstractInterestProfile {
 	
 			
 			try {
-				this.getAgent().send(severalKeywordsEvent, "TokenGeneration");
+				this.getAgent().send(severalKeywordsEvent, "Keywords");
 			} catch (NoValidEventException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
