@@ -172,7 +172,7 @@ public class Testing {
 					System.out.println("1 keyword"+foundkeywords);
 					//Procedure for 1 found keyword
 				}else {
-					// TODO: Mehr als 1 Keywort erkannt funktioniert noch nicht
+					
 					System.out.println(">1 keywords"+foundkeywords);								
 				}
 			}

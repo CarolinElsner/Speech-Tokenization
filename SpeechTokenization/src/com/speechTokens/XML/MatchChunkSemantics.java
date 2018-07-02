@@ -140,7 +140,6 @@ public class MatchChunkSemantics {
 					foundSemantics = SemanticData.semanticLookUp(currNode.getTextContent(), semanticFolderPath);
 					if (!(foundSemantics == null)) { // checks whether something was found
 						for (int j = 0; j < foundSemantics.length; j++) {
-							// TODO: right now the semantics are just comma seperated without further information about the semantic type, here might be a new Node for each semantic input helpful
 							// the text bit is always in the <text> node and we want to push the found semantics in its sibling node, the <semantics> node
 							currNode.getParentNode().getNextSibling().setTextContent(String.join(",", foundSemantics)); 
 							// joins the elements in the foundSemantics Array into the node with a comma as seperator

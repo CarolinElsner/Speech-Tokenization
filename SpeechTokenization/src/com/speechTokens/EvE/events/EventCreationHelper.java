@@ -26,15 +26,15 @@ public class EventCreationHelper {
 		ArrayList<String> semanticStr = (ArrayList<String>) chunks.getSemanticAt(0);
 		if(semanticStr.get(0).contains("Document")== true) {
 			actionEvent.setType("DocumentEvent");
-			actionEvent.add(new Property<>("Chunks", chunks));
+			actionEvent.add(new Property<>("Chunks", chunks.returnList()));
 			
 		}else if(semanticStr.get(0).contains("Project")== true) {
 			actionEvent.setType("ProjectEvent");
-			actionEvent.add(new Property<>("Chunks", chunks));
+			actionEvent.add(new Property<>("Chunks", chunks.returnList()));
 						
 		}else if(semanticStr.get(0).contains("Person")== true) {
 			actionEvent.setType("PersonEvent");
-			actionEvent.add(new Property<>("Chunks", chunks));
+			actionEvent.add(new Property<>("Chunks", chunks.returnList()));
 						
 		}else {
 			actionEvent.setType("UncertainEvent");

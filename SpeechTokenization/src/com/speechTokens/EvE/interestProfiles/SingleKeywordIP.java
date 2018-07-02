@@ -58,7 +58,7 @@ public class SingleKeywordIP extends AbstractInterestProfile {
 			Chunker tempChunker = new Chunker(); // create a temporary chunker which consists of just one chunk
 			String currChunk = semFoundChunks.getChunkContentAt(i);
 			tempChunker.addChunkContent(currChunk);
-			tempChunker.addSemanticToChunk(currChunk, tempChunker.readSemanticOfChunk(currChunk));
+			tempChunker.addSemanticToChunk(currChunk, semFoundChunks.readSemanticOfChunk(currChunk));
 			if(semantic instanceof ArrayList<?>) {
 				ArrayList<?> newSemantic = (ArrayList<?>) semantic; 
 				if(newSemantic.size()>1) { // if the chunk as more than one semantic info

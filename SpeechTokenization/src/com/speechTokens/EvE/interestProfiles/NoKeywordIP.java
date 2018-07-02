@@ -56,7 +56,7 @@ public class NoKeywordIP extends AbstractInterestProfile {
 					Chunker tempChunker = new Chunker();
 					String currChunk = semFoundChunks.getChunkContentAt(i);
 					tempChunker.addChunkContent(currChunk);
-					tempChunker.addSemanticToChunk(currChunk, tempChunker.readSemanticOfChunk(currChunk));
+					tempChunker.addSemanticToChunk(currChunk, semFoundChunks.readSemanticOfChunk(currChunk));
 					AbstractEvent uncertainEvent = eventFactory.createEvent("AtomicEvent");
 					uncertainEvent.setType("UncertainEvent");
 					uncertainEvent.add(new Property<>("UserID",EventUtils.findPropertyByKey(event, "UserID")));
@@ -82,7 +82,7 @@ public class NoKeywordIP extends AbstractInterestProfile {
 					AbstractEvent actionEvent = eventFactory.createEvent("AtomicEvent");
 					actionEvent = EventCreationHelper.createEvent(semFoundChunks, actionEvent, event);
 					try {
-						this.getAgent().send(actionEvent, "Action");
+						this.getAgent().send(actionEvent, "TokenGeneration");
 						
 					} catch (NoValidEventException e) {
 						

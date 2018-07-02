@@ -30,7 +30,7 @@ public class ServletInterface extends HttpServlet {
 	private static final MessageMapper messageMapper = new MessageMapper();
 
 
-	//TODO: Klassen können noch nicht auf das EvE Framework zugreifen, wenn kein Kafka + Spark läuft
+	
 	//private static final Despatcher despatcher = new Despatcher(ProducerSettings.INSTANCE);
 	// wandelt die Events in Nachrichten um.
 	//private static final MessageMapper messageMapper = new MessageMapper();
