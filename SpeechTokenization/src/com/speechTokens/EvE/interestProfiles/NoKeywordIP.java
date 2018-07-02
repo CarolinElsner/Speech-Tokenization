@@ -91,6 +91,8 @@ public class NoKeywordIP extends AbstractInterestProfile {
 						e.printStackTrace();
 					}
 				}
+			}else {
+				System.out.println("SingleKeywordIP.doOnReceive: Wrong Instanceof semantic Array");
 			}
 		}
 	}

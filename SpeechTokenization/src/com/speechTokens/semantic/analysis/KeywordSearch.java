@@ -30,7 +30,7 @@ public class KeywordSearch {
 				System.out.println("1 keyword"+foundkeywords);
 				//Procedure for 1 found keyword
 			}else {
-				// TODO: Mehr als 1 Keywort erkannt funktioniert noch nicht
+				foundResults = severalKeywords(foundkeywords, ch);
 				System.out.println(">1 keywords"+foundkeywords);								
 			}
 		}
