@@ -57,20 +57,18 @@ public class Tokenization {
 		List<String> chunkList = new ArrayList<String>();
 		
 		//System.out.println(chunkResult);
-		int counterSubstantiv=0;
 		// iterates through every token
 		for (int i = 0; i < chunkResult.length; i++) {
 			//System.out.println(posTags[i] + " und " + chunkResult[i] + " und " + tokens[i]);
 			// add a new token, since B indicates it is a new token
 			System.out.println("------------------------");
 			System.out.println(tokens[i]+"---->"+chunkResult[i].charAt(0) + "-->" + posTags[i]);
-			if (chunkResult[i].charAt(0) == 'B' && posTags[i].equals("NNP") ) {
-					counterSubstantiv = counterSubstantiv+1;
+			if (chunkResult[i].charAt(0) == 'B' && posTags[i].contains("NNP") ) {
 					chunkList.add(tokens[i]);
 				// add the token to the last chunk since it is not B
 			} 	
-			else if(chunkResult[i].charAt(0) != 'B' && posTags[i].equals("NNP") || chunkResult[i].charAt(0) != 'B' && posTags[i].equals("CD")) {
-				if(chunkResult[i-1].charAt(0) == 'B' && posTags[i-1].equals("NNP")) {
+			else if(chunkResult[i].charAt(0) != 'B' && posTags[i].contains("NNP") || chunkResult[i].charAt(0) != 'B' && posTags[i].equals("CD")) {
+				if(chunkResult[i-1].charAt(0) == 'B' && posTags[i-1].contains("NNP")) {
 				//if(counterSubstantiv)
 				int lastElement = chunkList.size() - 1; // last element in ArrayList
 					if (lastElement >= 0) {
@@ -88,12 +86,11 @@ public class Tokenization {
 				}
 			}
 			else if (chunkResult[i].charAt(0) == 'B' && posTags[i].equals("NN") ) {
-					counterSubstantiv = counterSubstantiv+1;
 					chunkList.add(tokens[i]);
 				// add the token to the last chunk since it is not B
 			} 	
 			else if(chunkResult[i].charAt(0) != 'B' && posTags[i].equals("NN") || chunkResult[i].charAt(0) != 'B' && posTags[i].equals("NNS") ) {
-				if(chunkResult[i-1].charAt(0) == 'B' && posTags[i-1].equals("NN") || chunkResult[i].charAt(0) != 'B' && posTags[i].equals("NNS") ) {
+				if(chunkResult[i-1].charAt(0) == 'B' && posTags[i-1].equals("NN") || chunkResult[i-1].charAt(0) != 'B' && posTags[i].equals("NNS") ) {
 				//if(counterSubstantiv)
 				int lastElement = chunkList.size() - 1; // last element in ArrayList
 					if (lastElement >= 0) {
