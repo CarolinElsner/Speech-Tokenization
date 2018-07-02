@@ -51,13 +51,13 @@ public class SingleKeywordIP extends AbstractInterestProfile {
 		Chunker semFoundChunks = KeywordSearch.oneKeyword(keyword, chunks); // Chunker object with all the chunks where sem info regarding the Keyword was found
 		for (int i = 0; i < semFoundChunks.size(); i++) { // A Token will just consist of one Chunk, with the sem Data, therefore iterate through the Chunks
 			Object semantic = semFoundChunks.getSemanticAt(i);// get the sem info for the current chunk
+			Chunker tempChunker = new Chunker(); // create a temporary chunker which consists of just one chunk
+			String currChunk = semFoundChunks.getChunkContentAt(i);
+			tempChunker.addChunkContent(currChunk);
+			tempChunker.addSemanticToChunk(currChunk, tempChunker.readSemanticOfChunk(currChunk));
 			if(semantic instanceof ArrayList<?>) {
 				ArrayList<?> newSemantic = (ArrayList<?>) semantic; 
-				if(newSemantic.size()>1) {
-					Chunker tempChunker = new Chunker();
-					String currChunk = semFoundChunks.getChunkContentAt(i);
-					tempChunker.addChunkContent(currChunk);
-					tempChunker.addSemanticToChunk(currChunk, tempChunker.readSemanticOfChunk(currChunk));
+				if(newSemantic.size()>1) { // if the chunk as more than one semantic info
 					AbstractEvent uncertainEvent = eventFactory.createEvent("AtomicEvent");
 					uncertainEvent.setType("UncertainEvent");
 					uncertainEvent.add(new Property<>("UserID",EventUtils.findPropertyByKey(event, "UserID")));
@@ -74,9 +74,9 @@ public class SingleKeywordIP extends AbstractInterestProfile {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-				}else {
+				}else { // the chunk has exactly one sem information
 					AbstractEvent actionEvent = eventFactory.createEvent("AtomicEvent");
-					actionEvent = EventCreationHelper.createEvent(semFoundChunks, actionEvent, event);
+					actionEvent = EventCreationHelper.createEvent(tempChunker, actionEvent, event);
 					try {
 						this.getAgent().send(actionEvent, "TokenGeneration");
 						
