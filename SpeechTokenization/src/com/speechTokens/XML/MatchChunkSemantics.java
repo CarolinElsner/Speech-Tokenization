@@ -84,7 +84,6 @@ public class MatchChunkSemantics {
 	 * @return {@link Document} object with the newly added semantics to the respective token
 	 */
 	public static Document addSemantics(Object obj) {
-		// TODO: Hier und oben noch NullPointerException abfangen, falls der XML Link
 		// falsch ist (oder FileNotFoundExction)
 		Document doc = null;
 		if (obj instanceof String) {

@@ -45,7 +45,6 @@ public class SingleKeywordIP extends AbstractInterestProfile {
 	@Override
 	public void doOnReceive(AbstractEvent event) {
 		
-		// TODO: Hier suchen wir exakt nach dem Keywort das wir als Chunk erhalten haben in den Semantischen Informationen. Sollte es als Plural (Projects Documents, Persons) hinterlegt sein wird es nicht gefunden
 		String keyword = EventUtils.findPropertyByKey(event, "Keywords").getValue().toString(); // is one String containing the Keyword that was found as a Chunk
 		ArrayList<Object> chunkArrList = (ArrayList<Object>) EventUtils.findPropertyByKey(event, "Chunks").getValue();
 		Chunker chunks = new Chunker();

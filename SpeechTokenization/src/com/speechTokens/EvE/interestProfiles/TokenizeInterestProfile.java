@@ -55,8 +55,6 @@ public class TokenizeInterestProfile extends AbstractInterestProfile {
 		}
 		
 		}else if (keywords.size() == 1) { // one Keyword was found
-
-			chunks.removeChunkAndSem(keywords.get(0));// remove keyword chunk
 			AbstractEvent singleKeywordEvent = eventFactory.createEvent("AtomicEvent");		
 			
 			singleKeywordEvent.setType("SingleKeywordEvent");
@@ -78,9 +76,6 @@ public class TokenizeInterestProfile extends AbstractInterestProfile {
 		
 		}else { // size of Keywords Arraylist is bigger than one, so more keywords were found
 			
-			for (int i = 0; i < keywords.size(); i++) {
-				chunks.removeSemanticOfChunk(keywords.get(i)); // there have to be more than one keyword included, remove them
-			}
 			AbstractEvent severalKeywordsEvent = eventFactory.createEvent("AtomicEvent");
 			severalKeywordsEvent.setType("SeveralKeywordsEvent");
 			//Besitzt event nur eine UserID??

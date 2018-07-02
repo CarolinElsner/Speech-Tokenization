@@ -55,8 +55,10 @@ public class KeywordSearch {
 	//Search through Chunker to find spoken Keywords
 	/**
 	 * Looks in the chunks for a specific keyword. Can detect singular and plural of Keywords
+	 * Uses "contains" --> chunks like "Project Document" will be one keyword or "Highnet Document" of type Document
+	 * Document will be added in the foundKeyword ArrayList, that we can search for it in the next step in the sem Infos
 	 * @param ch chunker Object which contains the Chunks including the Sem infou found by the DR Group
-	 * @return an ArrayList<String> with the KEywords that were found
+	 * @return an ArrayList<String> with the keyword that can be person document or project
 	 */
 	public static ArrayList<String> findKeywords(Chunker ch) {
 		
