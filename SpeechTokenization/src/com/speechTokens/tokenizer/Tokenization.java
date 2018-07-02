@@ -85,7 +85,7 @@ public class Tokenization {
 					chunkList.add(tokens[i]);
 				}
 			}
-			else if (chunkResult[i].charAt(0) == 'B' && posTags[i].equals("NN") ) {
+			else if (chunkResult[i].charAt(0) == 'B' && posTags[i].equals("NN") || chunkResult[i].charAt(0) == 'B' && posTags[i].equals("NNS")) {
 					chunkList.add(tokens[i]);
 				// add the token to the last chunk since it is not B
 			} 	
