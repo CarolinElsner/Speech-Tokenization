@@ -7,6 +7,10 @@ import java.util.List;
 import com.speechTokens.tokenizer.Chunker;
 import com.speechTokens.tokenizer.Tokenization;
 
+import eventprocessing.event.AbstractEvent;
+import eventprocessing.event.Property;
+import eventprocessing.utils.model.EventUtils;
+
 public class Testing {
 	public static String jsonString = "{\r\n" + 
 			"  \"head\": {\r\n" + 
@@ -15,11 +19,11 @@ public class Testing {
 			"  \"results\": {\r\n" + 
 			"    \"bindings\": [\r\n" + 
 			"      {\r\n" + 
-			"        \"Instanz\": { \"type\": \"uri\", } ,\r\n" + 
+			"        \"Instanz\": { \"type\": \"Document\", } ,\r\n" + 
 			"        \"Keyword\": { \"type\": \"Test\"}\r\n" + 
 			"      } ,\r\n" + 
 			"      {\r\n" + 
-			"        \"Instanz\": { \"type\": \"uri\"} ,\r\n" + 
+			"        \"Instanz\": { \"type\": \"Document\"} ,\r\n" + 
 			"        \"Keyword\": { \"type\": \"test1\"}\r\n" + 
 			"      } ,\r\n" + 
 			"      {\r\n" + 
@@ -42,7 +46,7 @@ public class Testing {
 			"  \"results\": {\r\n" + 
 			"    \"bindings\": [\r\n" + 
 			"      {\r\n" + 
-			"        \"Instanz\": { \"type\": \"uri\"} ,\r\n" + 
+			"        \"Instanz\": { \"type\": \"Project\"} ,\r\n" + 
 			"        \"Keyword\": { \"type\": \"Highnet\"}\r\n" + 
 			"      } ,\r\n" + 
 			"      {\r\n" + 
@@ -61,7 +65,7 @@ public class Testing {
 			"  }\r\n" + 
 			"}\r\n" + 
 			"";
-	
+
 	public static String jsonString2 = "{\r\n" + 
 			"  \"head\": {\r\n" + 
 			"    \"vars\": [ \"Instanz\" , \"Keyword\" ]\r\n" + 
@@ -95,21 +99,31 @@ public class Testing {
 		Chunker chunks = new Chunker();
 
 		ArrayList<String> test1 =new ArrayList<>();
-		test1.add("fdsfdsfdsa");
-		test1.add("dsaffdsafds");
+		test1.add("{\"Instanz\":{\"type\":\"http://semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#Person\"},\"Keyword\":{\"type\":\"Test\"}}");
 		ArrayList<String> test =new ArrayList<>();
-		test.add("fdsafdsfdsfdsafdsafdfdsa");
+		test.add("{\\r\\n\" + \r\n" + 
+				"			\"        \\\"Instanz\\\": { \\\"type\\\": \\\"Project\\\"} ,\\r\\n\" + \r\n" + 
+				"			\"        \\\"Keyword\\\": { \\\"type\\\": \\\"Highnet\\\"}\\r\\n\" + \r\n" + 
+				"			\"      }");
 		ArrayList<String> test2 =new ArrayList<>();
 		chunks.addChunkContent("uri");
 		chunks.addChunkContent("fhad");
 		chunks.addChunkContent("Mond");
 		
-		chunks.addChunkContent("post");
+		chunks.addChunkContent("Document");
 		chunks.addChunkContent("Hallo");
-		chunks.addSemanticToChunk("post", jsonString);
+		chunks.addSemanticToChunk("Hallo", jsonString);
 		JsonHandler js = new JsonHandler();
-		System.out.println(js.semanticLookUp(jsonString1, "fdsafdsa").size());
-		chunks.addSemanticToChunk("Hallo", test);
+		//System.out.println(js.semanticLookUp(jsonString1, "fdsafdsa").size());
+		chunks.addSemanticToChunk("Mond", jsonString1);
+		Chunker newChunker = new Chunker();
+		newChunker.addChunkContent("test");
+		newChunker.addSemanticToChunk("test", test1);
+		newChunker.printList();
+		//KeywordSearch.noKeyword(chunks).printList();
+		System.out.println("adsf");
+	
+		createEvent(newChunker);
 		//System.out.println(chunks.getSemanticAt(4));
 		//chunks.addSemanticToChunk("Mond", jsonString);
 		//chunks.addSemanticToChunk("post", jsonString1);
@@ -120,7 +134,7 @@ public class Testing {
 		keys.add("Person");
 		keys.add("uri");
 		KeywordSearch.severalKeywords(keys, chunks).printList();
-		*/
+		
 		//chunks.printList();
 		//KeywordSearch.noKeyword(chunks).printList();
 		//chunks.addSemanticToChunk("Geeeht", "test");
@@ -162,5 +176,25 @@ public class Testing {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		*/
 	}
+	
+	public static void createEvent(Chunker chunks) {
+		ArrayList<String> semanticStr = (ArrayList<String>) chunks.getSemanticAt(0);
+		if(semanticStr.get(0).contains("Document")== true) {
+
+			chunks.printList();
+		}else if(semanticStr.get(0).contains("Project")== true) {
+			chunks.printList();
+						System.out.println("Projekt");
+		}else if(semanticStr.get(0).contains("Person")== true) {
+			chunks.printList();
+						System.out.println("Person");
+		}else {
+			chunks.printList();
+			System.out.println("No specific type detected, uncertain event has to be pushed");
+		}
+
+	}
+	
 }
