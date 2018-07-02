@@ -79,7 +79,7 @@ public class TokenizeInterestProfile extends AbstractInterestProfile {
 		}else {
 			
 			for (int i = 0; i < keywords.size(); i++) {
-				chunks.readSemanticOfChunk(keywords.get(i)); // there have to be more than one keyword included, remove them
+				chunks.removeSemanticOfChunk(keywords.get(i)); // there have to be more than one keyword included, remove them
 			}
 			AbstractEvent severalKeywordsEvent = eventFactory.createEvent("AtomicEvent");
 			severalKeywordsEvent.setType("SeveralKeywordsEvent");
