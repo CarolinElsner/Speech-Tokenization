@@ -69,25 +69,21 @@ public class KeywordSearch {
 				
 				System.out.println("document detected");
 				foundkeywords.add("document");
-				i--;
 				
 			}else if (ch.getChunkContentAt(i).contains("project")) {
 				
 				System.out.println("project detected");
 				foundkeywords.add("project");
-				i--;
 				
 			}else if (ch.getChunkContentAt(i).contains("person")) {
 				
 				System.out.println("person detected");
 				foundkeywords.add("person");
-				i--;
 				
 			}else if (ch.getChunkContentAt(i).contains("activit")) {
 				
 				System.out.println("activity detected");
 				foundkeywords.add("activity");
-				i--;
 			}
 		} 
 		
