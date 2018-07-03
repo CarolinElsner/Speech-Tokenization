@@ -61,8 +61,14 @@ public class DetectTermin {
 					if(chunk.get(i).contains(dayMonth.get(j))) {
 						dayMonthfound = true;
 						dateDetect.add(chunk.get(i));
+						if(i != 0) {
 						chunk.remove(i);
 						i--;
+						}
+						else if (i == 0) {
+						chunk.remove(i)	;
+						i = 0;
+						}
 					}
 				}
 			}
