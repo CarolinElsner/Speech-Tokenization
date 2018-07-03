@@ -68,7 +68,7 @@ public class Tokenization {
 				// add the token to the last chunk since it is not B
 			} 	
 			else if(chunkResult[i].charAt(0) != 'B' && posTags[i].contains("NNP") || chunkResult[i].charAt(0) != 'B' && posTags[i].equals("CD")) {
-				if(chunkResult[i-1].charAt(0) == 'B' && posTags[i-1].contains("NNP")) {
+				if(chunkResult[i-1].charAt(0) == 'B' && posTags[i-1].contains("NNP") || chunkResult[i-1].charAt(0) == 'I' && posTags[i-1].contains("NN")) {
 				//if(counterSubstantiv)
 				int lastElement = chunkList.size() - 1; // last element in ArrayList
 					if (lastElement >= 0) {
@@ -85,12 +85,12 @@ public class Tokenization {
 					chunkList.add(tokens[i]);
 				}
 			}
-			else if (chunkResult[i].charAt(0) == 'B' && posTags[i].equals("NN") ) {
+			else if (chunkResult[i].charAt(0) == 'B' && posTags[i].equals("NN") || chunkResult[i].charAt(0) == 'B' && posTags[i].equals("NNS")) {
 					chunkList.add(tokens[i]);
 				// add the token to the last chunk since it is not B
 			} 	
 			else if(chunkResult[i].charAt(0) != 'B' && posTags[i].equals("NN") || chunkResult[i].charAt(0) != 'B' && posTags[i].equals("NNS") ) {
-				if(chunkResult[i-1].charAt(0) == 'B' && posTags[i-1].equals("NN") || chunkResult[i-1].charAt(0) != 'B' && posTags[i].equals("NNS") ) {
+				if(chunkResult[i-1].charAt(0) == 'B' && posTags[i-1].equals("NN") || chunkResult[i-1].charAt(0) == 'I' && posTags[i-1].equals("NN")  ) {
 				//if(counterSubstantiv)
 				int lastElement = chunkList.size() - 1; // last element in ArrayList
 					if (lastElement >= 0) {
