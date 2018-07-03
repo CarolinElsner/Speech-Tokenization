@@ -59,13 +59,11 @@ public class SingleKeywordIP extends AbstractInterestProfile {
 			tempChunker.addChunkContent(currChunk);
 			tempChunker.addSemanticToChunk(currChunk, semFoundChunks.readSemanticOfChunk(currChunk));
 			if(semantic instanceof ArrayList<?>) {
-				ArrayList<?> newSemantic = (ArrayList<?>) semantic; 
+				ArrayList<String> newSemantic = (ArrayList<String>) semantic; 
 				if(newSemantic.size()>1) { // if the chunk as more than one semantic info
 					AbstractEvent uncertainEvent = eventFactory.createEvent("AtomicEvent");
-					uncertainEvent.setType("UncertainEvent");
-					uncertainEvent.add(new Property<>("UserID",EventUtils.findPropertyByKey(event, "UserID")));
-					uncertainEvent.add(new Property<>("SessionID",EventUtils.findPropertyByKey(event, "SessionID")));
-					uncertainEvent.add(new Property<>("Chunks", tempChunker.returnList()));// the chunker Object cant be pushed as it is and has to be parsed to the ArrayList
+					uncertainEvent = EventCreationHelper.createEvent(tempChunker, uncertainEvent, event);
+
 					try {
 						this.getAgent().send(uncertainEvent, "TokenGeneration");
 						

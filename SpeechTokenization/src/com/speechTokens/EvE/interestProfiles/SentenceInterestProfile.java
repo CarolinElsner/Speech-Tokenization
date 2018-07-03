@@ -79,9 +79,9 @@ public class SentenceInterestProfile extends AbstractInterestProfile {
 			AbstractEvent calendarevent = eventFactory.createEvent("AtomicEvent");
 			calendarevent.setType("CalendarEvent");
 			//Besitzt event nur eine UserID??
-			calendarevent.add(new Property<>("UserID", EventUtils.findPropertyByKey(event, "UserID")));
-			calendarevent.add(new Property<>("SessionID", EventUtils.findPropertyByKey(event, "SessionID")));
-			calendarevent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID")));
+			calendarevent.add(new Property<>("UserID", EventUtils.findPropertyByKey(event, "UserID").getValue()));
+			calendarevent.add(new Property<>("SessionID", EventUtils.findPropertyByKey(event, "SessionID").getValue()));
+			calendarevent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID").getValue()));
 			
 			try {
 				this.getAgent().send(calendarevent, "TokenGeneration");
@@ -99,9 +99,9 @@ public class SentenceInterestProfile extends AbstractInterestProfile {
 			AbstractEvent calendarevent = eventFactory.createEvent("AtomicEvent");
 			calendarevent.setType("CalendarEvent");
 			//Besitzt event nur eine UserID??
-			calendarevent.add(new Property<>("UserID", EventUtils.findPropertyByKey(event, "UserID")));
-			calendarevent.add(new Property<>("SessionID", EventUtils.findPropertyByKey(event, "SessionID")));
-			calendarevent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID")));
+			calendarevent.add(new Property<>("UserID", EventUtils.findPropertyByKey(event, "UserID").getValue()));
+			calendarevent.add(new Property<>("SessionID", EventUtils.findPropertyByKey(event, "SessionID").getValue()));
+			calendarevent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID").getValue()));
 			calendarevent.add(new Property<>("Termin", detector.getfoundDate()));
 			
 			try {
@@ -135,9 +135,9 @@ public class SentenceInterestProfile extends AbstractInterestProfile {
 				AbstractEvent applicationEvent = eventFactory.createEvent("AtomicEvent");
 				applicationEvent.setType("ApplicationEvent");
 				applicationEvent.add(new Property<>("ApplicationType",foundapps.get(i)));
-				applicationEvent.add(new Property<>("UserID",EventUtils.findPropertyByKey(event, "UserID")));
-				applicationEvent.add(new Property<>("SessionID",EventUtils.findPropertyByKey(event, "SessionID")));
-				applicationEvent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID")));
+				applicationEvent.add(new Property<>("UserID",EventUtils.findPropertyByKey(event, "UserID").getValue()));
+				applicationEvent.add(new Property<>("SessionID",EventUtils.findPropertyByKey(event, "SessionID").getValue()));
+				applicationEvent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID").getValue()));
 
 				
 				try {

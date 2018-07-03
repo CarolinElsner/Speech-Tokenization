@@ -51,17 +51,15 @@ public class NoKeywordIP extends AbstractInterestProfile {
 		for (int i = 0; i < semFoundChunks.size(); i++) { // iterate through all the chunks that 
 			Object semantic = semFoundChunks.getSemanticAt(i);
 			if(semantic instanceof ArrayList<?>) {
-				ArrayList<?> newSemantic = (ArrayList<?>) semantic; 
+				ArrayList<String> newSemantic = (ArrayList<String>) semantic;
+				Chunker tempChunker = new Chunker(); // create a temporary chunker which consists of just one chunk
+				String currChunk = semFoundChunks.getChunkContentAt(i);
+				tempChunker.addChunkContent(currChunk);
+				tempChunker.addSemanticToChunk(currChunk, semFoundChunks.readSemanticOfChunk(currChunk));
 				if(newSemantic.size()>1) {// more than one sem data off the respective chunk, so we dont know which type
-					Chunker tempChunker = new Chunker();
-					String currChunk = semFoundChunks.getChunkContentAt(i);
-					tempChunker.addChunkContent(currChunk);
-					tempChunker.addSemanticToChunk(currChunk, semFoundChunks.readSemanticOfChunk(currChunk));
 					AbstractEvent uncertainEvent = eventFactory.createEvent("AtomicEvent");
-					uncertainEvent.setType("UncertainEvent");
-					uncertainEvent.add(new Property<>("UserID",EventUtils.findPropertyByKey(event, "UserID")));
-					uncertainEvent.add(new Property<>("SessionID",EventUtils.findPropertyByKey(event, "SessionID")));
-					uncertainEvent.add(new Property<>("Chunks", tempChunker.returnList()));
+					uncertainEvent = EventCreationHelper.createEvent(tempChunker, uncertainEvent, event);
+
 					try {
 						this.getAgent().send(uncertainEvent, "TokenGeneration");
 						
