@@ -42,7 +42,7 @@ public class TokenizeInterestProfile extends AbstractInterestProfile {
 		noKeywordEvent.add(new Property<>("UserID", EventUtils.findPropertyByKey(event, "UserID").getValue()));
 		noKeywordEvent.add(new Property<>("SessionID", EventUtils.findPropertyByKey(event, "SessionID").getValue()));
 		noKeywordEvent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID").getValue()));
-		noKeywordEvent.add(new Property<>("Chunks", EventUtils.findPropertyByKey(event, "Chunks")));
+		noKeywordEvent.add(new Property<>("Chunks", EventUtils.findPropertyByKey(event, "Chunks")).getValue());
 		
 		try {
 			this.getAgent().send(noKeywordEvent, "Keywords");

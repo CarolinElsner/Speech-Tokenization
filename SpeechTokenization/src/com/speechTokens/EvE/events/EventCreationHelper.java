@@ -32,11 +32,8 @@ public class EventCreationHelper {
 		for (int i = 0; i < semanticStr.size(); i++) {
 			JSONObject semantics = new JSONObject(semanticStr.get(i));
 			String semType = "";
-			 if (semantics.get("Oberklasse") instanceof String) {
-				semType = (String) semantics.get("Oberklasse");
-			}else {
-				System.out.println("EventCreationHelper.createEvent: Key Oberklasse not found");
-			}
+			semType = (String) semantics.get("Oberklasse").toString(); // get the JSON Object and look in it for the Keyword
+
 			if(semType.contains("#Document")== true) {
 				actionEvent.setType("DocumentEvent");
 				actionEvent.add(chunkerToEvent(semanticStr.get(i), "Document"));
@@ -64,7 +61,7 @@ public class EventCreationHelper {
 	 * @param type The Type which was identified
 	 * @return a new property Object {type:{name, keyword}}
 	 */
-	public static Property<Object> chunkerToEvent(String semanticJSON, String type) { // The token Chunk has to be inserted, with just one Chunk and maybe more sem infos
+	public static Property<?> chunkerToEvent(String semanticJSON, String type) { // The token Chunk has to be inserted, with just one Chunk and maybe more sem infos
 		JSONObject semJs = new JSONObject(semanticJSON);
 		String nameValue = "";
 		String keywordValue= "";
@@ -99,9 +96,9 @@ public class EventCreationHelper {
 		Property<String> nameKeyProp = new Property<String>();
 		nameKeyProp.setKey(nameValue); // set the key to the name that was found
 		nameKeyProp.setValue(keywordValue);		 // set the value to the keywords that DR group found
-		Property<Object> actionProperty = new Property<Object>();
+		Property<?> actionProperty = new Property<Property<String>>(type,new Property<String>(nameValue, keywordValue));
 		actionProperty.setKey(type);
-		actionProperty.setValue(nameKeyProp);	
+		
 		return actionProperty;
 	}
 }
