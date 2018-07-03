@@ -97,7 +97,6 @@ public class EventCreationHelper {
 		nameKeyProp.setKey(nameValue); // set the key to the name that was found
 		nameKeyProp.setValue(keywordValue);		 // set the value to the keywords that DR group found
 		Property<?> actionProperty = new Property<Property<String>>(type,new Property<String>(nameValue, keywordValue));
-		actionProperty.setKey(type);
 		
 		return actionProperty;
 	}
