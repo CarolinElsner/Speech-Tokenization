@@ -37,7 +37,7 @@ public class TokenizeInterestProfile extends AbstractInterestProfile {
 		if(keywords.size() == 0) { // no keyword was found
 		
 		AbstractEvent noKeywordEvent = eventFactory.createEvent("AtomicEvent");
-		noKeywordEvent.setType("NoKeywordsEvent");
+		noKeywordEvent.setType("NoKeywordEvent");
 		//Besitzt event nur eine UserID??
 		noKeywordEvent.add(new Property<>("UserID", EventUtils.findPropertyByKey(event, "UserID")));
 		noKeywordEvent.add(new Property<>("SessionID", EventUtils.findPropertyByKey(event, "SessionID")));
