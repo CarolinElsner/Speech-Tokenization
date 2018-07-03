@@ -7,8 +7,8 @@ public class DetectApplication {
 	public static ArrayList<String> detection(Chunker chunks){
 			
 			ArrayList<String> appdetection = new ArrayList<>();
-			
-			//Hier Keywords definieren, die für die Erzeugung von ApplicationEvents relevant sind
+chunks.printList();
+//Hier Keywords definieren, die für die Erzeugung von ApplicationEvents relevant sind
 			String[][] appkeywords = {
 					{"google mail","mail"},
 					{"mails","mail"},
@@ -18,11 +18,8 @@ public class DetectApplication {
 					};
 			
 			for(int i=0;i<chunks.size();i++) {
-				System.out.println("i"+i);
-
 				for(int j=0;j<appkeywords.length;j++) {
-
-					if(chunks.getChunkContentAt(i) == appkeywords[j][0]) {
+					if(chunks.getChunkContentAt(i).equals(appkeywords[j][0])) {
 						appdetection.add(appkeywords[j][1]);
 					}
 				}

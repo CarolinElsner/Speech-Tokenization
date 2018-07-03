@@ -176,11 +176,9 @@ public class KeywordSearch {
 		}
 		for (int i = 0; i < keywords.size(); i++) {
 			tempChunker = oneKeyword(keywords.get(i), chunks);
-			tempChunker.printList();
 			for (int j = 0; j < tempChunker.size(); j++) {
 				String currChunk =  tempChunker.getChunkContentAt(j);
 				Object tempSemChunk = tempChunker.getSemanticAt(j);
-				newChunker.printList();
 				if(tempSemChunk instanceof ArrayList<?> && !((ArrayList<String>) tempSemChunk).isEmpty()) {
 					newChunker.addSemanticToChunk(currChunk, (ArrayList<String>)tempSemChunk);	
 				}else {

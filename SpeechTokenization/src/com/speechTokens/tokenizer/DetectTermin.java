@@ -55,14 +55,11 @@ public class DetectTermin {
 			dayMonth.add("Sunday");
 			dayMonth.add("Calendar");
 			dayMonth.add("Appointment");
-			
 			for (int i = 0; i< chunk.size(); i++) {
 				for (int j = 0; j< dayMonth.size(); j++) {
 					if(chunk.get(i).contains(dayMonth.get(j))) {
 						dayMonthfound = true;
 						dateDetect.add(chunk.get(i));
-						chunk.remove(i);
-						i--;
 					}
 				}
 			}
