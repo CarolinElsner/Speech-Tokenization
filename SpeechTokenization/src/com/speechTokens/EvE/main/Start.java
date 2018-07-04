@@ -92,8 +92,6 @@ public class Start {
 				Chunker chunks1= new Chunker();
 				chunks1.addChunkContent("Hallo");
 				chunks1.addChunkContent("Mond");
-				chunks1.addSemanticToChunk("Hallo", Testing.jsonString1);
-				chunks1.addSemanticToChunk("Mond", Testing.jsonString2);		
 				String userID = "test";
 		
 				System.out.println(16);				
