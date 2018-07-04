@@ -37,9 +37,9 @@ public class DetectTermin {
 		}
 		
 			
-
+		//Mit der MEthode searchDate soll nach Schlagworten(Calenadar, Appointment) und Datumsangaben (Monat oder Tag oder Monat+Tag) gesucht werden
 		public ArrayList<String> searchDate (ArrayList<String> chunk) {
-
+			//ArrayListe mit den Schlagworten und Datumsangeben die auf einen Termin hindeuten
 			ArrayList<String> dayMonth = new ArrayList<String>();
 			dayMonth.add("January");
 			dayMonth.add("February");
@@ -61,10 +61,13 @@ public class DetectTermin {
 			dayMonth.add("Saturday");
 			dayMonth.add("Sunday");
 			dayMonth.add("Calendar");
-			dayMonth.add("Appointment");
+			dayMonth.add("appointment");
 			
+			//Iterieren über die Chunk-Liste
 			for (int i = 0; i< chunk.size(); i++) {
+				//Iterieren über die zurvor definierte ArrayList mit den Schlagworten und Datumsangaben
 				for (int j = 0; j< dayMonth.size(); j++) {
+					//Abgleich der beiden Listen und pürfeno ob Schlagworten und Datumsangabe vorkommt
 					if(chunk.get(i).contains(dayMonth.get(j))) {
 						dayMonthfound = true;
 						dateDetect.add(chunk.get(i));
