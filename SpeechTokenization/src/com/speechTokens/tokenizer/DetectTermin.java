@@ -8,20 +8,27 @@ public class DetectTermin {
 	
 
 	public static boolean dayMonthfound = false;
-	
+	//Globale Regular Expression für das exakte Datum im Format DD/MM/YYYYY
 	private static final Pattern Date_Expression = 
 		    Pattern.compile("(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)", Pattern.CASE_INSENSITIVE);
+	//ArrayList für die endeckten Termine innerhalb eines Satzes
 	private ArrayList<String> dateDetect = new ArrayList<String>();
+	//Boolean Variable, falls ein exakte Datum gefunden wird
 	private String foundDate = null;
+	
 	public DetectTermin() {
 		this.foundDate= null;
 	}
-	
+	    //Methode um zu Pürfen ob ein Datum im Format DD/MM/YYYY im Satz vorkommt
 		public boolean validate(String sentence) {
 		        Matcher matcher = Date_Expression.matcher(sentence);
+		        //Pürfen ob etwas zur Regular Expression gefunden wurde
 		        if(matcher.find()) {
+		        	//Gibt den Beginn der Stelle an, an dem was Datum im Satz beginnt
 		        	int beginn = matcher.start();
+		        	//Gibt das Ende der Stelle an, an dem was Datum im Satz endet
 		        	int finish = matcher.end();
+		        	//Variable mit dem gefundenen Datum
 		        	String termin = sentence.substring(beginn, finish);
 		        	foundDate = termin;
 		        	return true;
