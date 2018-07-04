@@ -22,7 +22,8 @@ public class DetectApplication {
 
 				for(int j=0;j<appkeywords.length;j++) {
 
-					if(chunks.getChunkContentAt(i) == appkeywords[j][0]) {
+					if(chunks.getChunkContentAt(i).equals(appkeywords[j][0])) {
+						System.out.println("hier");
 						appdetection.add(appkeywords[j][1]);
 					}
 				}
