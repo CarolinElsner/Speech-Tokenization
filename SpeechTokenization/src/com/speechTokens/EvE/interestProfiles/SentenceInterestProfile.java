@@ -70,7 +70,7 @@ public class SentenceInterestProfile extends AbstractInterestProfile {
 		//Zu erst pürfen ob ein exaktes Datum angegeben wurde
 		DetectTermin detector = new DetectTermin();
 		foundDate = detector.validate(sentence);
-		ArrayList<String> chunkscleaned = detector.searchDate(chunks);
+		ArrayList<String> chunkscleaned = detector.searchDate(chunks,sentence);
 		
 		//Wenn Datum gefunden, dann Kalenderevent
 		
@@ -94,7 +94,7 @@ public class SentenceInterestProfile extends AbstractInterestProfile {
 			}
 			
 			
-		}else if(foundDate == true) {
+		}else if(foundDate == true || detector.datefound == true) { //Falls Datum mit angegebene sein sollte
 			
 			AbstractEvent calendarevent = eventFactory.createEvent("AtomicEvent");
 			calendarevent.setType("CalendarEvent");
