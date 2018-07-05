@@ -3,6 +3,8 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.xml.datatype.DatatypeFactory;
+
 
 public class DetectTermin {
 	
@@ -11,13 +13,16 @@ public class DetectTermin {
 	//Globale Regular Expression für das exakte Datum im Format DD/MM/YYYYY
 	private static final Pattern Date_Expression = 
 		    Pattern.compile("(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)", Pattern.CASE_INSENSITIVE);
+	private static final Pattern Date_Detection = Pattern.compile("\\d+$");
 	//ArrayList für die endeckten Termine innerhalb eines Satzes
 	private ArrayList<String> dateDetect = new ArrayList<String>();
 	//Boolean Variable, falls ein exakte Datum gefunden wird
 	private String foundDate = null;
+	public boolean datefound = false;
 	
 	public DetectTermin() {
 		this.foundDate= null;
+		
 	}
 	    //Methode um zu Pürfen ob ein Datum im Format DD/MM/YYYY im Satz vorkommt
 		public boolean validate(String sentence) {
@@ -38,7 +43,7 @@ public class DetectTermin {
 		
 			
 		//Mit der MEthode searchDate soll nach Schlagworten(Calenadar, Appointment) und Datumsangaben (Monat oder Tag oder Monat+Tag) gesucht werden
-		public ArrayList<String> searchDate (ArrayList<String> chunk) {
+		public ArrayList<String> searchDate (ArrayList<String> chunk, String sentence) {
 			//ArrayListe mit den Schlagworten und Datumsangeben die auf einen Termin hindeuten
 			ArrayList<String> dayMonth = new ArrayList<String>();
 			dayMonth.add("January");
@@ -60,28 +65,69 @@ public class DetectTermin {
 			dayMonth.add("Friday");
 			dayMonth.add("Saturday");
 			dayMonth.add("Sunday");
-			dayMonth.add("Calendar");
-			dayMonth.add("appointment");
+			dayMonth.add("week");
+			
+			ArrayList<String> keyWordTermin = new ArrayList<String>();
+			keyWordTermin.add("appointment");
+			keyWordTermin.add("meeting");
+			keyWordTermin.add("conference");
+			keyWordTermin.add("meet");
+			keyWordTermin.add("arrange");
+			keyWordTermin.add("fix");
+
 			
 			//Iterieren über die Chunk-Liste
 			for (int i = 0; i< chunk.size(); i++) {
 				//Iterieren über die zurvor definierte ArrayList mit den Schlagworten und Datumsangaben
 				for (int j = 0; j< dayMonth.size(); j++) {
-					//Abgleich der beiden Listen und pürfeno ob Schlagworten und Datumsangabe vorkommt
+					//Abgleich der beiden Listen und pürfen ob Wochentag oder Monat
 					if(chunk.get(i).contains(dayMonth.get(j))) {
-						dayMonthfound = true;
-						dateDetect.add(chunk.get(i));
-						if(i != 0) {
-						chunk.remove(i);
-						i--;
+						//Abgleich ob in Zusammengang mit einem Wochentag oder Monat ein Schlagwort für ein Treffen gefallen ist
+						for (int k = 0; k<keyWordTermin.size();k++) {
+							//prüfen ob im Satz ein Schlagwort für ein Treffen genannt wurde
+							if (sentence.contains(keyWordTermin.get(k))) {
+								dayMonthfound = true;
+								System.out.println("Schlagwort und Zeitpunk wurden erkannt");
+								//Schauen ob auch Tag angegeben wurde, falls ja kann exakter Termin angegeben werden
+								Matcher matcher = Date_Detection.matcher(chunk.get(i));
+								if(matcher.find()) {
+									dateDetect.add(chunk.get(i));
+									System.out.println("Tag wurde gefunden " + chunk.get(i));
+									foundDate = chunk.get(i);
+									datefound = true;
+									
+								}	
+								System.out.println("Schlagwort und Zeitpunkt jedoch ohne exakte Tagesangabe");
+								chunk.remove(i);
+								i--;
+								break;
+//									if(i != 0) {
+//										chunk.remove(i);
+//										i--;
+//										break;
+//									}
+//									else if (i == 0) {
+//										System.out.println("hier mit i= " + i);
+//										chunk.remove(i)	;
+//										i = 0;
+//										System.out.println("ende mit i= "+ i);
+//										break;
+//									}
+							}
+							
+							else {
+								
+							}
 						}
-						else if (i == 0) {
-						chunk.remove(i)	;
-						i = 0;
-						}
+						break;
 					}
 				}
 			}
+			return chunk;
+		}
+		
+		public ArrayList<String> searchKeywordDate (ArrayList<String> chunk) {
+
 			return chunk;
 		}
 		
