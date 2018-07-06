@@ -85,6 +85,7 @@ public class SentenceInterestProfile extends AbstractInterestProfile {
 			
 			try {
 				this.getAgent().send(calendarevent, "TokenGeneration");
+				System.out.println("CalendarEvent sent to Topic TokenGeneration.");
 			} catch (NoValidEventException e) {
 			
 				e.printStackTrace();
@@ -106,6 +107,7 @@ public class SentenceInterestProfile extends AbstractInterestProfile {
 			
 			try {
 				this.getAgent().send(calendarevent, "TokenGeneration");
+				System.out.println("CalendarEvent sent to Topic TokenGeneration.");
 			} catch (NoValidEventException e) {
 				
 				e.printStackTrace();
@@ -142,7 +144,8 @@ public class SentenceInterestProfile extends AbstractInterestProfile {
 				
 				try {
 					this.getAgent().send(applicationEvent, "TokenGeneration");
-					
+					System.out.println("ApplicationEvent sent to Topic TokenGeneration. ApplicationType:" + applicationEvent.getPropertyByKey("ApplicationEvent"));
+
 				} catch (NoValidEventException e) {
 					e.printStackTrace();
 				} catch (NoValidTargetTopicException e) {
@@ -165,6 +168,7 @@ public class SentenceInterestProfile extends AbstractInterestProfile {
 	
 			try {
 				this.getAgent().send(sentenceEvent, "ChunkGeneration");
+				System.out.println("SenteceEvent sent to Topic ChunkGeneration.");
 				
 			} catch (NoValidEventException e) {
 				
