@@ -45,7 +45,6 @@ public class SingleKeywordIP extends AbstractInterestProfile {
 	@Override
 	public void doOnReceive(AbstractEvent event) {
 		
-		// TODO: Hier suchen wir exakt nach dem Keywort das wir als Chunk erhalten haben in den Semantischen Informationen. Sollte es als Plural (Projects Documents, Persons) hinterlegt sein wird es nicht gefunden
 		String keyword = EventUtils.findPropertyByKey(event, "Keywords").getValue().toString(); // is one String containing the Keyword that was found as a Chunk
 		ArrayList<Object> chunkArrList = (ArrayList<Object>) EventUtils.findPropertyByKey(event, "Chunks").getValue();
 		Chunker chunks = new Chunker();
@@ -58,15 +57,13 @@ public class SingleKeywordIP extends AbstractInterestProfile {
 			Chunker tempChunker = new Chunker(); // create a temporary chunker which consists of just one chunk
 			String currChunk = semFoundChunks.getChunkContentAt(i);
 			tempChunker.addChunkContent(currChunk);
-			tempChunker.addSemanticToChunk(currChunk, tempChunker.readSemanticOfChunk(currChunk));
+			tempChunker.addSemanticToChunk(currChunk, semFoundChunks.readSemanticOfChunk(currChunk));
 			if(semantic instanceof ArrayList<?>) {
-				ArrayList<?> newSemantic = (ArrayList<?>) semantic; 
+				ArrayList<String> newSemantic = (ArrayList<String>) semantic; 
 				if(newSemantic.size()>1) { // if the chunk as more than one semantic info
 					AbstractEvent uncertainEvent = eventFactory.createEvent("AtomicEvent");
-					uncertainEvent.setType("UncertainEvent");
-					uncertainEvent.add(new Property<>("UserID",EventUtils.findPropertyByKey(event, "UserID")));
-					uncertainEvent.add(new Property<>("SessionID",EventUtils.findPropertyByKey(event, "SessionID")));
-					uncertainEvent.add(new Property<>("Chunks", tempChunker.returnList()));// the chunker Object cant be pushed as it is and has to be parsed to the ArrayList
+					uncertainEvent = EventCreationHelper.createEvent(tempChunker, uncertainEvent, event);
+
 					try {
 						this.getAgent().send(uncertainEvent, "TokenGeneration");
 						
@@ -91,6 +88,8 @@ public class SingleKeywordIP extends AbstractInterestProfile {
 						e.printStackTrace();
 					}
 				}
+			}else {
+				System.out.println("SingleKeywordIP.doOnReceive: Wrong Instanceof semantic Array");
 			}
 		}
 	}

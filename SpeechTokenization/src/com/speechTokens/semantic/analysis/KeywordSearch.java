@@ -30,7 +30,7 @@ public class KeywordSearch {
 				System.out.println("1 keyword"+foundkeywords);
 				//Procedure for 1 found keyword
 			}else {
-				// TODO: Mehr als 1 Keywort erkannt funktioniert noch nicht
+				foundResults = severalKeywords(foundkeywords, ch);
 				System.out.println(">1 keywords"+foundkeywords);								
 			}
 		}
@@ -55,8 +55,10 @@ public class KeywordSearch {
 	//Search through Chunker to find spoken Keywords
 	/**
 	 * Looks in the chunks for a specific keyword. Can detect singular and plural of Keywords
+	 * Uses "contains" --> chunks like "Project Document" will be one keyword or "Highnet Document" of type Document
+	 * Document will be added in the foundKeyword ArrayList, that we can search for it in the next step in the sem Infos
 	 * @param ch chunker Object which contains the Chunks including the Sem infou found by the DR Group
-	 * @return an ArrayList<String> with the KEywords that were found
+	 * @return an ArrayList<String> with the keyword that can be person document or project
 	 */
 	public static ArrayList<String> findKeywords(Chunker ch) {
 		
@@ -174,11 +176,9 @@ public class KeywordSearch {
 		}
 		for (int i = 0; i < keywords.size(); i++) {
 			tempChunker = oneKeyword(keywords.get(i), chunks);
-			tempChunker.printList();
 			for (int j = 0; j < tempChunker.size(); j++) {
 				String currChunk =  tempChunker.getChunkContentAt(j);
 				Object tempSemChunk = tempChunker.getSemanticAt(j);
-				newChunker.printList();
 				if(tempSemChunk instanceof ArrayList<?> && !((ArrayList<String>) tempSemChunk).isEmpty()) {
 					newChunker.addSemanticToChunk(currChunk, (ArrayList<String>)tempSemChunk);	
 				}else {

@@ -109,19 +109,13 @@ public class Chunker implements Serializable{
 						((ArrayList<String>) chunkList.get(i)).remove(1); // add the new Semantic to the chunkList
 						((ArrayList<String>) chunkList.get(i)).add(1,(String) semantics); // add the new Semantic to the chunkList
 					}else { // something strange happened
-						try {
-							throw new Exception();
-						} catch (Exception e) {
-							
-							e.printStackTrace();
-						}
-						
+							System.out.println("Chunker.addSemanticToChunk: something strange happened");
 					}
 					count++; //counts how often the chunk was found
 				}
 			}
 			if(count==0) {// chunk was never found in List
-				throw new NoSuchElementException();
+				System.out.println("Chunker.addSemanticToChunk: Chunk you want to add into was not found");
 			}
 		}else if(semantics instanceof ArrayList<?>) {
 			int count=0;
@@ -204,7 +198,7 @@ public class Chunker implements Serializable{
 			}
 		}
 		if(count==0) {// chunk was never found in List
-			throw new NoSuchElementException();
+			System.out.println("Chunker.hasSemInfo: Chunk not found");
 		}
 		
 		if(eachChunk.size()==1) {// contains just the chunk without semantic information

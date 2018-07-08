@@ -37,12 +37,12 @@ public class TokenizeInterestProfile extends AbstractInterestProfile {
 		if(keywords.size() == 0) { // no keyword was found
 		
 		AbstractEvent noKeywordEvent = eventFactory.createEvent("AtomicEvent");
-		noKeywordEvent.setType("NoKeywordsEvent");
+		noKeywordEvent.setType("NoKeywordEvent");
 		//Besitzt event nur eine UserID??
-		noKeywordEvent.add(new Property<>("UserID", EventUtils.findPropertyByKey(event, "UserID")));
-		noKeywordEvent.add(new Property<>("SessionID", EventUtils.findPropertyByKey(event, "SessionID")));
-		noKeywordEvent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID")));
-		noKeywordEvent.add(new Property<>("Chunks", EventUtils.findPropertyByKey(event, "Chunks")));
+		noKeywordEvent.add(new Property<>("UserID", EventUtils.findPropertyByKey(event, "UserID").getValue()));
+		noKeywordEvent.add(new Property<>("SessionID", EventUtils.findPropertyByKey(event, "SessionID").getValue()));
+		noKeywordEvent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID").getValue()));
+		noKeywordEvent.add(new Property<>("Chunks", EventUtils.findPropertyByKey(event, "Chunks")).getValue());
 		
 		try {
 			this.getAgent().send(noKeywordEvent, "Keywords");
@@ -55,15 +55,13 @@ public class TokenizeInterestProfile extends AbstractInterestProfile {
 		}
 		
 		}else if (keywords.size() == 1) { // one Keyword was found
-
-			chunks.removeChunkAndSem(keywords.get(0));// remove keyword chunk
 			AbstractEvent singleKeywordEvent = eventFactory.createEvent("AtomicEvent");		
 			
 			singleKeywordEvent.setType("SingleKeywordEvent");
 			//Besitzt event nur eine UserID??
-			singleKeywordEvent.add(new Property<>("UserID", EventUtils.findPropertyByKey(event, "UserID")));
-			singleKeywordEvent.add(new Property<>("SessionID", EventUtils.findPropertyByKey(event, "SessionID")));
-			singleKeywordEvent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID")));
+			singleKeywordEvent.add(new Property<>("UserID", EventUtils.findPropertyByKey(event, "UserID").getValue()));
+			singleKeywordEvent.add(new Property<>("SessionID", EventUtils.findPropertyByKey(event, "SessionID").getValue()));
+			singleKeywordEvent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID").getValue()));
 			singleKeywordEvent.add(new Property<>("Chunks", chunks.returnList())); // Give the new chunker object where keyword chunk is removed
 			singleKeywordEvent.add(new Property<>("Keywords", keywords.get(0))); // Pushes the Keyword as an String (the Keyword) into the Event
 
@@ -78,15 +76,12 @@ public class TokenizeInterestProfile extends AbstractInterestProfile {
 		
 		}else { // size of Keywords Arraylist is bigger than one, so more keywords were found
 			
-			for (int i = 0; i < keywords.size(); i++) {
-				chunks.removeSemanticOfChunk(keywords.get(i)); // there have to be more than one keyword included, remove them
-			}
 			AbstractEvent severalKeywordsEvent = eventFactory.createEvent("AtomicEvent");
 			severalKeywordsEvent.setType("SeveralKeywordsEvent");
 			//Besitzt event nur eine UserID??
-			severalKeywordsEvent.add(new Property<>("UserID", EventUtils.findPropertyByKey(event, "UserID")));
-			severalKeywordsEvent.add(new Property<>("SessionID", EventUtils.findPropertyByKey(event, "SessionID")));
-			severalKeywordsEvent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID")));
+			severalKeywordsEvent.add(new Property<>("UserID", EventUtils.findPropertyByKey(event, "UserID").getValue()));
+			severalKeywordsEvent.add(new Property<>("SessionID", EventUtils.findPropertyByKey(event, "SessionID").getValue()));
+			severalKeywordsEvent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID").getValue()));
 			severalKeywordsEvent.add(new Property<>("Chunks", chunks.returnList()));// add new chunker object
 			severalKeywordsEvent.add(new Property<>("Keywords", keywords)); // Pushes the Keyword as an ArrayList<String> with multiple entries (the Keywords) into the Event
 	
