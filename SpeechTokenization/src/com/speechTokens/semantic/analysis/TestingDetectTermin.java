@@ -16,7 +16,7 @@ public class TestingDetectTermin {
 		Tokenization chunks = new Tokenization(); 
 		ArrayList <String> testChunks = new ArrayList<String>();
 		
-		String sentence = "Show me documents from April 8 and can we meet 09/06/2018 ?";
+		String sentence = "Do you have time for a meeting next Friday ?";
 		
 		//Test ob exaktes Datum gefunden wird
 		termin.validate(sentence);

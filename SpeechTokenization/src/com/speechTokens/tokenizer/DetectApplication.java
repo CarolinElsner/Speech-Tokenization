@@ -3,7 +3,7 @@ package com.speechTokens.tokenizer;
 import java.util.ArrayList;
 
 public class DetectApplication {
-	// Die Klasse DetectApplication Ã¼bernimmt die Suche nach Keywords bzgl. der Google Application
+	// Die Klasse DetectApplication übernimmt die Suche nach Keywords bzgl. der Google Application
 	// Gefundene Keywords haben die Erstellung bzw. das Versenden von 
 	public static ArrayList<String> detection(Chunker chunks){
 			
@@ -11,7 +11,7 @@ public class DetectApplication {
 			chunks.printList();
 
 // Zweidimesionales String Array zur Definition von Keywords --> {"Keyword", "zugeordneter Applikationstyp"}
-// Keywords sind stark vereinfacht definiert (Bsp. keep bezieht sich nicht nur auf die application) --> Ansatz: MÃ¶glichst viele Treffer
+// Keywords sind stark vereinfacht definiert (Bsp. keep bezieht sich nicht nur auf die application) --> Ansatz: Möglichst viele Treffer
 // --> Jeden Nennung von "keep" --> ApplicationEvent auch wenn "keep" auch eine andere Bedeutung hat
 			
 
@@ -30,18 +30,12 @@ public class DetectApplication {
 					{"note", "note"},
 					};
 
-// Ãœbergebenes Chunker-Objekt wird durchlaufen und mit dem Array appkeywords verglichen.
-// Wird ein keyword gefunden, wird der ArrayList der zugehÃ¶rige Apllikationstyp als neues Element hinzugefÃ¼gt 		
+// Übergebenes Chunker-Objekt wird durchlaufen und mit dem Array appkeywords verglichen.
+// Wird ein keyword gefunden, wird der ArrayList der zugehörige Apllikationstyp als neues Element hinzugefügt 		
 			
 			for(int i=0;i<chunks.size();i++) {
 				for(int j=0;j<appkeywords.length;j++) {
-<<<<<<< HEAD
-
 					if(chunks.getChunkContentAt(i).equals(appkeywords[j][0])) {
-						System.out.println("hier");
-=======
-					if(chunks.getChunkContentAt(i).equals(appkeywords[j][0])) {
->>>>>>> refs/remotes/origin/master
 						appdetection.add(appkeywords[j][1]);
 					}
 				}

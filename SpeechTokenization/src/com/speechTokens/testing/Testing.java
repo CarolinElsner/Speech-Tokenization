@@ -44,7 +44,7 @@ public class Testing {
 		//Zu erst pürfen ob ein exaktes Datum angegeben wurde
 		DetectTermin detector = new DetectTermin();
 		foundDate = detector.validate(sentence);
-		ArrayList<String> chunkscleaned = detector.searchDate(chunks);
+		ArrayList<String> chunkscleaned = detector.searchDate(chunks,sentence);
 		if(DetectTermin.dayMonthfound == true) {
 			System.out.println("Kalenderaktion erkannt");
 		}else if(foundDate == true) {

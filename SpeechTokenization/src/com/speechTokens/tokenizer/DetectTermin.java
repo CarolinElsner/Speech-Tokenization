@@ -65,7 +65,6 @@ public class DetectTermin {
 			dayMonth.add("Friday");
 			dayMonth.add("Saturday");
 			dayMonth.add("Sunday");
-<<<<<<< HEAD
 			dayMonth.add("week");
 			
 			ArrayList<String> keyWordTermin = new ArrayList<String>();
@@ -78,16 +77,12 @@ public class DetectTermin {
 
 			
 			//Iterieren über die Chunk-Liste
-=======
-			dayMonth.add("Calendar");
-			dayMonth.add("Appointment");
->>>>>>> refs/remotes/origin/master
+			
 			for (int i = 0; i< chunk.size(); i++) {
 				//Iterieren über die zurvor definierte ArrayList mit den Schlagworten und Datumsangaben
 				for (int j = 0; j< dayMonth.size(); j++) {
 					//Abgleich der beiden Listen und pürfen ob Wochentag oder Monat
 					if(chunk.get(i).contains(dayMonth.get(j))) {
-<<<<<<< HEAD
 						//Abgleich ob in Zusammengang mit einem Wochentag oder Monat ein Schlagwort für ein Treffen gefallen ist
 						for (int k = 0; k<keyWordTermin.size();k++) {
 							//prüfen ob im Satz ein Schlagwort für ein Treffen genannt wurde
@@ -103,7 +98,7 @@ public class DetectTermin {
 									datefound = true;
 									
 								}	
-								System.out.println("Schlagwort und Zeitpunkt jedoch ohne exakte Tagesangabe");
+								//System.out.println("Schlagwort und Zeitpunkt jedoch ohne exakte Tagesangabe");
 								chunk.remove(i);
 								i--;
 								break;
@@ -126,17 +121,6 @@ public class DetectTermin {
 							}
 						}
 						break;
-=======
-						dayMonthfound = true;
-						dateDetect.add(chunk.get(i));
-						if(i != 0) {
-							chunk.remove(i);
-							i--;
-						}else if(i==0) {
-							chunk.remove(i);
-							i=0;
-						}
->>>>>>> refs/remotes/origin/master
 					}
 				}
 			}
