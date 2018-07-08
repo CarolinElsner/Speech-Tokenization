@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class DetectApplication {
 	// Die Klasse DetectApplication übernimmt die Suche nach Keywords bzgl. der Google Application
-	// Gefundene Keywords haben die Erstellung bzw. das Versenden von 
+	// Gefundene Keywords haben die Erstellung bzw. das Versenden eines ApplicationEvents zur Folge
 	public static ArrayList<String> detection(String sentence){
 			
 			ArrayList<String> appdetection = new ArrayList<>();
@@ -23,8 +23,10 @@ public class DetectApplication {
 					{"google drive","drive"}
 					};
 
-// Übergebenes Chunker-Objekt wird durchlaufen und mit dem Array appkeywords verglichen.
+//Iteration durch Array appkeywords. Prüfen, ob keywords im jeweiligen Satz enthalten sind.	
 // Wird ein keyword gefunden, wird der ArrayList der zugehörige Apllikationstyp als neues Element hinzugefügt 		
+			
+			//Interation durch alle Keyword und 
 			
 			for(int i=0;i<appkeywords.length;i++) {
 					if(sentence.toLowerCase().contains(appkeywords[i][0])) {
