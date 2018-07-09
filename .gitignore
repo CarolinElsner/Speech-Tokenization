@@ -13,6 +13,9 @@ Speech_Recognition/node_modules/
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
+# JDT-specific (Eclipse Java Development Tools)     
+.classpath
+
 # Package Files #
 *.jar
 *.war
