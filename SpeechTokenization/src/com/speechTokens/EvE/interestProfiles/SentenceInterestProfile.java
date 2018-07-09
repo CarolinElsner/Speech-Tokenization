@@ -126,7 +126,7 @@ public class SentenceInterestProfile extends AbstractInterestProfile {
 			
 		DetectApplication appdetection = new DetectApplication();
 		
-		ArrayList<String> foundapps = appdetection.detection(chunk);
+		ArrayList<String> foundapps = appdetection.detection(sentence);
 		
 		if(foundapps.size()>0) {
 			for(int i = 0; i < foundapps.size(); i++) {
