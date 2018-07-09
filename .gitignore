@@ -1,6 +1,8 @@
 # Compiled class file
 *.class
 
+C:\Users\Menz\git\Speech-Tokenization\SpeechTokenization\target\m2e-wtp\web-resources\META-INF\MANIFEST.MF
+
 # Log file
 *.log
 
@@ -14,7 +16,7 @@ Speech_Recognition/node_modules/
 .mtj.tmp/
 
 # JDT-specific (Eclipse Java Development Tools)     
-.classpath
+SpeechTokenization/.classpath
 
 # Package Files #
 *.jar
