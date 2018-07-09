@@ -60,30 +60,30 @@ public class KeywordSearch {
 	 * @param ch chunker Object which contains the Chunks including the Sem infou found by the DR Group
 	 * @return an ArrayList<String> with the keyword that can be person document or project
 	 */
+	
 	public static ArrayList<String> findKeywords(Chunker ch) {
 		
+		
+		String[][] keywords = {
+				{"project","project"},
+				{"document", "document"},
+				{"person", "person"},
+				{"contact", "person"},
+				};
 		
 		ArrayList<String> foundkeywords = new ArrayList<>();
 		
 		for(int i=0; i<ch.size(); i++) {
-
-			if(ch.getChunkContentAt(i).contains("document")){
+			for(int j=0; j<keywords.length;j++) {
 				
-				System.out.println("document detected");
-				foundkeywords.add("document");
+				if(ch.getChunkContentAt(i).contains(keywords[j][0])) {
+					foundkeywords.add(keywords[j][1]);
+					System.out.println("Keyword detected: " + keywords[j][1]);
+				}
 				
-			}else if (ch.getChunkContentAt(i).contains("project")) {
-				
-				System.out.println("project detected");
-				foundkeywords.add("project");
-				
-			}else if (ch.getChunkContentAt(i).contains("person")) {
-				
-				System.out.println("person detected");
-				foundkeywords.add("person");
-			}else {
-				System.out.println("KeywordSerch.findKeywords: Keywort nicht erkannt");
 			}
+			
+		
 		}
 		
 		return foundkeywords;
