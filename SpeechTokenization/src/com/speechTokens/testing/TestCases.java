@@ -14,8 +14,8 @@ import eventprocessing.utils.factory.FactoryValues;
 public class TestCases {
 	private static AbstractFactory eventFactory = FactoryProducer.getFactory(FactoryValues.INSTANCE.getEventFactory());
 
-
-	public static void main(String[] args) {
+		public static void main(String[] args) {
+	
 		// TODO Auto-generated method stub
 		
 		/*

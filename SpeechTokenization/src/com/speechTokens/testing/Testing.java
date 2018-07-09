@@ -25,15 +25,80 @@ public class Testing {
 
 	public static void main(String[] args) {
 		
-		//("{ \"Instanzname\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#MilestonePlan\" } , \"Beziehung\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#IsChangedBy\" } , \"Instanzname2\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#FlorianHahn\" } , \"Oberklasse\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#Document\" } , \"Attribut\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#FileName\" } , \"Name\": { \"type\": \"literal\" , \"value\": \"milestone plan\" } , \"Keyword\": { \"type\": \"literal\" , \"value\": \"milestone; phase; plan; project; deadline;\" } } ,");
-		//("{ \"Instanzname\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#MilestonePlan\" } , \"Beziehung\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#IsChangedBy\" } , \"Instanzname2\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#FlorianHahn\" } , \"Oberklasse\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#Person\" } , \"Attribut\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#FileName\" } , \"Name\": { \"type\": \"literal\" , \"value\": \"Thomas\" } , \"Keyword\": { \"type\": \"literal\" , \"value\": \"manager; gay;\" } } ,");
-
+		ArrayList<String> milestonePlan =new ArrayList<>();
+		// keywords: milestone; phase; plan; project; deadline;
+		//milestonePlan.add("	{\"head\": {\"vars\": [ \"Instanzname\" , \"Beziehung\" , \"Instanzname2\" , \"Classname\" , \"Attribut\" , \"x\" ]} ,\"results\": {\"bindings\": [ {\r\n\"{ \"Instanzname\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#MilestonePlan\" } , \"Beziehung\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#IsChangedBy\" } , \"Instanzname2\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#FlorianHahn\" } , \"Oberklasse\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#Document\" } , \"Attribut\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#FileName\" } , \"Name\": { \"type\": \"literal\" , \"value\": \"milestone plan\" } , \"Keyword\": { \"type\": \"literal\" , \"value\": \"milestone; phase; plan; project; deadline;\" } }]}} ,");
+		milestonePlan.add("{\r\n" + 
+				"  \"head\": {\r\n" + 
+				"    \"vars\": [ \"Instanzname\" , \"Beziehung\" , \"Instanzname2\" , \"Classname\" , \"Attribut\" , \"x\" ]\r\n" + 
+				"  } ,\r\n" + 
+				"  \"results\": {\r\n" + 
+				"    \"bindings\": [\r\n" + 
+				"      {\r\n" + 
+				"        \"Instanzname\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#CostPlan\" } ,\r\n" + 
+				"        \"Beziehung\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#IsCreatedFor\" } ,\r\n" + 
+				"        \"Instanzname2\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#HighNet\" } ,\r\n" + 
+				"        \"Oberklasse\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#Document\" } ,\r\n" + 
+				"        \"Name\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#URL\" } ,\r\n" + 
+				"        \"Keyword\": { \"type\": \"literal\" , \"value\": \"https://drive.google.com/open?id=17LFPYVxbBQK5Wdt5SrNgo3_iYxXJiXfXq6jYoLl8H4Y\" }\r\n" + 
+				"      } ,\r\n" + 
+				"      {\r\n" + 
+				"        \"Instanzname\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#CostPlan\" } ,\r\n" + 
+				"        \"Beziehung\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#IsCreatedFor\" } ,\r\n" + 
+				"        \"Instanzname2\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#HighNet\" } ,\r\n" + 
+				"        \"Classname\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#ProjectControlling\" } ,\r\n" + 
+				"        \"Name\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#FileName\" } ,\r\n" + 
+				"        \"x\": { \"type\": \"literal\" , \"value\": \"costplan\" }\r\n" + 
+				"      }]}}");
+		
+		
+		
+		
+		
+		
+		ArrayList<String> thomas = new ArrayList<>();
+		// keywords : manager; male
+		thomas.add("{\r\n" + 
+				"  \"head\": {\r\n" + 
+				"    \"vars\": [ \"Instanzname\" , \"Beziehung\" , \"Instanzname2\" , \"Classname\" , \"Attribut\" , \"x\" ]\r\n" + 
+				"  } ,\r\n" + 
+				"  \"results\": {\r\n" + 
+				"    \"bindings\": [\r\n" + 
+				"      {\r\n" + 
+				"        \"Instanzname\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#CostPlan\" } ,\r\n" + 
+				"        \"Beziehung\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#IsCreatedFor\" } ,\r\n" + 
+				"        \"Instanzname2\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#HighNet\" } ,\r\n" + 
+				"        \"Oberklasse\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#Person\" } ,\r\n" + 
+				"        \"Name\": { \"type\": \"uri\" , \"value\": Thomas Mueller\" } ,\r\n" + 
+				"        \"Keyword\": { \"type\": \"literal\" , \"value\":milestone plan\" }\r\n" + 
+				"      } ,\r\n" + 
+				"      {\r\n" + 
+				"        \"Instanzname\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#CostPlan\" } ,\r\n" + 
+				"        \"Beziehung\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#IsCreatedFor\" } ,\r\n" + 
+				"        \"Instanzname2\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#HighNet\" } ,\r\n" + 
+				"        \"Classname\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#ProjectControlling\" } ,\r\n" + 
+				"        \"Name\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#FileName\" } ,\r\n" + 
+				"        \"x\": { \"type\": \"literal\" , \"value\": \"costplan\" }\r\n" + 
+				"      }]}}");
+				
+		ArrayList<String> highnet = new ArrayList<>();
+		// keywords : highnet; information
+		highnet.add("{ \"Instanzname\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#MilestonePlan\" } , \"Beziehung\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#IsChangedBy\" } , \"Instanzname2\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#FlorianHahn\" } , \"Oberklasse\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#Project\" } , \"Attribut\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#FileName\" } , \"Name\": { \"type\": \"literal\" , \"value\": \"Highnet Project\" } , \"Keyword\": { \"type\": \"literal\" , \"value\": \"highnet; information; revenue;\" } } ,");
+		
+		ArrayList<String> josef = new ArrayList();
+		// keywords: munich; revenue; stream; // Josef Project
+		josef.add("{ \"Instanzname\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#Josef\" } , \"Beziehung\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#IsChangedBy\" } , \"Instanzname2\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#FlorianHahn\" } , \"Oberklasse\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#Project\" } , \"Attribut\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#FileName\" } , \"Name\": { \"type\": \"literal\" , \"value\": \"Josef Project\" } , \"Keyword\": { \"type\": \"literal\" , \"value\": \"munich; revenue; stream;\" } } ,");
+		// keywords: "word; hamilton; // Josef File
+		josef.add("{ \"Instanzname\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#Josef\" } , \"Beziehung\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#IsChangedBy\" } , \"Instanzname2\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#FlorianHahn\" } , \"Oberklasse\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#Project\" } , \"Attribut\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#FileName\" } , \"Name\": { \"type\": \"literal\" , \"value\": \"Josef File\" } , \"Keyword\": { \"type\": \"literal\" , \"value\": \"word; hamilton;\" } } ,");
+		// keywords: male; big; accountant; // Josef Miller
+		josef.add("{ \"Instanzname\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#Josef\" } , \"Beziehung\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#IsChangedBy\" } , \"Instanzname2\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#FlorianHahn\" } , \"Oberklasse\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#Person\" } , \"Attribut\": { \"type\": \"uri\" , \"value\": \"http://www.semanticweb.org/jennifertran/ontologies/2018/0/dokumentenRepraesentation#FileName\" } , \"Name\": { \"type\": \"literal\" , \"value\": \"Josef Miller\" } , \"Keyword\": { \"type\": \"literal\" , \"value\": \"male; big; accountant;\" } } ,");
+		
 
 		Tokenization chunking = new Tokenization();
 		//Variable um zu prüfen ob Datum in Satz enthalten ist
 		boolean foundDate;
 		//boolean foundDayMonth = DetectTermin.dayMonthfound;
-		String sentence= "I use google mail will work with the project";
+		String sentence= "Thomas and Milestone ";
 		ArrayList<String> chunks = new ArrayList<String>();
 		try {
 			chunks = (ArrayList<String>) chunking.doTokenization(sentence);
@@ -62,7 +127,7 @@ public class Testing {
 		//Detecting Application Keywords and publishing ApplicationEvent
 		DetectApplication appdetection = new DetectApplication();
 		
-		ArrayList<String> foundapps = appdetection.detection(chunk);
+		ArrayList<String> foundapps = appdetection.detection(sentence);
 		
 		if(foundapps.size()>0) {
 			for (int i = 0; i < foundapps.size(); i++) {
@@ -72,12 +137,22 @@ public class Testing {
 			System.out.println("Keine Apps");
 		}
 		if(chunk.size()!=0) {
+			if(chunk.hasChunk("milestone")) {
+				chunk.addSemanticToChunk("milestone", milestonePlan.get(0));
+			}else if (chunk.hasChunk("thomas")) {
+				chunk.addSemanticToChunk("thomas", thomas.get(0));
+			}else {
+				System.out.println("Error");
+			}
+			chunk.printList();
+			//chunk.addSemanticToChunk(chunk, semantics);
 			// zu dieesem Zeitpunk muss der Chunker Sem infos haben
 			Chunker semFoundChunks = new Chunker();
 			ArrayList<String> keywords = KeywordSearch.findKeywords(chunk);
 			if(keywords.size() == 0) {
 				semFoundChunks = KeywordSearch.noKeyword(chunk);
 			}else if(keywords.size() == 1) {
+				System.out.println(keywords);
 				semFoundChunks = KeywordSearch.oneKeyword(keywords.get(0), chunk);
 			}else if(keywords.size() >1) {
 				semFoundChunks = KeywordSearch.severalKeywords(keywords, chunk);
@@ -85,22 +160,27 @@ public class Testing {
 				System.out.println("###Error###");
 			}
 			for (int i = 0; i < semFoundChunks.size(); i++) {
+
 				Object semantic = semFoundChunks.getSemanticAt(i);
 					ArrayList<String> newSemantic = (ArrayList<String>) semantic;
 					Chunker tempChunker = new Chunker(); // create a temporary chunker which consists of just one chunk
 					String currChunk = semFoundChunks.getChunkContentAt(i);
 					tempChunker.addChunkContent(currChunk);
 					tempChunker.addSemanticToChunk(currChunk, semFoundChunks.readSemanticOfChunk(currChunk));
-					if(newSemantic.size()>1) {// more than one sem data off the respective chunk, so we dont know which type
+					if(newSemantic != null && newSemantic.size()>1) {// more than one sem data off the respective chunk, so we dont know which type
 						System.out.println(createEvent(tempChunker));			
-					}else { // just one semantic entry was found for the chunk
+					}else if(newSemantic == null) {
+						
+					}
+					else { // just one semantic entry was found for the chunk
 						// Hier geht es um ein Event, die eine spezifische Aktion erfordert
 						String chunkStr = semFoundChunks.getChunkContentAt(i);
 						Object sem = semFoundChunks.getSemanticAt(i);
 						Chunker tokenChunker = new Chunker();
 						tokenChunker.addChunkContent(chunkStr);
 						tokenChunker.addSemanticToChunk(chunkStr, sem);
-						System.out.println(createEvent(semFoundChunks));
+						
+						System.out.println(createEvent(tokenChunker));
 					}
 			}
 		}

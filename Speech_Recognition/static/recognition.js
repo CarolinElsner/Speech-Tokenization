@@ -17,24 +17,24 @@
 
     stream.setEncoding('utf8'); // get text instead of Buffers for on data events
 
- // Auskommentiert für Test
-    // stream.on('data', function(data) {
-    //   console.log(stop);
-    //   if (stop == true){
-    //     console.log("Stop")
-    //     stream.stop();
-    //     stream.stop.bind(stream);
-    //     stream.end();
-    //     stop = false;
-    //   } else {
-    //     console.log(sentenceID);
-    //     console.log(data);
-    //     // waits until one complete sentence is recognized. Then stored in the data variable as a string
-    //     GETRequest(serverURL, data, userID, timestamp, sessionID, sentenceID); // send one sentence to the application server
-    //     sentenceID++;
-    //     console.log(sentenceID);
-    //   }
-    // });
+
+     stream.on('data', function(data) {
+       console.log(stop);
+       if (stop == true){
+         console.log("Stop")
+         stream.stop();
+         stream.stop.bind(stream);
+         stream.end();
+         stop = false;
+       } else {
+         console.log(sentenceID);
+         console.log(data);
+         // waits until one complete sentence is recognized. Then stored in the data variable as a string
+         GETRequest(serverURL, data, userID, timestamp, sessionID, sentenceID); // send one sentence to the application server
+         sentenceID++;
+         console.log(sentenceID);
+       }
+     });
 
 //  Ausgabe Rückgabewerte Watson
     stream.on('data', function(data) {
