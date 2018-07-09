@@ -55,7 +55,7 @@ public class ServletInterface extends HttpServlet {
 		String sentenceID = request.getParameter("sentenceID");
 		// To execute the other class and its dependencies it is important to add these dependencies under "Deployment Assembly"
 		System.out.println("Recorded Sentence: "+JsSentence);		
-		
+		/*
 		AbstractEvent watsonEvent = eventFactory.createEvent("AtomicEvent");
 		watsonEvent.setType("WatsonEvent");
 		watsonEvent.add(new Property<>("UserID",userID));
@@ -64,6 +64,7 @@ public class ServletInterface extends HttpServlet {
 		watsonEvent.add(new Property<>("SentenceID", sentenceID));
 		String message = messageMapper.toJSON(watsonEvent);
 		despatcher.deliver(message, "ChunkGeneration");
+		*/
 	}
 
 }

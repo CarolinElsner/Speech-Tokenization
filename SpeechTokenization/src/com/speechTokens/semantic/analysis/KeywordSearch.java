@@ -116,6 +116,7 @@ public class KeywordSearch {
 	 */
 	public static Chunker oneKeyword(String keyword, Chunker chunks){
 		Chunker results= new Chunker();
+
 		for (int j = 0; j < chunks.size(); j++) {
 			ArrayList<String> foundSemOfChunk = new ArrayList<String>(); // the semantics that were found by the keyword and belong to ONE chunk
 			Boolean semanticExistance = chunks.getSemanticAt(j) != null;
