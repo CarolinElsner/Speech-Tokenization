@@ -16,7 +16,12 @@
 
 'use strict';
 
-/* eslint-env node, es6 */
+/*
+Webserver will be hosted on port 3000
+Secure server for Watson authentification will be hosted on port 3001
+Self signed certificates will be used
+This server.js is for test purpose only and will host .html files in /static folder
+*/
 
 const express = require('express');
 const app = express();
