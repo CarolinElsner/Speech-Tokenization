@@ -3,7 +3,11 @@
  */
 'use strict';
 
-/* eslint-env node, es6 */
+/* server.js for implementing Watson Speech to Text into GUI
+Secure server for Watson authentification will be hosted on port 3000
+Self signed certificates will be used
+After startup the node server will be hosted on port 3001 with /public as default
+*/
 
 const express = require('express');
 const app = express();
@@ -14,22 +18,6 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpack = require('webpack');
 const webpackConfig = require('./webpack.config');
 var path = require('path');
-
-//var server = require('http').createServer(app);
-//var io = require('socket.io')(server);
-// var port = process.env.PORT || 3000;
-//var WebSocket = require('ws')
-//webSocket = new WebSocket("ws://localhost:8081/Websocket/socket");
-
-//webSocket.send(message.value);
-//echoText.value += "Message sended to the server : " + message.value + "\n";
-//message.value = "";
-
-
-//Node Server
-// server.listen(port, () => {
-//   console.log('Server listening at port %d', port);
-// });
 
 // allows environment properties to be set in a file named .env
 require('dotenv').load({ silent: true });
@@ -155,59 +143,3 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //node module
 app.use('/scripts', express.static(__dirname + '/node_modules'));
-
-
-//Servlet das mit Kafka Agents kommuniziert
-
-
-
-
-
-
-
-//ALT mit Node Server
-//Chatroom
-
-var numUsers = 0;
-//
-//io.on('connection', (socket) => {
-//  var addedUser = false;
-//
-//  // when the client emits 'add user', this listens and executes
-//  socket.on('add user', (username) => {
-//    if (addedUser) return;
-//
-//    // we store the username in the socket session for this client
-//    socket.username = username;
-//    ++numUsers;
-//    addedUser = true;
-//    socket.emit('login', {
-//      numUsers: numUsers
-//    });
-//    // echo globally (all clients) that a person has connected
-//    socket.broadcast.emit('user joined', {
-//      username: socket.username,
-//      numUsers: numUsers
-//    });
-//  });
-//
-//    // when the client emits 'stop typing', we broadcast it to others
-//  socket.on('stop typing', () => {
-//    socket.broadcast.emit('stop typing', {
-//      username: socket.username
-//    });
-//  });
-//
-//  // when the user disconnects.. perform this
-//  socket.on('disconnect', () => {
-//    if (addedUser) {
-//      --numUsers;
-//
-//      // echo globally that this client has left
-//      socket.broadcast.emit('user left', {
-//        username: socket.username,
-//        numUsers: numUsers
-//      });
-//    }
-//  });
-//});
