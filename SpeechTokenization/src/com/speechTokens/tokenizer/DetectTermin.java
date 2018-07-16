@@ -10,12 +10,17 @@ public class DetectTermin {
 	
 
 	public static boolean dayMonthfound = false;
+	
 	//Globale Regular Expression für das exakte Datum im Format DD/MM/YYYYY
 	private static final Pattern Date_Expression = 
 		    Pattern.compile("(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)", Pattern.CASE_INSENSITIVE);
+	
+	//Regular Expression fuer Datum mit Tagangabe 
 	private static final Pattern Date_Detection = Pattern.compile("\\d+$");
+	
 	//ArrayList für die endeckten Termine innerhalb eines Satzes
 	private ArrayList<String> dateDetect = new ArrayList<String>();
+	
 	//Boolean Variable, falls ein exakte Datum gefunden wird
 	private String foundDate = null;
 	public boolean datefound = false;
@@ -88,6 +93,7 @@ public class DetectTermin {
 			keyWordTermin.add("meet");
 			keyWordTermin.add("arrange");
 			keyWordTermin.add("fix");
+			keyWordTermin.add("time");
 
 			
 			//Iterieren über die Chunk-Liste
@@ -107,7 +113,7 @@ public class DetectTermin {
 								Matcher matcher = Date_Detection.matcher(chunk.get(i));
 								if(matcher.find()) {
 									dateDetect.add(chunk.get(i));
-									System.out.println("Tag wurde gefunden " + chunk.get(i));
+									//System.out.println("Tag wurde gefunden " + chunk.get(i));
 									foundDate = chunk.get(i);
 									datefound = true;
 									
@@ -120,7 +126,7 @@ public class DetectTermin {
 							}
 							
 							else {
-								System.out.println("Es wurde kein Schlagwort für ein Treffen genannt");
+								//System.out.println("Es wurde kein Schlagwort für ein Treffen genannt");
 							}
 						}
 						break;
