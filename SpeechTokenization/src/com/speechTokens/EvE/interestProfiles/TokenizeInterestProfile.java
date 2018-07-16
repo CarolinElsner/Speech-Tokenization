@@ -84,7 +84,6 @@ public class TokenizeInterestProfile extends AbstractInterestProfile {
 			//severalKeywordsEvent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID").getValue()));
 			severalKeywordsEvent.add(new Property<>("Chunks", chunks.returnList()));// add new chunker object
 			severalKeywordsEvent.add(new Property<>("Keywords", keywords)); // Pushes the Keyword as an ArrayList<String> with multiple entries (the Keywords) into the Event
-	//gdsfjklsdföfs
 			
 			try {
 				this.getAgent().send(severalKeywordsEvent, "Keywords");
