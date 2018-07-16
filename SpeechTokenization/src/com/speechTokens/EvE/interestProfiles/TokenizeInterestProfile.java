@@ -41,7 +41,7 @@ public class TokenizeInterestProfile extends AbstractInterestProfile {
 		//Besitzt event nur eine UserID??
 		noKeywordEvent.add(new Property<>("UserID", EventUtils.findPropertyByKey(event, "UserID").getValue()));
 		noKeywordEvent.add(new Property<>("SessionID", EventUtils.findPropertyByKey(event, "SessionID").getValue()));
-		noKeywordEvent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID").getValue()));
+		//noKeywordEvent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID").getValue()));
 		noKeywordEvent.add(new Property<>("Chunks", EventUtils.findPropertyByKey(event, "Chunks")).getValue());
 		
 		try {
@@ -61,7 +61,7 @@ public class TokenizeInterestProfile extends AbstractInterestProfile {
 			//Besitzt event nur eine UserID??
 			singleKeywordEvent.add(new Property<>("UserID", EventUtils.findPropertyByKey(event, "UserID").getValue()));
 			singleKeywordEvent.add(new Property<>("SessionID", EventUtils.findPropertyByKey(event, "SessionID").getValue()));
-			singleKeywordEvent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID").getValue()));
+			//singleKeywordEvent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID").getValue()));
 			singleKeywordEvent.add(new Property<>("Chunks", chunks.returnList())); // Give the new chunker object where keyword chunk is removed
 			singleKeywordEvent.add(new Property<>("Keywords", keywords.get(0))); // Pushes the Keyword as an String (the Keyword) into the Event
 
@@ -81,10 +81,10 @@ public class TokenizeInterestProfile extends AbstractInterestProfile {
 			//Besitzt event nur eine UserID??
 			severalKeywordsEvent.add(new Property<>("UserID", EventUtils.findPropertyByKey(event, "UserID").getValue()));
 			severalKeywordsEvent.add(new Property<>("SessionID", EventUtils.findPropertyByKey(event, "SessionID").getValue()));
-			severalKeywordsEvent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID").getValue()));
+			//severalKeywordsEvent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID").getValue()));
 			severalKeywordsEvent.add(new Property<>("Chunks", chunks.returnList()));// add new chunker object
 			severalKeywordsEvent.add(new Property<>("Keywords", keywords)); // Pushes the Keyword as an ArrayList<String> with multiple entries (the Keywords) into the Event
-	
+	//gdsfjklsdföfs
 			
 			try {
 				this.getAgent().send(severalKeywordsEvent, "Keywords");
