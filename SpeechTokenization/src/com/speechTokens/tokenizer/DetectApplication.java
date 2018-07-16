@@ -8,36 +8,27 @@ public class DetectApplication {
 	public static ArrayList<String> detection(String sentence){
 			
 			ArrayList<String> appdetection = new ArrayList<>();
-// Zweidimesionales String Array zur Definition von Keywords --> {"Keyword", "zugeordneter Applikationstyp"}
-// Keywords sind stark vereinfacht definiert (Bsp. keep bezieht sich nicht nur auf die application) --> Ansatz: Möglichst viele Treffer
-// --> Jeden Nennung von "keep" --> ApplicationEvent auch wenn "keep" auch eine andere Bedeutung hat
-			
+			ArrayList<String> appkeywords = new ArrayList<>();
+		
+			appkeywords.add("google keep");
+			appkeywords.add("google drive");
+			appkeywords.add("google docs");
+			appkeywords.add("presentation");
+			appkeywords.add("google mail");
+			appkeywords.add("mail");
 
-			String[][] appkeywords = {
-					{"mail","mail"},
-					{"presentation", "presentation"},
-					{"doc", "docs"},
-					{"google keep", "keep"},
-					{"note", "keep"},
-					{"google drive","drive"}
-					};
 
 //Iteration durch Array appkeywords. Prüfen, ob keywords im jeweiligen Satz enthalten sind.	
 // Wird ein keyword gefunden, wird der ArrayList der zugehörige Apllikationstyp als neues Element hinzugefügt 		
 			
 			//Interation durch alle Keyword und 
 			
-			for(int i=0;i<appkeywords.length;i++) {
-					if(sentence.toLowerCase().contains(appkeywords[i][0])) {
-						appdetection.add(appkeywords[i][1]);
-						System.out.println("Application detected: " + appkeywords[i][1]);
+			for(int i=0;i<appkeywords.size();i++) {
+					if(sentence.toLowerCase().contains(appkeywords.get(i))) {
+						appdetection.add(appkeywords.get(i));
+						System.out.println("Application detected: " + appkeywords.get(i));
 					}
 				}
-								
-
 			return appdetection;
-
 		}
-
-
 }
