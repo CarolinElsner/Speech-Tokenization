@@ -79,8 +79,8 @@ public class SentenceInterestProfile extends AbstractInterestProfile {
 			AbstractEvent calendarevent = eventFactory.createEvent("AtomicEvent");
 			calendarevent.setType("CalendarEvent");
 			//Besitzt event nur eine UserID??
-			calendarevent.add(new Property<>("UserID", EventUtils.findPropertyByKey(event, "UserID")));
-			calendarevent.add(new Property<>("SessionID", EventUtils.findPropertyByKey(event, "SessionID")));
+			calendarevent.add(new Property<>("UserID", EventUtils.findPropertyByKey(event, "UserID").getValue()));
+			calendarevent.add(new Property<>("SessionID", EventUtils.findPropertyByKey(event, "SessionID").getValue()));
 			//calendarevent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID")));
 			
 			try {
@@ -99,8 +99,8 @@ public class SentenceInterestProfile extends AbstractInterestProfile {
 			AbstractEvent calendarevent = eventFactory.createEvent("AtomicEvent");
 			calendarevent.setType("CalendarEvent");
 			//Besitzt event nur eine UserID??
-			calendarevent.add(new Property<>("UserID", EventUtils.findPropertyByKey(event, "UserID")));
-			calendarevent.add(new Property<>("SessionID", EventUtils.findPropertyByKey(event, "SessionID")));
+			calendarevent.add(new Property<>("UserID", EventUtils.findPropertyByKey(event, "UserID").getValue()));
+			calendarevent.add(new Property<>("SessionID", EventUtils.findPropertyByKey(event, "SessionID").getValue()));
 			//calendarevent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID")));
 			calendarevent.add(new Property<>("Termin", detector.getfoundDate()));
 			
@@ -135,8 +135,8 @@ public class SentenceInterestProfile extends AbstractInterestProfile {
 				AbstractEvent applicationEvent = eventFactory.createEvent("AtomicEvent");
 				applicationEvent.setType("ApplicationEvent");
 				applicationEvent.add(new Property<>("ApplicationType",foundapps.get(i)));
-				applicationEvent.add(new Property<>("UserID",EventUtils.findPropertyByKey(event, "UserID")));
-				applicationEvent.add(new Property<>("SessionID",EventUtils.findPropertyByKey(event, "SessionID")));
+				applicationEvent.add(new Property<>("UserID",EventUtils.findPropertyByKey(event, "UserID").getValue()));
+				applicationEvent.add(new Property<>("SessionID",EventUtils.findPropertyByKey(event, "SessionID").getValue()));
 				//applicationEvent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID")));
 
 				
@@ -157,8 +157,8 @@ public class SentenceInterestProfile extends AbstractInterestProfile {
 		if(chunk.size()!=0) {
 			AbstractEvent sentenceEvent = eventFactory.createEvent("AtomicEvent");
 			sentenceEvent.setType("SentenceEvent");
-			sentenceEvent.add(new Property<>("UserID",EventUtils.findPropertyByKey(event, "UserID")));
-			sentenceEvent.add(new Property<>("SessionID",EventUtils.findPropertyByKey(event, "SessionID")));
+			sentenceEvent.add(new Property<>("UserID",EventUtils.findPropertyByKey(event, "UserID").getValue()));
+			sentenceEvent.add(new Property<>("SessionID",EventUtils.findPropertyByKey(event, "SessionID").getValue()));
 			//sentenceEvent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID")));
 
 			sentenceEvent.add(new Property<>("Chunks", chunk.returnList()));// the chunker Object cant be pushed as it is and has to be parsed to the ArrayList
