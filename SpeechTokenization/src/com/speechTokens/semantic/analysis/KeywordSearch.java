@@ -121,42 +121,50 @@ public class KeywordSearch {
 		
 		for (int j = 0; j < chunks.size(); j++) {
 			ArrayList<String> foundSemOfChunk = new ArrayList<String>(); // the semantics that were found by the keyword and belong to ONE chunk
-			Boolean semanticExistance = chunks.getSemanticAt(j) != null;
-			Boolean isSemanticString = (chunks.getSemanticAt(j) instanceof String);
+			Boolean semanticExistance = chunks.getSemanticAt(j) != null; // there is semantic of the respective chunk
+			Boolean isSemanticString = (chunks.getSemanticAt(j) instanceof String); // the semantic is a string
 			Boolean keywordIsChunk = chunks.getChunkContentAt(j).equals(keyword); // check whether the keyword equals the current chunk
 			if(semanticExistance && isSemanticString && !keywordIsChunk){
 				JsonHandler js = new JsonHandler();
+				// looks in the sem info of each chunk and searches in it for the keyword
 				foundSemOfChunk = js.semanticLookUp((String) chunks.readSemanticOfChunk(chunks.getChunkContentAt(j)), keyword);
 				// wird das keywort projekt in dem chunk erkannt soll untersucht werden ob nicht evtl noch ein Dokument der anderen Chunks relevant ist
 				if(keyword.equalsIgnoreCase("project")) {
-					if(foundSemOfChunk.isEmpty()) {
-						noProjectFound.add(chunks.getChunkContentAt(j)); // Chunk worüber wir evtl dokumente finden wollen
-						
+					if(foundSemOfChunk.isEmpty()) { // if no semantic regarding the keyword for the chunk was found:
+						noProjectFound.add(chunks.getChunkContentAt(j)); // Chunk worüber wir evtl dokumente finden wollen, da wir keine projektinformationen darüber gefunden haben
 					}else {
 						projectFound.add(chunks.getChunkContentAt(j));
 					}
 					
 				}
+			}else if(!semanticExistance){
+				System.out.println("KeywordSearch.oneKeyword: No semantic of chunk found");				
+			}else if(!isSemanticString) {
+				System.out.println("KeywordSearch.oneKeyword: Chunk is not a String");				
+			}else if(keywordIsChunk) {
+				System.out.println("KeywordSearch.oneKeyword: Keyword is a chunk");				
 			}else {
-				System.out.println("KeywordSearch.oneKeyword: No semantic or not a String or keyword is a chunk");
+				System.out.println("KeywordSearch.oneKeyword: not predictable error");
 			}
-			if(!foundSemOfChunk.isEmpty()) {
+			if(!foundSemOfChunk.isEmpty()) { // create new chunker were the found semantic and the chunk will be added
 				results.addChunkContent(chunks.getChunkContentAt(j));
 				results.addSemanticToChunk(chunks.getChunkContentAt(j), foundSemOfChunk);
 			}else {
-				System.out.println("KeywordSearch.oneKeyword: No semantic found at all in the chunker object");
+				System.out.println("KeywordSearch.oneKeyword: No semantic found at all in the respective chunk");
 			}
 		}
 		// ausführen sollte ein Chunk gefunden werden der keine sem treffer hat und ein chunk der schon welche hat mit dem Keywort "Project"
 		if(!noProjectFound.isEmpty() && !projectFound.isEmpty()) {
 			// in den semantischen informationen von noProjectFound nach dem auftreten des chunks projectFound suchen
-			JsonHandler js = new JsonHandler();
+			
 			 // iterieren durch die anzahl der chunks wozu keine projektinformationen gefunden wurden
 			for (int i = 0; i < noProjectFound.size(); i++) {
 				// iterieren durch die chunks wozu projektinformationen gefunden wurden
 				for (int h = 0; h < projectFound.size(); h++) {
+					JsonHandler js = new JsonHandler();
 					// lese die semantischen informationen des "noProjectFound" Chunks aus, worin wir das auftreten des "projectFound" Chunks überprüfen
-					ArrayList<String> semInfos = js.semanticLookUp((String) chunks.readSemanticOfChunk(noProjectFound.get(i)), projectFound.get(h));
+					ArrayList<String> semInfos = new ArrayList<>();
+					semInfos = js.semanticLookUp((String) chunks.readSemanticOfChunk(noProjectFound.get(i)), projectFound.get(h));
 					// wurden treffer gefunden wird weiter gemacht
 					if(!semInfos.isEmpty()) {
 						for (int k = 0; k < semInfos.size(); k++) {
@@ -168,13 +176,14 @@ public class KeywordSearch {
 							}
 						}
 						// hier wird dann alles in das finale results chunker object zusammengeführt
-						// ACHTUNG: MAN MUSS TESTEN, OB DIE CHUNKS UND DIE SEM INFOS ÜbBERSCHRIEBEN ODER SICH ERGENZEN BEIM EINFÜGEN!!!
 						results.addChunkContent(noProjectFound.get(i));	
 						results.addSemanticToChunk(noProjectFound.get(i), semInfos);
+					}else {
+						System.out.println("KeywordSearch.oneKeyword: no sem for this chunk");
 					}
 				}				
 			}
-		}		
+		}
 		return results;		
 	}
 	
