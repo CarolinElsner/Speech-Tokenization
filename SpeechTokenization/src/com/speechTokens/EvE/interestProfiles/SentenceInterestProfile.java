@@ -77,8 +77,9 @@ public class SentenceInterestProfile extends AbstractInterestProfile {
 		if(foundDayMonth == true) {
 			
 			AbstractEvent calendarevent = eventFactory.createEvent("AtomicEvent");
-			calendarevent.setType("ApplicationEvent");
+			calendarevent.setType("CalendarEvent");
 			//Besitzt event nur eine UserID??
+			calendarevent.add(new Property<>("Type","calendar"));
 			calendarevent.add(new Property<>("UserID", EventUtils.findPropertyByKey(event, "UserID").getValue()));
 			calendarevent.add(new Property<>("SessionID", EventUtils.findPropertyByKey(event, "SessionID").getValue()));
 			//calendarevent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID")));
@@ -97,8 +98,9 @@ public class SentenceInterestProfile extends AbstractInterestProfile {
 		}else if(foundDate == true || detector.datefound == true) { //Falls Datum mit angegebene sein sollte
 			
 			AbstractEvent calendarevent = eventFactory.createEvent("AtomicEvent");
-			calendarevent.setType("ApplicationEvent");
+			calendarevent.setType("CalendarEvent");
 			//Besitzt event nur eine UserID??
+			calendarevent.add(new Property<>("Type","calendar"));
 			calendarevent.add(new Property<>("UserID", EventUtils.findPropertyByKey(event, "UserID").getValue()));
 			calendarevent.add(new Property<>("SessionID", EventUtils.findPropertyByKey(event, "SessionID").getValue()));
 			//calendarevent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(event, "SentenceID")));
