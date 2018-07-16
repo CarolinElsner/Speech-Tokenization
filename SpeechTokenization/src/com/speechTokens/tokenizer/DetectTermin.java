@@ -67,6 +67,7 @@ public class DetectTermin {
 			dayMonth.add("Sunday");
 			dayMonth.add("week");
 			
+			//Schlagwörter die auf ein Treffen hinweisen können
 			ArrayList<String> keyWordTermin = new ArrayList<String>();
 			keyWordTermin.add("appointment");
 			keyWordTermin.add("meeting");
@@ -88,7 +89,7 @@ public class DetectTermin {
 							//prüfen ob im Satz ein Schlagwort für ein Treffen genannt wurde
 							if (sentence.contains(keyWordTermin.get(k))) {
 								dayMonthfound = true;
-								System.out.println("Schlagwort und Zeitpunk wurden erkannt");
+								//System.out.println("Schlagwort und Zeitpunk wurden erkannt");
 								//Schauen ob auch Tag angegeben wurde, falls ja kann exakter Termin angegeben werden
 								Matcher matcher = Date_Detection.matcher(chunk.get(i));
 								if(matcher.find()) {
@@ -102,22 +103,11 @@ public class DetectTermin {
 								chunk.remove(i);
 								i--;
 								break;
-//									if(i != 0) {
-//										chunk.remove(i);
-//										i--;
-//										break;
-//									}
-//									else if (i == 0) {
-//										System.out.println("hier mit i= " + i);
-//										chunk.remove(i)	;
-//										i = 0;
-//										System.out.println("ende mit i= "+ i);
-//										break;
-//									}
+
 							}
 							
 							else {
-								
+								System.out.println("Es wurde kein Schlagwort für ein Treffen genannt");
 							}
 						}
 						break;
