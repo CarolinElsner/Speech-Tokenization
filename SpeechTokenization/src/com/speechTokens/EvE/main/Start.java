@@ -9,6 +9,7 @@ import com.speechTokens.testing.Testing;
 import com.speechTokens.tokenizer.Chunker;
 
 import eventprocessing.agent.AbstractAgent;
+import eventprocessing.agent.AgentException;
 import eventprocessing.consume.kafka.ConsumerSettings;
 import eventprocessing.consume.spark.streaming.NoValidAgentException;
 import eventprocessing.consume.spark.streaming.StreamingExecution;
@@ -64,11 +65,16 @@ public class Start {
 		tokenizeAgent.setConsumerSettings(new ConsumerSettings(server, port, "TokenizeAgent"));
 		tokenizeAgent.setProducerSettings(new ProducerSettings(server,port));
 
+		try {
 		StreamingExecution.add(sentenceAgent);
 		StreamingExecution.add(noKeywordAgent);
 		StreamingExecution.add(severalKeywordsAgent);
 		StreamingExecution.add(singleKeywordAgent);
 		StreamingExecution.add(tokenizeAgent);
+		} catch (AgentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		StreamingExecution.start();
 		
 		publishDemoEvents();
