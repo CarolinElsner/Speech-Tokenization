@@ -24,6 +24,12 @@ public class DetectTermin {
 		this.foundDate= null;
 		
 	}
+	/**
+	 * Untersuchtung des Satzes ob ein Datum im Format DD/MM/YYYY vorkommt
+	 * @param sentence Übergabe des Satzes der auf ein Datum untersucht werden soll
+	 * @return Boolean Variable die beim Finden eines Termines in dem Satz true zurück gibt
+	 */
+	
 	    //Methode um zu Pürfen ob ein Datum im Format DD/MM/YYYY im Satz vorkommt
 		public boolean validate(String sentence) {
 		        Matcher matcher = Date_Expression.matcher(sentence);
