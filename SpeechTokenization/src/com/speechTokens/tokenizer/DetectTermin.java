@@ -24,6 +24,7 @@ public class DetectTermin {
 		this.foundDate= null;
 		
 	}
+	
 	/**
 	 * Untersuchtung des Satzes ob ein Datum im Format DD/MM/YYYY vorkommt
 	 * @param sentence Übergabe des Satzes der auf ein Datum untersucht werden soll
@@ -47,8 +48,14 @@ public class DetectTermin {
 		        return matcher.find();
 		}
 		
-			
-		//Mit der MEthode searchDate soll nach Schlagworten(Calenadar, Appointment) und Datumsangaben (Monat oder Tag oder Monat+Tag) gesucht werden
+		/**
+		 * Die Chunks werden überpürft, ob ein Schalgwort enthalten ist welches auf ein Datum (Monat, Tag oder Monat + Tag)
+		 * oder auf einen Treffen (verschiedene Wörter die auf ein Treffen hindeuten) hinweist
+		 * @param chunk enthält die erkannten Chunks aus dem gesprochenen Satz
+		 * @param sentence enthält den gesprochenen Satz
+		 * @return Chunk-Array Liste welche die Chunks für die weiterverarbeitung enthält
+		 */		
+		//Mit der Methode searchDate soll nach Schlagworten(Calenadar, Appointment) und Datumsangaben (Monat oder Tag oder Monat+Tag) gesucht werden
 		public ArrayList<String> searchDate (ArrayList<String> chunk, String sentence) {
 			//ArrayListe mit den Schlagworten und Datumsangeben die auf einen Termin hindeuten
 			ArrayList<String> dayMonth = new ArrayList<String>();
