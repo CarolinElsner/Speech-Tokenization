@@ -150,7 +150,7 @@ public class Testing {
 		//Variable um zu prüfen ob Datum in Satz enthalten ist
 		boolean foundDate;
 		//boolean foundDayMonth = DetectTermin.dayMonthfound;
-		String sentence= "Show me the costplan of the Bosch project.";
+		String sentence= "Show me the drive of the document.";
 		ArrayList<String> chunks = new ArrayList<String>();
 		try {
 			chunks = (ArrayList<String>) chunking.doTokenization(sentence);

@@ -61,8 +61,8 @@ public class Tokenization {
 		for (int i = 0; i < chunkResult.length; i++) {
 			//System.out.println(posTags[i] + " und " + chunkResult[i] + " und " + tokens[i]);
 			// add a new token, since B indicates it is a new token
-			System.out.println("------------------------");
-			System.out.println(tokens[i]+"---->"+chunkResult[i].charAt(0) + "-->" + posTags[i]);
+			//System.out.println("------------------------");
+			//System.out.println(tokens[i]+"---->"+chunkResult[i].charAt(0) + "-->" + posTags[i]);
 			if (chunkResult[i].charAt(0) == 'B' && posTags[i].contains("NNP") ) {
 					chunkList.add(tokens[i]);
 				// add the token to the last chunk since it is not B
@@ -158,11 +158,12 @@ public class Tokenization {
 		//chunkList.remove(j);
 		// execute the createToken function in the com.speechTokens.XML Package
 
-		/*
-		 * to show all the chunks in the List
-		 * for (int j = 0; j < chunkList.size(); j++) {
-		 * System.out.println(chunkList.get(j)); }
-		 */
+		
+		 //to show all the chunks in the List
+		 for (int j = 0; j < chunkList.size(); j++) {
+			 System.out.println("####### Identified Chunk Number "+(j+1)+chunkList.get(j)); 
+		 }
+		 
 		return chunkList;
 	}
 	

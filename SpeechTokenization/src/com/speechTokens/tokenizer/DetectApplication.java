@@ -8,7 +8,6 @@ public class DetectApplication {
 	public static ArrayList<String> detection(String sentence){
 			
 			ArrayList<String> appdetection = new ArrayList<>();
-			System.out.println(sentence);
 // Zweidimesionales String Array zur Definition von Keywords --> {"Keyword", "zugeordneter Applikationstyp"}
 // Keywords sind stark vereinfacht definiert (Bsp. keep bezieht sich nicht nur auf die application) --> Ansatz: Möglichst viele Treffer
 // --> Jeden Nennung von "keep" --> ApplicationEvent auch wenn "keep" auch eine andere Bedeutung hat

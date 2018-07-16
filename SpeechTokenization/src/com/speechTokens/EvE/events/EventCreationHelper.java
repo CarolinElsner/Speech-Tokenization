@@ -25,9 +25,8 @@ public class EventCreationHelper {
 
 		actionEvent.add(new Property<>("UserID",EventUtils.findPropertyByKey(oldEvent, "UserID").getValue()));
 		actionEvent.add(new Property<>("SessionID",EventUtils.findPropertyByKey(oldEvent, "SessionID").getValue()));
-		actionEvent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(oldEvent, "SentenceID").getValue()));
+		//actionEvent.add(new Property<>("SentenceID", EventUtils.findPropertyByKey(oldEvent, "SentenceID").getValue()));
 
-		// TODO: Nicht so nach keywords suchen, da Projectplan zu keyword "Projekt" gehören würde, desewegen nach keyword #projekt suchen
 		ArrayList<String> semanticStr = (ArrayList<String>) chunks.getSemanticAt(0);
 		for (int i = 0; i < semanticStr.size(); i++) {
 			JSONObject semantics = new JSONObject(semanticStr.get(i));
